@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.main.PublishActivity">
+
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/_5sdp"
+        app:cardBackgroundColor="@color/white"
+        app:cardElevation="@dimen/_4sdp"
+        android:layout_margin="@dimen/_10sdp"
+        android:padding="@dimen/_15sdp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/temp_constaint"
+        android:orientation="vertical"
+        >
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <Button
+                android:id="@+id/publish_btn_publish"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="publish"
+                android:textStyle="bold"
+                android:clickable="true"
+                android:elevation="@dimen/_1sdp"
+                android:textColor="@color/colorPrimary"
+                android:backgroundTint="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/publish_my_image"
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="@dimen/_60sdp"
+                android:layout_gravity="start"
+                android:layout_margin="@dimen/_5sdp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/kareem_cover"
+                app:civ_border_color="@color/colorPrimary"
+                app:civ_border_width="@dimen/_1sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/publish_my_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:text="Kareem Aboelatta"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="22sp"
+                android:layout_margin="@dimen/_10sdp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/publish_my_image"
+
+                />
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="35dp"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginVertical="5dp"
+                app:cardCornerRadius="6dp"
+                app:cardElevation="0dp"
+                android:layout_marginStart="@dimen/_10sdp"
+                app:layout_constraintStart_toEndOf="@id/publish_my_image"
+                app:layout_constraintTop_toBottomOf="@id/publish_my_name"
+
+                >
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/custom_shape">
+
+                    <RelativeLayout
+                        android:id="@+id/publish_btn_anyone"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:padding="@dimen/_1sdp"
+                        android:focusable="true"
+                        >
+
+
+                        <TextView
+                            android:id="@+id/pubish_text_anyone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:ellipsize="end"
+                            android:lines="1"
+                            android:text=" anyone"
+                            android:textColor="@color/black"
+                            android:textSize="11sp"
+                            android:textStyle="bold" />
+
+                        <ImageButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="@dimen/_2sdp"
+                            android:layout_marginTop="@dimen/_2sdp"
+                            android:layout_marginEnd="@dimen/_2sdp"
+                            android:layout_marginBottom="@dimen/_2sdp"
+                            android:backgroundTint="@color/white"
+                            android:src="@drawable/ic_arrow_drop_down"
+                            app:tint="@color/black" />
+
+                        <ImageButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_margin="@dimen/_2sdp"
+                            android:background="@color/white"
+                            android:src="@drawable/ic_public"
+                            app:tint="@color/black" />
+
+                    </RelativeLayout>
+
+                </FrameLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+
+    <View
+        android:id="@+id/temp_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_2sdp"
+        android:background="@color/colorGray"
+        android:layout_marginVertical="@dimen/_3sdp"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        app:layout_constraintTop_toBottomOf="@+id/temp_constaint"
+        />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="center_horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/publish_btn_bottom"
+        app:layout_constraintTop_toBottomOf="@+id/temp_view"
+        android:orientation="vertical"
+        >
+        <EditText
+            android:id="@+id/publish_caption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:layout_margin="@dimen/_4sdp"
+            android:elevation="@dimen/_1sdp"
+            android:gravity="top"
+            android:hint="What do you want to talk about?"
+            android:lines="4"
+            android:padding="@dimen/_9sdp"
+            android:textSize="@dimen/_20sdp"
+            app:layout_constraintBottom_toTopOf="@+id/publish_image"
+            app:layout_constraintTop_toBottomOf="@+id/temp_view"
+             />
+
+        <ImageView
+            android:id="@+id/publish_image"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_240sdp"
+            android:scaleType="centerCrop"
+            android:layout_weight="2"
+            android:visibility="gone"
+            android:src="@drawable/kareem_cover"
+            app:layout_constraintBottom_toTopOf="@id/publish_btn_bottom"
+            app:layout_constraintTop_toBottomOf="@+id/publish_caption"
+            />
+
+        <VideoView
+            android:id="@+id/publish_video"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_270sdp"
+            android:layout_weight="1"
+            android:scaleType="centerCrop"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/publish_btn_bottom"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/publish_image" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/publish_btn_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_70sdp"
+        android:background="@drawable/fragment_menu_around"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_arrow_down_curved"
+            android:scaleType="fitXY"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/_1sdp"
+            android:rotation="180"
+            app:tint="@color/white" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:orientation="horizontal"
+            android:layout_marginBottom="@dimen/_2sdp">
+
+            <ImageButton
+                android:layout_width="35dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_image_default"
+                app:tint="@color/white" />
+
+            <ImageButton
+                android:layout_width="35dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_videocam"
+                app:tint="@color/white" />
+
+            <ImageButton
+                android:layout_width="35dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_attach_file"
+                app:tint="@color/white" />
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

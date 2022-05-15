@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <ImageView
+                android:id="@+id/prof_image_cover"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_220sdp"
+                android:background="#EDEDED"
+                android:src="@drawable/ic_image_default"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/prof_btn_change_cover"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_camera"
+                android:text=" Cover "
+                android:background="@color/colorGray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_margin="@dimen/_5sdp"/>
+
+            <ImageButton
+                android:id="@+id/prof_btn_setting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_settings"
+                android:layout_margin="@dimen/_5sdp"
+                android:backgroundTint="@color/trans"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/colorGray" />
+            <LinearLayout
+                android:id="@+id/lin_prof"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="@dimen/_120sdp"
+                android:gravity="center"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <FrameLayout
+                    android:layout_width="@dimen/_140sdp"
+                    android:layout_height="@dimen/_140sdp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="3dp">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/prof_image_profile"
+                        android:layout_width="@dimen/_138sdp"
+                        android:layout_height="@dimen/_138sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.498"
+                        android:src="@drawable/kareem_cover"
+                        android:scaleType="centerCrop"
+                        app:civ_border_color="@color/colorPrimary"
+                        app:civ_border_width="@dimen/_2sdp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        tools:layout_editor_absoluteY="153dp" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/prof_btn_change_profile"
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="@dimen/_40sdp"
+                        android:src="@drawable/ic_camera_white"
+                        android:tint="@color/colorWhite"
+                        android:elevation="@dimen/_2sdp"
+                        android:layout_gravity="top|right"
+
+                        />
+                </FrameLayout>
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center"
+                    >
+                    <TextView
+                        android:id="@+id/prof_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Kareem Aboelatta"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        />
+                    <ImageButton
+                        android:id="@+id/prof_btn_edit_pen"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_pen"
+                        android:backgroundTint="@color/trans"
+                        />
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/prof_bio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Android Developer"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:textColor="@color/colorGray"
+                    android:textSize="17sp"
+                    />
+            </LinearLayout>
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ProgressBar
+            android:id="@+id/prof_ProgressBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/prof_rec"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/item_post"
+            android:layout_marginHorizontal="@dimen/_2sdp"
+            />
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

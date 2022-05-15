@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/menu_anyone"
+        android:title="Anyone"
+        />
+    <item android:id="@+id/menu_friends"
+        android:title="Friends"
+        />
+    <item android:id="@+id/menu_only_me"
+        android:title="Only me"
+        />
+</menu>

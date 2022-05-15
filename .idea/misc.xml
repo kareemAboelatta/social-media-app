@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/East-Sound/.gradle/caches/transforms-3/27962ead4e4e1bd3577fccbfe9245f5d/transformed/jetified-firebase-messaging-23.0.2/res/drawable-v26/adaptive_icon.xml" value="0.1" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/drawable-v24/edit_text_background.xml" value="0.21851851851851853" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/drawable/add_post.xml" value="0.240625" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/drawable/circular_image.xml" value="0.16041666666666668" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/drawable/custom_shape.xml" value="0.225" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/drawable/edit_text_background.xml" value="0.240625" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/drawable/edittext_shape.xml" value="0.16041666666666668" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/drawable/fragment_menu_around.xml" value="0.21944444444444444" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/drawable/ic__arrow_back.xml" value="0.16041666666666668" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/drawable/ic__arrow_forward.xml" value="0.16041666666666668" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/drawable/ic_add_photo_white.xml" value="0.16041666666666668" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/drawable/ic_add_photo_whithe.xml" value="0.240625" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/drawable/ic_arrow_drop_down.xml" value="0.225" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/drawable/ic_image_default.xml" value="0.240625" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/drawable/ic_like_not.xml" value="0.240625" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/drawable/ic_public.xml" value="0.21944444444444444" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/drawable/ic_video.xml" value="0.16041666666666668" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/drawable/ic_videocam.xml" value="0.16041666666666668" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/drawable/ic_wavee.xml" value="0.16041666666666668" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/drawable/icon_message.xml" value="0.16041666666666668" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/drawable/message_shape.xml" value="0.16041666666666668" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/drawable/messages_count.xml" value="0.1" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/drawable/profile.xml" value="0.16041666666666668" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/drawable/round_corners_shape.xml" value="0.16041666666666668" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/drawable/send_icon.xml" value="0.16041666666666668" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/drawable/small_circualr_image.xml" value="0.16041666666666668" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/drawable/thumb_switch.xml" value="0.148" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/drawable/user_status.xml" value="0.16041666666666668" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/font/poppins.xml" value="0.16979166666666667" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/font/poppins_bold.xml" value="0.16979166666666667" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/layout/activity_login_and_sign_up.xml" value="0.1" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/layout/activity_main.xml" value="0.15" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/layout/activity_messenger.xml" value="0.1" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/layout/activity_publish.xml" value="0.18" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/layout/activity_test.xml" value="0.13114754098360656" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/layout/bottom_dialog.xml" value="0.22418478260869565" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/layout/chat_layout.xml" value="0.14965277777777777" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/layout/conversation_toolbar.xml" value="0.15" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/layout/fragment_chats.xml" value="0.1444672131147541" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/layout/fragment_conversation.xml" value="0.1444672131147541" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/layout/fragment_home.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/layout/fragment_login.xml" value="0.16" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/layout/fragment_people.xml" value="0.1444672131147541" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/layout/fragment_post_details.xml" value="0.18" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/layout/fragment_post_owner.xml" value="0.1" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/layout/fragment_profile.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/layout/fragment_publish.xml" value="0.1" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/layout/fragment_register.xml" value="0.21331521739130435" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/layout/fragment_reset_password.xml" value="0.2" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/layout/fragment_video.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/layout/item_comment.xml" value="0.14965277777777777" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/layout/item_post.xml" value="0.18" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/layout/received_msg_layout.xml" value="0.16" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/layout/sent_msg_layout.xml" value="0.1" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/layout/user_layout.xml" value="0.1444672131147541" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/menu/anyone_menu.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/menu/menu_bottom.xml" value="0.1" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/menu/nav_menu.xml" value="0.14965277777777777" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/menu/pop_menu.xml" value="0.175" />
+        <entry key="..\:/Users/East-Sound/AndroidStudioProjects/SocialMediaApp/app/src/main/res/xml/provider_paths.xml" value="0.2210144927536232" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

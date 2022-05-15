@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_10sdp"
+    app:cardCornerRadius="@dimen/_5sdp"
+    app:cardElevation="@dimen/_5sdp"
+    android:padding="@dimen/_5sdp"
+    app:cardBackgroundColor="#FFFFFF"
+    >
+
+    <RelativeLayout
+        android:id="@+id/item_comment_long_click"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/item_comment_avatarTv"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginHorizontal="@dimen/_2sdp"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:src="@drawable/ic_profile"
+
+            ></de.hdodenhof.circleimageview.CircleImageView>
+
+
+        <TextView
+            android:id="@+id/item_comment_nameTv"
+            android:text="Kareem "
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_toRightOf="@id/item_comment_avatarTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBlack"
+            android:layout_margin="@dimen/_2sdp"
+
+
+            ></TextView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/item_comment"
+            android:layout_below="@id/item_comment_nameTv"
+            android:layout_marginTop="6sp"
+            android:textSize="16sp"
+            android:gravity="start"
+            android:textColor="@color/colorBlack"
+            android:text="This is actually comment "
+            android:layout_toRightOf="@id/item_comment_avatarTv"
+            android:layout_margin="@dimen/_2sdp"
+
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="7/2/2020"
+            android:id="@+id/item_comment_timeTv"
+            android:textSize="10sp"
+            android:layout_below="@id/item_comment"
+            android:layout_toRightOf="@id/item_comment_avatarTv"
+            android:layout_margin="@dimen/_2sdp"
+            />
+
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

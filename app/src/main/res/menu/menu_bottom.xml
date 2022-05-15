@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cnb_unselectedColor="@color/colorPink">
+    <item
+        android:id="@+id/home"
+        android:icon="@drawable/ic_home"
+        android:title="Home"
+        app:cnb_iconColor="@color/colorPink"/>
+    <item
+        android:id="@+id/profile"
+        android:icon="@drawable/ic_profile"
+        android:title="Profile"
+        app:cnb_iconColor="@color/colorBlue" />
+    <item
+        android:id="@+id/videos"
+        android:icon="@drawable/ic_video"
+        android:title="Videos"
+        app:cnb_iconColor="@color/colorGreen" />
+
+    <item
+        android:id="@+id/add_post"
+        android:icon="@drawable/add_post"
+        android:title="Post"
+        app:cnb_iconColor="@color/colorAccent"/>
+
+    <item
+        android:id="@+id/messenger"
+        android:icon="@drawable/ic_message"
+        android:title="Messenger"
+        app:cnb_iconColor="@color/yellow"/>
+
+
+</menu>

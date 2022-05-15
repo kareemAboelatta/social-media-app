@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_nav_gragh"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.socialmediaapp.ui.main.fragment.HomeFragment"
+        android:label="HomeFragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_postDetailsFragment"
+            app:destination="@id/postDetailsFragment"
+
+            />
+        <action
+            android:id="@+id/action_homeFragment_to_postOwnerFragment"
+            app:destination="@id/postOwnerFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.socialmediaapp.ui.main.fragment.ProfileFragment"
+        android:label="ProfileFragment" >
+        <action
+            android:id="@+id/action_profileFragment_to_postDetailsFragment"
+            app:destination="@id/postDetailsFragment"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/videosFragment"
+        android:name="com.example.socialmediaapp.ui.main.fragment.VideosFragment"
+        android:label="VideosFragment" >
+        <action
+            android:id="@+id/action_videosFragment_to_postDetailsFragment"
+            app:destination="@id/postDetailsFragment"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            />
+        <action
+            android:id="@+id/action_videosFragment_to_postOwnerFragment"
+            app:destination="@id/postOwnerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/publishFragment"
+        android:name="com.example.socialmediaapp.ui.main.fragment.PublishFragment"
+        android:label="PublishFragment" />
+    <fragment
+        android:id="@+id/postDetailsFragment"
+        android:name="com.example.socialmediaapp.ui.main.fragment.PostDetailsFragment"
+        android:label="PostDetailsFragment" >
+        <argument
+            android:name="post"
+            app:argType="com.example.socialmediaapp.models.Post" />
+        <action
+            android:id="@+id/action_postDetailsFragment_to_postOwnerFragment"
+            app:destination="@id/postOwnerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/postOwnerFragment"
+        android:name="com.example.socialmediaapp.ui.main.fragment.PostOwnerFragment"
+        android:label="PostOwnerFragment" >
+        <argument
+            android:name="post"
+            app:argType="com.example.socialmediaapp.models.Post" />
+        <action
+            android:id="@+id/action_postOwnerFragment_to_postDetailsFragment"
+            app:destination="@id/postDetailsFragment" />
+    </fragment>
+</navigation>
