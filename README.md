@@ -57,6 +57,6 @@ Social media app but with new features like translate messages and posts , suppo
 - Notification 
 - Cloud messaging
 - Machine Learning
- ** to Detect the language of text 
- ** to Translate text from one language to another
+ * to Detect the language of text 
+ * to Translate text from one language to another
 
