@@ -54,7 +54,9 @@ Social media app but with new features like translate messages and posts , suppo
 - Coroutines
 - Navigation component
 - Glide
-- Animation
 - Notification 
 - Cloud messaging
+- Machine Learning
+ ** to Detect the language of text 
+ ** to Translate text from one language to another
 
