@@ -56,7 +56,7 @@ Social media app but with new features like translate messages and posts , suppo
 - Glide
 - Notification 
 - Cloud messaging
-- Machine Learning
- * to Detect the language of text 
- * to Translate text from one language to another
+# Machine Learning
+ > to Detect the language of text 
+ > to Translate text from one language to another
 
