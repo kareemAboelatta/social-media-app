@@ -45,8 +45,7 @@ Social media app but with new features like translate messages and posts , suppo
 
 
 
-
-# Tools:
+# <img src="https://media.giphy.com/media/5WILqPq29TyIkVCSej/giphy.gif" width="50">  Tools: 
 - Kotlin
 - MVVM , clean code
 - Dagger Hilt
