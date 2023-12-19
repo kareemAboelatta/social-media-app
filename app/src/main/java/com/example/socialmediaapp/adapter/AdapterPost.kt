@@ -7,13 +7,11 @@ import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
-import android.widget.Toast
-import androidx.recyclerview.widget.AsyncListDiffer
-import androidx.recyclerview.widget.DiffUtil
+
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import com.example.socialmediaapp.R
+import com.example.socialmediaapp.databinding.ItemPostBinding
 import com.example.socialmediaapp.models.Post
 import com.example.socialmediaapp.repository.Repository
 import com.google.android.exoplayer2.MediaItem
@@ -34,8 +32,7 @@ import com.google.mlkit.nl.translate.TranslateLanguage
 import com.google.mlkit.nl.translate.Translation
 import com.google.mlkit.nl.translate.TranslatorOptions
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.android.synthetic.main.item_post.view.*
-import kotlinx.android.synthetic.main.received_msg_layout.view.*
+
 import java.util.*
 import javax.inject.Inject
 
@@ -46,7 +43,7 @@ class AdapterPost @Inject constructor (
     private var auth: FirebaseAuth
 ) :  RecyclerView.Adapter<AdapterPost.PostViewHolder>(){
 
-    inner class PostViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
+    inner class PostViewHolder(val binding: ItemPostBinding) : RecyclerView.ViewHolder(binding.root)
 
 
     var posts: List<Post> = ArrayList()
@@ -62,12 +59,10 @@ class AdapterPost @Inject constructor (
          notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):   PostViewHolder {
-        return   PostViewHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.item_post, parent, false)
-        )
-    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder =
+        PostViewHolder(ItemPostBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+
 
     override fun getItemCount(): Int {
         return posts.size
@@ -76,31 +71,31 @@ class AdapterPost @Inject constructor (
 
     override fun onBindViewHolder(holder:   PostViewHolder, position: Int) {
         val   post = posts[position]
-        holder.itemView.apply {
+        holder.binding.apply {
 
             //user data
-            post_userName.text=post.userName
-            glide.load(post.userImage).into(post_userPicture)
+            postUserName.text=post.userName
+            glide.load(post.userImage).into(postUserPicture)
             //post data
             //get time from timestamp
             val cal = Calendar.getInstance(Locale.getDefault())
             cal.timeInMillis = post.postTime.toLong()
 
             val time = DateFormat.format("dd/MM/yyyy hh:mm aa", cal).toString()
-            post_TimeIv.text=time
-            post_caption.text=post.caption
-            post_LikesTV.text=post.postLikes.toString()
-            post_CommentTV.text=post.postComments.toString()
-            post_text_anyone.text=post.postFans
+            postTimeIv.text=time
+            postCaption.text=post.caption
+            postLikesTV.text=post.postLikes.toString()
+            postCommentTV.text=post.postComments.toString()
+            postTextAnyone.text=post.postFans
             when(post.postFans){
                 "Anyone"->{
-                    post_image_anyone.setImageResource(R.drawable.ic_public);
+                    postImageAnyone.setImageResource(R.drawable.ic_public);
                 }
                 "Friends"->{
-                    post_image_anyone.setImageResource(R.drawable.ic_group);
+                    postImageAnyone.setImageResource(R.drawable.ic_group);
                 }
                 "Only me"->{
-                    post_image_anyone.setImageResource(R.drawable.ic_profile);
+                    postImageAnyone.setImageResource(R.drawable.ic_profile);
                 }
             }
 
@@ -108,17 +103,17 @@ class AdapterPost @Inject constructor (
             when (post.postType) {
                 "article" -> {
 
-                    post_Image.visibility=View.GONE
-                    post_video.visibility=View.GONE
+                    postImage.visibility=View.GONE
+                    postVideo.visibility=View.GONE
                 }
                 "image" -> {
-                    post_video.visibility=View.GONE
-                    post_Image.visibility=View.VISIBLE
-                    glide.load(post.postAttachment).into(post_Image)
+                    postVideo.visibility=View.GONE
+                    postImage.visibility=View.VISIBLE
+                    glide.load(post.postAttachment).into(postImage)
                 }
                 "video" -> {
-                    post_Image.visibility=View.GONE
-                    post_video.visibility=View.VISIBLE
+                    postImage.visibility=View.GONE
+                    postVideo.visibility=View.VISIBLE
 
 
                     var simpleExoPlayer: SimpleExoPlayer = SimpleExoPlayer.Builder(context).build()
@@ -126,13 +121,13 @@ class AdapterPost @Inject constructor (
                     val mediaSource: MediaSource =buildMediaSource(video)
                     simpleExoPlayer.prepare(mediaSource)
                     simpleExoPlayer.playWhenReady =false
-                    post_video.player=simpleExoPlayer
+                    postVideo.player=simpleExoPlayer
 
 
                 }
             }
 
-            post_like_btn.setOnClickListener {
+            postLikeBtn.setOnClickListener {
                 onItemClickListenerForLike?.let { it(post) }
                 notifyDataSetChanged()
             }
@@ -143,18 +138,18 @@ class AdapterPost @Inject constructor (
                 translate(post.caption,post.languageCode,myLanguage,holder)
             }
 
-            post_userPicture.setOnClickListener {
+            postUserPicture.setOnClickListener {
                 onItemClickListenerForGoingtoOwner?.let { it(post) }
             }
-            post_userName.setOnClickListener {
+            postUserName.setOnClickListener {
                 onItemClickListenerForGoingtoOwner?.let { it(post) }
             }
 
-            post_comment_btn.setOnClickListener {
+            postCommentBtn.setOnClickListener {
                 onItemClickListener?.let { it(post) }
             }
 
-            setOnClickListener {
+            holder.itemView.setOnClickListener {
                 onItemClickListener?.let { it(post) }
             }
 
@@ -170,9 +165,9 @@ class AdapterPost @Inject constructor (
 
     override fun onViewDetachedFromWindow(holder: PostViewHolder) {
         super.onViewDetachedFromWindow(holder)
-        holder.itemView.apply {
-            if (post_video.visibility == View.VISIBLE && post_video.player?.isPlaying == true ){
-                post_video.player?.stop()
+        holder.binding.apply {
+            if (postVideo.visibility == View.VISIBLE && postVideo.player?.isPlaying == true ){
+                postVideo.player?.stop()
             }
 
         }
@@ -199,17 +194,17 @@ class AdapterPost @Inject constructor (
     private fun setLikes(holder1: PostViewHolder, postKey: String) {
         repository.refDatabase.child("Likes").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                holder1.itemView.apply {
+                holder1.binding.apply {
                     if (dataSnapshot.child(postKey).hasChild(myUid!!)) {
                         //user has liked for this post
-                        post_like_btn.setCompoundDrawablesWithIntrinsicBounds(
+                        postLikeBtn.setCompoundDrawablesWithIntrinsicBounds(
                             R.drawable.ic_like, 0, 0, 0)
-                        post_like_btn.text = "Liked"
+                        postLikeBtn.text = "Liked"
                     } else {
                         //user has not liked for this post
-                        post_like_btn.setCompoundDrawablesWithIntrinsicBounds(
+                        postLikeBtn.setCompoundDrawablesWithIntrinsicBounds(
                             R.drawable.ic_like_not, 0, 0, 0)
-                        post_like_btn.text = "Like"
+                        postLikeBtn.text = "Like"
                     }
                 }
 
@@ -243,15 +238,15 @@ class AdapterPost @Inject constructor (
                     .addOnSuccessListener { translatedText ->
                         // Translation successful.
                         targetLanguage = translatedText
-                        holder.itemView.apply {
-                            post_caption.text=translatedText
-                            post_language.visibility= View.VISIBLE
-                            post_language.text="translated  from $sourceLanguage ${context.getString(R.string.see_original)}"
-                            post_language.paintFlags = post_language.getPaintFlags() or Paint.UNDERLINE_TEXT_FLAG
+                        holder.binding.apply {
+                            postCaption.text=translatedText
+                            postLanguage.visibility= View.VISIBLE
+                            postLanguage.text="translated  from $sourceLanguage ${context.getString(R.string.see_original)}"
+                            postLanguage.paintFlags = postLanguage.getPaintFlags() or Paint.UNDERLINE_TEXT_FLAG
 
-                            post_language.setOnClickListener {
-                                post_caption.text=text
-                                post_language.visibility= View.GONE
+                            postLanguage.setOnClickListener {
+                                postCaption.text=text
+                                postLanguage.visibility= View.GONE
 
                             }
                         }

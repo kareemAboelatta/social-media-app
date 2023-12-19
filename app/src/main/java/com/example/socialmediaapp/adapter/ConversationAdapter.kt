@@ -11,6 +11,8 @@ import android.widget.Toast
 import androidx.core.view.updatePadding
 import androidx.recyclerview.widget.RecyclerView
 import com.example.socialmediaapp.R
+import com.example.socialmediaapp.databinding.ReceivedMsgLayoutBinding
+import com.example.socialmediaapp.databinding.SentMsgLayoutBinding
 import com.example.socialmediaapp.models.Message
 import com.example.socialmediaapp.utils.Utils
 import com.google.mlkit.common.model.DownloadConditions
@@ -18,95 +20,76 @@ import com.google.mlkit.nl.languageid.LanguageIdentification
 import com.google.mlkit.nl.translate.TranslateLanguage
 import com.google.mlkit.nl.translate.Translation
 import com.google.mlkit.nl.translate.TranslatorOptions
-import kotlinx.android.synthetic.main.activity_test.*
-import kotlinx.android.synthetic.main.received_msg_layout.view.*
-import kotlinx.android.synthetic.main.sent_msg_layout.view.*
+
 import java.util.*
 
-class ConversationAdapter( var messages: List<Message> , var context : Context) :
+class ConversationAdapter(private val messages: List<Message>, private val context: Context) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            1 -> ViewHolder1(
-                LayoutInflater.from(parent.context)
-                    .inflate(R.layout.sent_msg_layout, parent, false)
-            )
-            else -> ViewHolder2(
-                LayoutInflater.from(parent.context)
-                    .inflate(R.layout.received_msg_layout, parent, false)
-            )
+            MESSAGE_TYPE_SENT -> SentViewHolder(SentMsgLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            else -> ReceivedViewHolder(ReceivedMsgLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false))
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        var sameAsPrevious=false
-        if(position>0) sameAsPrevious=messages[position].sender== messages[position-1].sender
-        val atTheSameDay=Utils.checkConversationDate(messages,position)
-        when (holder.itemViewType) {
-            1 -> {
-                (holder as ViewHolder1).bind(messages[position],sameAsPrevious,atTheSameDay)
-            }
-            else -> {
+        val message = messages[position]
+        val sameAsPrevious = position > 0 && messages[position].sender == messages[position - 1].sender
+        val atTheSameDay = Utils.checkConversationDate(messages, position)
 
-                (holder as ViewHolder2).bind(messages[position],sameAsPrevious,atTheSameDay)
-                translateThisIntoMyLanguage(messages[position].body, holder.itemView )
-
-            }
+        when (holder) {
+            is SentViewHolder -> holder.bind(message, sameAsPrevious, atTheSameDay)
+            is ReceivedViewHolder -> holder.bind(message, sameAsPrevious, atTheSameDay)
         }
     }
 
-    override fun getItemCount()=messages.size
+    override fun getItemCount() = messages.size
 
     override fun getItemViewType(position: Int): Int {
         return Utils.getMessageType(messages[position])
     }
 
-    class ViewHolder1(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(message: Message,sameAsPrevious:Boolean,atTheSameDay:Boolean) {
+    inner class SentViewHolder(private val binding: SentMsgLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(message: Message, sameAsPrevious: Boolean, atTheSameDay: Boolean) {
+            with(binding) {
+                val padding = if (!sameAsPrevious) 10 else 4
+                val dpPadding = Utils.convertPxToDp(context, padding)
+                root.updatePadding(top = dpPadding)
 
-            if(!sameAsPrevious){     // large space between messages
-                val dp=Utils.convertPxToDp(itemView.context,10)
-                itemView.updatePadding(top = dp)
-            }else {                  // set as normal
-                val dp=Utils.convertPxToDp(itemView.context,4)
-                itemView.updatePadding(top = dp)
+                sentConversationDate.apply {
+                    text = if (!atTheSameDay) Utils.getChatTime(message.time) else ""
+                    visibility = if (!atTheSameDay) View.VISIBLE else View.GONE
+                }
+
+                sentMsgText.text = message.body
+                sentMsgTime.text = Utils.getMessageTime(message.time)
             }
-
-            if(!atTheSameDay){
-                itemView.sent_conversation_date.text=Utils.getChatTime(message.time)
-                itemView.sent_conversation_date.visibility= VISIBLE
-            }else itemView.sent_conversation_date.visibility= GONE
-
-            itemView.sent_msg_text.text=message.body
-
-            itemView.sent_msg_time.text=Utils.getMessageTime(message.time)
         }
     }
 
-    class ViewHolder2(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(message: Message,sameAsPrevious:Boolean,atTheSameDay:Boolean) {
+    inner class ReceivedViewHolder(private val binding: ReceivedMsgLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(message: Message, sameAsPrevious: Boolean, atTheSameDay: Boolean) {
+            with(binding) {
+                val padding = if (!sameAsPrevious) 10 else 4
+                val dpPadding = Utils.convertPxToDp(context, padding)
+                root.updatePadding(top = dpPadding)
 
-            if(!sameAsPrevious){   // large space between messages
-                val dp=Utils.convertPxToDp(itemView.context,10)
-                itemView.updatePadding(top = dp)
-            } else {                 // set as normal
-                val dp=Utils.convertPxToDp(itemView.context,4)
-                itemView.updatePadding(top = dp)
+                receivedConversationDate.apply {
+                    text = if (!atTheSameDay) Utils.getChatTime(message.time) else ""
+                    visibility = if (!atTheSameDay) View.VISIBLE else View.GONE
+                }
+
+                receivedMsgText.text = message.body
+                receivedMsgTime.text = Utils.getMessageTime(message.time)
             }
-
-            if(!atTheSameDay){
-                itemView.received_conversation_date.text=Utils.getChatTime(message.time)
-                itemView.received_conversation_date.visibility= VISIBLE
-            }else itemView.received_conversation_date.visibility= GONE
-
-            itemView.received_msg_text.text=message.body
-
-
-            itemView.received_msg_time.text=Utils.getMessageTime(message.time)
         }
     }
 
+    companion object {
+        private const val MESSAGE_TYPE_SENT = 1
+        private const val MESSAGE_TYPE_RECEIVED = 2
+    }
 
 
     val languageIdentifier = LanguageIdentification.getClient()
@@ -134,6 +117,8 @@ class ConversationAdapter( var messages: List<Message> , var context : Context) 
 
         return targetLanguage
     }
+
+
     fun translate(text: String,sourceLanguage:String ,myLanguage:String,itemView : View):String{
         var targetLanguage=""
 

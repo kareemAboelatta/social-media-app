@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.example.socialmediaapp.R
+import com.example.socialmediaapp.databinding.ChatLayoutBinding
+import com.example.socialmediaapp.databinding.ItemPostBinding
 import com.example.socialmediaapp.models.Chat
 import com.example.socialmediaapp.models.Post
 import com.example.socialmediaapp.models.User
@@ -20,7 +22,6 @@ import com.example.socialmediaapp.repository.Repository
 import com.example.socialmediaapp.utils.Utils
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.android.synthetic.main.chat_layout.view.*
 import java.util.ArrayList
 import javax.inject.Inject
 
@@ -47,46 +48,48 @@ class ChatsAdapter @Inject constructor (
 
     val differ = AsyncListDiffer(this, DIFF_CALLBACK)
 
-    inner class ChatsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatsViewHolder {
-        return ChatsViewHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.chat_layout, parent, false)
-        )
-    }
+    inner class ChatsViewHolder(val binding: ChatLayoutBinding) : RecyclerView.ViewHolder(binding.root)
+
+
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatsViewHolder =
+        ChatsViewHolder(ChatLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+
+
+
 
     override fun onBindViewHolder(holder: ChatsViewHolder, position: Int) {
         val chat = differ.currentList[position]
 
-        holder.itemView.apply {
-            chat_username.text = chat.userName                          // set user name
-            chat_last_message.text = chat.lastMessage                    // set chat message
+        holder.binding.apply {
+            chatUsername.text = chat.userName                          // set user name
+            chatLastMessage.text = chat.lastMessage                    // set chat message
             //---------------
             if (!chat.seen) {
-                chat_username.setTypeface(null, Typeface.BOLD)
-                chat_last_message.setTextColor(context.getColor(R.color.black))
-                chat_last_message.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14F)
-                chat_last_message.setTypeface(null, Typeface.BOLD)
+                chatUsername.setTypeface(null, Typeface.BOLD)
+                chatLastMessage.setTextColor(context.getColor(R.color.black))
+                chatLastMessage.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14F)
+                chatLastMessage.setTypeface(null, Typeface.BOLD)
             }
             //---------------
             Utils.getChatTime(chat.time).let {
                 //set chat time
-                message_time_tv.text = it
+                messageTimeTv.text = it
             }
             //---------------
             if (chat.seen) {                                   // set seen notification
-                unread_messages_notify.visibility = View.GONE
+                unreadMessagesNotify.visibility = View.GONE
             }
             //---------------
             glide.load(chat.userImageUrl)  //set user image
                 .placeholder(context?.let { it1 ->
                     AppCompatResources.getDrawable(it1, R.drawable.default_user)
                 })
-                .into(chat_user_image)
+                .into(chatUserImage)
             //---------------
 
-            setOnClickListener {
+            holder.itemView.setOnClickListener {
                 onItemClickListener?.let {
                     it(
                         User(

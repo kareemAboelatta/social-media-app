@@ -18,7 +18,6 @@ import com.google.mlkit.nl.languageid.LanguageIdentification
 import com.google.mlkit.nl.translate.TranslateLanguage
 import com.google.mlkit.nl.translate.Translation
 import com.google.mlkit.nl.translate.TranslatorOptions
-import kotlinx.android.synthetic.main.activity_test.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -34,13 +33,13 @@ class TestActivity : AppCompatActivity() {
         setContentView(R.layout.activity_test)
 
 
-        button.setOnClickListener {
+/*        button.setOnClickListener {
             val text = et_first.text.toString()
             if (title.isNotEmpty()) {
                 translateThisIntoMyLanguage(text)
 
             }
-        }
+        }*/
     }
 
 
@@ -97,7 +96,7 @@ class TestActivity : AppCompatActivity() {
             .addOnSuccessListener { translatedText ->
                 // Translation successful.
                 targetLanguage=translatedText
-                et_second.setText(translatedText + " was \n \"$sourceLanguage\" to \"$myLanguage\"")
+//                et_second.setText(translatedText + " was \n \"$sourceLanguage\" to \"$myLanguage\"")
             }
             .addOnFailureListener { exception ->
                 // Error.

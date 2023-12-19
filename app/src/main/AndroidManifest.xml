@@ -2,11 +2,24 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.socialmediaapp">
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+
+
+
+
+
 
     <application
         android:name=".MyApplication"
@@ -57,7 +70,7 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
-        <service
+<!--        <service
             android:name=".firebase.FirebaseService"
             android:exported="false"
             android:permission="com.google.android.c2dm.permission.SEND">
@@ -65,7 +78,7 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
                 <action android:name="com.google.android.c2dm.intent.RECEVIE" />
             </intent-filter>
-        </service>
+        </service>-->
 
         <meta-data
             android:name="com.google.mlkit.vision.DEPENDENCIES"

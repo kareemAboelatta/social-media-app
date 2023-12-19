@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -19,7 +20,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.StorageReference
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.android.synthetic.main.item_comment.view.*
+import com.example.socialmediaapp.databinding.ItemCommentBinding
+
 import java.util.*
 import javax.inject.Inject
 
@@ -27,8 +29,7 @@ class AdapterComment @Inject constructor (
     @ApplicationContext var context: Context,
     var repository: Repository,
     private val glide: RequestManager,
-    private var refDatabase: DatabaseReference,
-    private var refStorage: StorageReference,
+
     private var auth: FirebaseAuth
 ) : RecyclerView.Adapter<AdapterComment.CommentViewHolder>() {
 
@@ -41,7 +42,7 @@ class AdapterComment @Inject constructor (
 
 
 
-    inner class CommentViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
+    inner class CommentViewHolder(val binding: ItemCommentBinding): RecyclerView.ViewHolder(binding.root)
 
     companion object {
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Comment>() {
@@ -58,67 +59,66 @@ class AdapterComment @Inject constructor (
     val differ = AsyncListDiffer(this, DIFF_CALLBACK)
 
 
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommentViewHolder {
-     return   CommentViewHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.item_comment,
-                parent,
-                false
-            )
+        return CommentViewHolder(
+            ItemCommentBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
     }
+
+
 
     override fun onBindViewHolder(holder: CommentViewHolder, position: Int) {
         val   curComment = differ.currentList[position]
 
         val cal = Calendar.getInstance(Locale.getDefault())
-        if (curComment.timeStamp != null) {
-            cal.timeInMillis = curComment.timeStamp!!.toLong()
-        }
+        cal.timeInMillis = curComment.timeStamp.toLong()
         val commentTime = DateFormat.format("dd/MM/yyyy hh:mm aa", cal).toString()
 
 
-        holder.itemView.apply {
-            item_comment.text=curComment.comment
-            item_comment_nameTv.text=curComment.userName
-            item_comment_timeTv.text=commentTime
+        holder.binding.apply {
+
+            itemComment.text = curComment.comment
+            itemCommentNameTv.text = curComment.userName
+            itemCommentTimeTv.text = commentTime
+
+            glide.load(curComment.userImage).error(R.drawable.ic_profile).into(itemCommentAvatarTv)
 
 
-
-
-            glide.load(curComment.userImage).error(R.drawable.ic_profile).into(item_comment_avatarTv)
-
-            item_comment_long_click.setOnLongClickListener {
+            itemCommentLongClick.setOnLongClickListener {
                 if (myUserId == curComment.userId) {
-                    //my comment
-                    //show delete dialog
-                    val builder = AlertDialog.Builder(context)
-                    builder.setTitle("Delete")
-                    builder.setMessage("are you sure to delete this comment")
-                    builder.setPositiveButton("Delete") { dialog, which ->
-                        deleteComment(curComment.commentId)
-
-                    }
-                    builder.setNegativeButton(
-                        "Cancel") { dialog, which ->
-                        dialog.dismiss()
-                    }
-                    val myAlertDialog: AlertDialog = builder.create()
-                    myAlertDialog.setOnShowListener {
-                        myAlertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(resources.getColor(R.color.colorGreen));
-                        myAlertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(resources.getColor(R.color.red));
-                        myAlertDialog.getButton(AlertDialog.BUTTON_NEUTRAL).setTextColor(resources.getColor(R.color.red));
-                    }
-                    myAlertDialog.show()
+                    context.createCommentDeletionDialog { deleteComment(curComment.commentId) }.show()
                 } else {
-                    Toast.makeText(context, "Can't delete others's comments.", Toast.LENGTH_SHORT)
-                        .show()
+                    Toast.makeText(context, "Can't delete other's comments.", Toast.LENGTH_SHORT).show()
                 }
                 false
             }
+
+
         }
 
     }
+
+
+    private fun Context.createCommentDeletionDialog(onDelete: () -> Unit): AlertDialog {
+        val builder = AlertDialog.Builder(this)
+        return builder.setTitle("Delete")
+            .setMessage("are you sure to delete this comment")
+            .setPositiveButton("Delete") { _, _ -> onDelete() }
+            .setNegativeButton("Cancel", null)
+            .create().apply {
+                setOnShowListener {
+                    getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getColorCompat(R.color.red))
+                    getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(this@createCommentDeletionDialog.resources.getColor((R.color.red)))
+                }
+            }
+    }
+
+
+    private fun Context.getColorCompat(color: Int) = ContextCompat.getColor(this, color)
+
+
 
     private fun deleteComment(commentId: String?) {
         val ref = FirebaseDatabase.getInstance().getReference("Posts").child(postId)
