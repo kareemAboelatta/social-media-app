@@ -28,6 +28,8 @@ import com.example.socialmediaapp.models.User
 import androidx.core.content.FileProvider
 
 import android.os.Environment
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import com.example.socialmediaapp.databinding.ActivityPublishBinding
 import com.example.socialmediaapp.utils.Status
 import java.io.File
@@ -55,9 +57,9 @@ class PublishActivity : AppCompatActivity() {
     var videoUri: Uri? = null
 
 
-    //array of permission
-    lateinit var  cameraPermissions : Array<String>
-    lateinit var  storagePermissions : Array<String>
+    private val permissionReadMediaImages = "android.permission.READ_MEDIA_IMAGES"
+    private val permissionReadMediaVideo = "android.permission.READ_MEDIA_VIDEO"
+
 
     private val viewModel by viewModels<ViewModelMain>()
 
@@ -76,14 +78,25 @@ class PublishActivity : AppCompatActivity() {
 
 
 
+    private lateinit var imagePickerLauncher: ActivityResultLauncher<String>
+    private lateinit var videoPickerLauncher: ActivityResultLauncher<String>
+    private lateinit var cameraImageLauncher: ActivityResultLauncher<Uri>
+    private lateinit var cameraVideoLauncher: ActivityResultLauncher<Uri>
+
+
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPublishBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
 
-        cameraPermissions =arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-        storagePermissions =arrayOf( Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        setupActivityResultLaunchers()
+
+
+
 
         viewModel.getDataForCurrentUser()
         viewModel.currentUserLiveData.observe(this) {
@@ -119,17 +132,17 @@ class PublishActivity : AppCompatActivity() {
             } else if (imageUri != null && videoUri == null) {
                 //image
                 postType = "image"
-                postAttachment = "${imageUri.toString()}"
+                postAttachment = imageUri.toString()
 
-            } else if (imageUri == null && videoUri != null) {
+            } else if (imageUri == null ) {
                 //video
                 postType = "video"
-                postAttachment = "${videoUri.toString()}"
+                postAttachment = videoUri.toString()
 
             }
-            var post = Post(
+            val post = Post(
                 thisUser.id, thisUser.name, thisUser.email, thisUser.image, caption,
-                "", "" + fans, "$postType", "$postAttachment"
+                "", "" + fans, postType, postAttachment
             )
 
             viewModel.identifyLanguage(caption)
@@ -232,6 +245,58 @@ class PublishActivity : AppCompatActivity() {
         }
     }
 
+
+    private fun setupActivityResultLaunchers() {
+        // For picking image from gallery
+        imagePickerLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            uri?.let {
+                imageUri = it
+                binding.publishImage.visibility = View.VISIBLE
+                binding.publishImage.setImageURI(imageUri)
+                // Reset video URI if an image is picked
+                videoUri = null
+                binding.publishVideo.visibility = View.GONE
+            }
+        }
+
+        // For picking video from gallery
+        videoPickerLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            uri?.let {
+                videoUri = it
+                binding.publishVideo.visibility = View.VISIBLE
+                setVideoToVideoView()
+                // Reset image URI if a video is picked
+                imageUri = null
+                binding.publishImage.visibility = View.GONE
+            }
+        }
+
+        // For capturing image from camera
+        cameraImageLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()) { success: Boolean ->
+            if (success) {
+                binding.publishImage.visibility = View.VISIBLE
+                binding.publishImage.setImageURI(imageUri)
+                // Reset video URI if an image is captured
+                videoUri = null
+                binding.publishVideo.visibility = View.GONE
+            }
+        }
+
+        // For capturing video from camera
+        cameraVideoLauncher = registerForActivityResult(ActivityResultContracts.CaptureVideo()) { success: Boolean ->
+            if (success) {
+                binding.publishVideo.visibility = View.VISIBLE
+                setVideoToVideoView()
+                // Reset image URI if a video is captured
+                imageUri = null
+                binding.publishImage.visibility = View.GONE
+            }
+        }
+    }
+
+
+
+
     private fun imagePickDialog() {
         val options = arrayOf("Camera", "Gallery")
         //dialog
@@ -244,18 +309,14 @@ class PublishActivity : AppCompatActivity() {
             builder.setItems(options) { dialog, which ->
                 if (which == 0) {
                     //camera clicked
-                    if (!checkCameraPermission()) {
-                        requestCameraPermission()
-                    } else {
+
                         imagePickCamera()
-                    }
+
                 } else if (which == 1) {
                     // gallery clicked
-                    if (!checkStoragePermission()) {
-                        requestStoragePermission()
-                    }else{
-                        imagePickGallery()
-                    }
+
+                    imagePickGallery()
+
                 }
 
         }
@@ -278,18 +339,13 @@ class PublishActivity : AppCompatActivity() {
         builder.setItems(options) { dialog, which ->
             if (which == 0) {
                 //camera clicked
-                if (!checkCameraPermission()) {
-                    requestCameraPermission()
-                } else {
+
                     videoPickCamera()
-                }
+
             } else if (which == 1) {
                 // gallery clicked
-                if (!checkStoragePermission()) {
-                    requestStoragePermission()
-                } else {
                     videoPickGallery()
-                }
+
             }
         }
 
@@ -298,55 +354,51 @@ class PublishActivity : AppCompatActivity() {
         builder.create().show()
     }
 
-    private fun videoPickGallery() {
-        //pick from camera _ intent
-        val intent = Intent()
-        intent.type = "video/*"
-        intent.action = Intent.ACTION_GET_CONTENT
-        startActivityForResult(
-            Intent.createChooser(intent, "Select Videos"),
-            VIDEO_PICK_GALLERY_CODE
-        )
-    }
-    private  fun videoPickCamera() {
-        //pick from camera _ intent
-        val intent = Intent(MediaStore.ACTION_VIDEO_CAPTURE)
-        startActivityForResult(intent, VIDEO_PICK_CAMERA_CODE)
-    }
-    private fun imagePickGallery() {
-        //pick from gallery _ intent
-        val intent = Intent()
-        intent.type = "image/*"
-        intent.action = Intent.ACTION_GET_CONTENT
-        startActivityForResult(intent,IMAGE_PICK_GALLERY_CODE)
-    }
-    private  fun imagePickCamera() {
-        //pick from camera _ intent
-        /*val cameraintent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
-        startActivityForResult(cameraintent, IMAGE_PICK_CAMERA_CODE)*/
 
-        val m_intent = Intent(ACTION_IMAGE_CAPTURE)
-        val file = File(Environment.getExternalStorageDirectory(), "MyPhoto.jpg")
-        val uri = FileProvider.getUriForFile(this, this.applicationContext.packageName + ".provider", file)
-        m_intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
-        startActivityForResult(m_intent, IMAGE_PICK_CAMERA_CODE)
+    private fun imagePickCamera() {
+        val photoUri: Uri = createImageUri()
+        imageUri = photoUri
+        cameraImageLauncher.launch(photoUri)
     }
-    private  fun requestCameraPermission() {
-        //check if camera permission is enabled or not
-        ActivityCompat.requestPermissions(
-            this,
-            cameraPermissions,
-            CAMERA_REQUEST_CODE
-        )
+
+    private fun videoPickCamera() {
+        val videoUri: Uri = createVideoUri()
+        this.videoUri = videoUri
+        cameraVideoLauncher.launch(videoUri)
     }
-    private  fun requestStoragePermission() {
-        //check if camera permission is enabled or not
-        ActivityCompat.requestPermissions(
-            this,
-            storagePermissions,
-            STORAGE_REQUEST_CODE
-        )
+
+
+    private fun imagePickGallery() {
+        imagePickerLauncher.launch("image/*")
     }
+
+    private fun videoPickGallery() {
+        videoPickerLauncher.launch("video/*")
+    }
+
+    private fun createImageUri(): Uri {
+        // Ensure the directory for storing the image exists
+        val imagesFolder = File(getExternalFilesDir(null), "images")
+        if (!imagesFolder.exists()) imagesFolder.mkdirs()
+
+        // Create a file for the image
+        val file = File(imagesFolder, "post_image_${System.currentTimeMillis()}.jpg")
+        return FileProvider.getUriForFile(this, "${applicationContext.packageName}.provider", file)
+    }
+
+
+    private fun createVideoUri(): Uri {
+        // Ensure the directory for storing the video exists
+        val videosFolder = File(getExternalFilesDir(null), "videos")
+        if (!videosFolder.exists()) videosFolder.mkdirs()
+
+        // Create a file for the video
+        val file = File(videosFolder, "post_video_${System.currentTimeMillis()}.mp4")
+        return FileProvider.getUriForFile(this, "${applicationContext.packageName}.provider", file)
+    }
+
+
+
     private fun checkCameraPermission(): Boolean {
         //check if camera permission is enabled or not
         val result = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
@@ -356,8 +408,10 @@ class PublishActivity : AppCompatActivity() {
 
     private fun checkStoragePermission(): Boolean {
         //check if camera permission is enabled or not
-        val result = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
-        return result
+        return ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        ) == PackageManager.PERMISSION_GRANTED
     }
 
     override fun onRequestPermissionsResult(

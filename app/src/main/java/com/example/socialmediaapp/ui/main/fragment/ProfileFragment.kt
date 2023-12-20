@@ -13,6 +13,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -29,23 +31,22 @@ import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 
 
-
 import com.example.socialmediaapp.databinding.FragmentProfileBinding
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
-
-
 
 
 import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class ProfileFragment  : Fragment() {
+class ProfileFragment : Fragment() {
 
     @Inject
     lateinit var auth: FirebaseAuth
+
     @Inject
     lateinit var glide: RequestManager
+
     @Inject
     lateinit var adapterPosts: AdapterPost
 
@@ -54,11 +55,11 @@ class ProfileFragment  : Fragment() {
     var uriImageCover: Uri? = null
 
     lateinit var prog: ProgressDialog
-    lateinit var postList : ArrayList<Post>
+    lateinit var postList: ArrayList<Post>
 
+    private lateinit var profileImageLauncher: ActivityResultLauncher<String>
+    private lateinit var coverImageLauncher: ActivityResultLauncher<String>
 
-    private val IMAGE_REQUEST=0
-    private val Cover_REQUEST=1
 
     private val viewModel by viewModels<ViewModelMain>()
 
@@ -74,9 +75,36 @@ class ProfileFragment  : Fragment() {
         postList = ArrayList()
         prog = ProgressDialog(activity)
         prog.setMessage("Wait a minute...")
+
+
+        profileImageLauncher =
+            registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+                uri?.let {
+                    uriImage = it
+                    viewModel.changePhotoOrCover(it, "images", "image")
+                    prog.show()
+                    observeChangePhotoOrCover()
+                }
+            }
+
+        coverImageLauncher =
+            registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+                uri?.let {
+                    uriImageCover = it
+                    viewModel.changePhotoOrCover(it, "covers", "cover")
+                    prog.show()
+                    observeChangePhotoOrCover()
+                }
+            }
+
+
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -95,13 +123,14 @@ class ProfileFragment  : Fragment() {
             showAlertDialogForChangePhotos("cover")
         }
         binding.profBtnEditPen.setOnClickListener {
-            var popupMenu= PopupMenu(activity, binding.profBtnEditPen)
+            var popupMenu = PopupMenu(activity, binding.profBtnEditPen)
             popupMenu.menuInflater.inflate(R.menu.pop_menu, popupMenu.menu)
             popupMenu.menu.removeItem(R.id.logout)
             popupMenu.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     R.id.change_name ->
                         showUpdateNameBioDialog("name")
+
                     R.id.change_bio ->
                         showUpdateNameBioDialog("bio")
                 }
@@ -110,15 +139,17 @@ class ProfileFragment  : Fragment() {
             popupMenu.show()
         }
         binding.profBtnSetting.setOnClickListener {
-            var popupMenu= PopupMenu(activity, binding.profBtnSetting)
+            var popupMenu = PopupMenu(activity, binding.profBtnSetting)
             popupMenu.menuInflater.inflate(R.menu.pop_menu, popupMenu.menu)
 
             popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
                 when (item.itemId) {
                     R.id.change_name ->
                         showUpdateNameBioDialog("name")
+
                     R.id.change_bio ->
                         showUpdateNameBioDialog("bio")
+
                     R.id.logout -> {
                         auth.signOut()
                         startActivity(Intent(activity, LoginAndSignUpActivity::class.java))
@@ -140,11 +171,13 @@ class ProfileFragment  : Fragment() {
                 Status.LOADING -> {
                     binding.profProgressBar.visibility = View.VISIBLE
                 }
+
                 Status.SUCCESS -> {
                     binding.profProgressBar.visibility = View.GONE
                     postList = it.data as ArrayList<Post>
                     adapterPosts.setList(postList)
                 }
+
                 Status.ERROR -> {
                     binding.profProgressBar.visibility = View.GONE
                     Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
@@ -165,11 +198,12 @@ class ProfileFragment  : Fragment() {
 
                     name = user?.name
                     bio = user?.bio
-                    glide.load(user?.image).error(R.drawable.ic_profile).into( binding.profImageProfile)
+                    glide.load(user?.image).error(R.drawable.ic_profile)
+                        .into(binding.profImageProfile)
 
 
                     glide.load(user?.cover).error(R.drawable.ic_image_default)
-                        .into( binding.profImageCover)
+                        .into(binding.profImageCover)
                     binding.profImageCover.scaleType = ImageView.ScaleType.CENTER_CROP
 
                     prog.dismiss()
@@ -184,17 +218,17 @@ class ProfileFragment  : Fragment() {
             }
 
 
-
         }
 
 
-        viewModel.changePhotoOrCoverLiveData.observe(viewLifecycleOwner){
-            when(it.status){
-                Status.SUCCESS->{
+        viewModel.changePhotoOrCoverLiveData.observe(viewLifecycleOwner) {
+            when (it.status) {
+                Status.SUCCESS -> {
                     prog.dismiss()
                     Toast.makeText(activity, "Photo changed", Toast.LENGTH_SHORT).show()
                 }
-                Status.ERROR->{
+
+                Status.ERROR -> {
                     prog.dismiss()
                     Toast.makeText(activity, "${it.message}", Toast.LENGTH_SHORT).show()
                 }
@@ -203,19 +237,19 @@ class ProfileFragment  : Fragment() {
             }
         }
 
-        }
+    }
 
-    fun recyclerViewSetUp(){
+    fun recyclerViewSetUp() {
         //put linearLayout in recycle
         val linearLayout = LinearLayoutManager(activity)
         linearLayout.stackFromEnd = true
         linearLayout.reverseLayout = true
-        binding.profRec.layoutManager=linearLayout
+        binding.profRec.layoutManager = linearLayout
         adapterPosts.setList(postList)
-        binding.profRec.adapter=adapterPosts
+        binding.profRec.adapter = adapterPosts
     }
 
-    private fun showUpdateNameBioDialog(key: String){
+    private fun showUpdateNameBioDialog(key: String) {
         val builder = AlertDialog.Builder(activity)
         builder.setTitle("Update $key")
         builder.setCancelable(false)
@@ -225,10 +259,10 @@ class ProfileFragment  : Fragment() {
 
 
         val editText = EditText(activity)
-        if (key == "name"){
-            editText.hint = ""+name
-        }else if(key == "bio"){
-            editText.hint=""+bio
+        if (key == "name") {
+            editText.hint = "" + name
+        } else if (key == "bio") {
+            editText.hint = "" + bio
         }
         editText.setHintTextColor(resources.getColor(R.color.colorGray))
         linearLayout.addView(editText)
@@ -236,20 +270,21 @@ class ProfileFragment  : Fragment() {
 
 
         builder.setPositiveButton("Update") { _, _ ->
-            val value=editText.text.toString()
-            if (value.isEmpty()){
+            val value = editText.text.toString()
+            if (value.isEmpty()) {
                 Toast.makeText(activity, "Where's Your new $key", Toast.LENGTH_SHORT).show()
-            }else{
+            } else {
                 //update key
-                viewModel.changeNameOrBio(value,key)
+                viewModel.changeNameOrBio(value, key)
                 prog.show()
-                viewModel.changeNameOrBioLiveData.observe(viewLifecycleOwner){
-                    when(it.status){
-                        Status.SUCCESS->{
+                viewModel.changeNameOrBioLiveData.observe(viewLifecycleOwner) {
+                    when (it.status) {
+                        Status.SUCCESS -> {
                             prog.dismiss()
                             Toast.makeText(activity, "$key changed", Toast.LENGTH_SHORT).show()
                         }
-                        Status.ERROR->{
+
+                        Status.ERROR -> {
                             prog.dismiss()
                             Toast.makeText(activity, "${it.message}", Toast.LENGTH_SHORT).show()
                         }
@@ -269,14 +304,18 @@ class ProfileFragment  : Fragment() {
 
         val myAlertDialog: AlertDialog = builder.create()
         myAlertDialog.setOnShowListener {
-            myAlertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(resources.getColor(R.color.colorGreen));
-            myAlertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(resources.getColor(R.color.red));
-            myAlertDialog.getButton(AlertDialog.BUTTON_NEUTRAL).setTextColor(resources.getColor(R.color.red));
+            myAlertDialog.getButton(AlertDialog.BUTTON_POSITIVE)
+                .setTextColor(resources.getColor(R.color.colorGreen));
+            myAlertDialog.getButton(AlertDialog.BUTTON_NEGATIVE)
+                .setTextColor(resources.getColor(R.color.red));
+            myAlertDialog.getButton(AlertDialog.BUTTON_NEUTRAL)
+                .setTextColor(resources.getColor(R.color.red));
         }
         myAlertDialog.show()
 
     }
-    private fun showAlertDialogForChangePhotos(type: String){
+
+    private fun showAlertDialogForChangePhotos(type: String) {
         val alertDialog: AlertDialog.Builder = AlertDialog.Builder(activity)
         // Setting Alert Dialog Title
         alertDialog.setTitle("Are you sure,You want change $type photo?")
@@ -284,67 +323,66 @@ class ProfileFragment  : Fragment() {
         alertDialog.setIcon(R.drawable.ic_warning)
         alertDialog.setCancelable(false)
 
-        if (type == "profile"){
+        if (type == "profile") {
             alertDialog.setPositiveButton("Yes") { dialogInterface, which ->
 
 
-                if (!hasReadExternalStoragePermission())
-                    requestPermission()
-                else
-                    changeProfilePhoto()
+                changeProfilePhoto()
 
 
             }
-            alertDialog.setNegativeButton("Close") {dialogInterface, which ->  }
-        }else{
+            alertDialog.setNegativeButton("Close") { dialogInterface, which -> }
+        } else {
             alertDialog.setPositiveButton("Yes") { dialogInterface, which ->
-                if (!hasReadExternalStoragePermission())
-                    requestPermission()
-                else
-                    changeCoverPhoto()
+
+                changeCoverPhoto()
 
             }
-            alertDialog.setNegativeButton("Close") {dialogInterface, which ->}
+            alertDialog.setNegativeButton("Close") { dialogInterface, which -> }
 
         }
-        alertDialog.setNeutralButton("Cancel"){ dialogInterface, which -> }
+        alertDialog.setNeutralButton("Cancel") { dialogInterface, which -> }
 
 
         val myAlertDialog: AlertDialog = alertDialog.create()
         myAlertDialog.setOnShowListener {
-            myAlertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(resources.getColor(R.color.colorGreen));
-            myAlertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(resources.getColor(R.color.red));
-            myAlertDialog.getButton(AlertDialog.BUTTON_NEUTRAL).setTextColor(resources.getColor(R.color.red));
+            myAlertDialog.getButton(AlertDialog.BUTTON_POSITIVE)
+                .setTextColor(resources.getColor(R.color.colorGreen));
+            myAlertDialog.getButton(AlertDialog.BUTTON_NEGATIVE)
+                .setTextColor(resources.getColor(R.color.red));
+            myAlertDialog.getButton(AlertDialog.BUTTON_NEUTRAL)
+                .setTextColor(resources.getColor(R.color.red));
         }
         myAlertDialog.show()
     }
+
     private fun changeProfilePhoto() {
-        Intent(Intent.ACTION_GET_CONTENT).also {
-            it.type="image/*"
-            startActivityForResult(it, IMAGE_REQUEST)
-        }
+        profileImageLauncher.launch("image/*")
     }
+
+
     private fun changeCoverPhoto() {
-        Intent(Intent.ACTION_GET_CONTENT).also {
-            it.type="image/*"
-            this.startActivityForResult(it, Cover_REQUEST)
-        }
+        coverImageLauncher.launch("image/*")
     }
-    private fun hasReadExternalStoragePermission()= activity?.let {
-        ActivityCompat.checkSelfPermission(it, Manifest.permission.READ_EXTERNAL_STORAGE)} == PackageManager.PERMISSION_GRANTED
+
+    private fun hasReadExternalStoragePermission() = activity?.let {
+        ActivityCompat.checkSelfPermission(it, Manifest.permission.READ_EXTERNAL_STORAGE)
+    } == PackageManager.PERMISSION_GRANTED
 
 
-    private fun requestPermission(){
-        var permissionsToRequest= mutableListOf<String>()
-        if (!hasReadExternalStoragePermission()){
+    private fun requestPermission() {
+        var permissionsToRequest = mutableListOf<String>()
+        if (!hasReadExternalStoragePermission()) {
             permissionsToRequest.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
         }
-        if (permissionsToRequest.isNotEmpty()){
-            activity?.let { ActivityCompat.requestPermissions(
-                it,
-                permissionsToRequest.toTypedArray(),
-                0
-            ) }
+        if (permissionsToRequest.isNotEmpty()) {
+            activity?.let {
+                ActivityCompat.requestPermissions(
+                    it,
+                    permissionsToRequest.toTypedArray(),
+                    0
+                )
+            }
         }
 
     }
@@ -355,9 +393,9 @@ class ProfileFragment  : Fragment() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode==0  && grantResults.isNotEmpty()){
-            for (i in grantResults.indices){
-                if(grantResults[i] == PackageManager.PERMISSION_GRANTED){
+        if (requestCode == 0 && grantResults.isNotEmpty()) {
+            for (i in grantResults.indices) {
+                if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
                     Log.d("PermissionRequest", "${permissions[i]} granted.")
                 }
             }
@@ -366,43 +404,15 @@ class ProfileFragment  : Fragment() {
     }
 
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        //profile
-        if (resultCode== Activity.RESULT_OK && requestCode == IMAGE_REQUEST){
-            uriImage=data?.data
-
-            uriImage?.let {
-                viewModel.changePhotoOrCover(it,"images","image")
-                prog.show()
-                observeChangePhotoOrCover()
-            }
-        }
-
-
-        //cover
-        if (resultCode== Activity.RESULT_OK && requestCode == Cover_REQUEST){
-            uriImageCover=data?.data
-            uriImageCover?.let {
-                viewModel.changePhotoOrCover(it,"covers","cover")
-                prog.show()
-                observeChangePhotoOrCover()
-            }
-        }
-    }
-
-
-
-
-
-    private fun observeChangePhotoOrCover(){
-        viewModel.changePhotoOrCoverLiveData.observe(viewLifecycleOwner){
-            when(it.status){
-                Status.SUCCESS->{
+    private fun observeChangePhotoOrCover() {
+        viewModel.changePhotoOrCoverLiveData.observe(viewLifecycleOwner) {
+            when (it.status) {
+                Status.SUCCESS -> {
                     prog.dismiss()
                     Toast.makeText(activity, "Photo changed", Toast.LENGTH_SHORT).show()
                 }
-                Status.ERROR->{
+
+                Status.ERROR -> {
                     prog.dismiss()
                     Toast.makeText(activity, "${it.message}", Toast.LENGTH_SHORT).show()
                 }
@@ -411,8 +421,6 @@ class ProfileFragment  : Fragment() {
             }
         }
     }
-
-
 
 
 }

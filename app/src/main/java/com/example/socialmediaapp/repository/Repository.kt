@@ -126,32 +126,35 @@ class Repository @Inject constructor(
     }
 
      suspend fun setLike(post: Post){
+
+
         var postLikes: Int = post.postLikes
         var mProcessLike = true
         //get id of the post clicked
         val postId: String = post.postId
-        val myId= auth.currentUser?.uid
-        refDatabase.child(Constants.LIKES).addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                if (mProcessLike) { //already liked ,so remove  like
-                    mProcessLike = if (dataSnapshot.child(postId).hasChild(myId!!)) {
 
-                        refDatabase.child(Constants.POSTS).child(postId).child(Constants.POSTLIKES)
-                            .setValue(( -- postLikes))
-                        refDatabase.child(Constants.LIKES).child(postId).child(myId).removeValue()
-                        false
-                    } else { //not liked , liked it
-                        refDatabase.child(Constants.POSTS).child(postId).child(Constants.POSTLIKES)
-                            .setValue(( ++ postLikes ))
-                        refDatabase.child(Constants.LIKES).child(postId).child(myId).setValue("Liked")
-                        false
-                    }
-                }
-            }
-            override fun onCancelled(databaseError: DatabaseError) {
-                Toast.makeText(context, "error from likeRepo"+databaseError.message, Toast.LENGTH_SHORT).show()
-            }
-        })
+         if (postId.isNotEmpty()){
+             val myId= auth.currentUser?.uid
+             refDatabase.child(Constants.LIKES).addValueEventListener(object : ValueEventListener {
+                 override fun onDataChange(dataSnapshot: DataSnapshot) {
+                     if (mProcessLike) { //already liked ,so remove  like
+                         mProcessLike = if (dataSnapshot.child(postId).hasChild(myId!!)) {
+
+                             refDatabase.child(Constants.POSTS).child(postId).child(Constants.POSTLIKES).setValue(( -- postLikes))
+                             refDatabase.child(Constants.LIKES).child(postId).child(myId).removeValue()
+                             false
+                         } else { //not liked , liked it
+                             refDatabase.child(Constants.POSTS).child(postId).child(Constants.POSTLIKES).setValue(( ++ postLikes ))
+                             refDatabase.child(Constants.LIKES).child(postId).child(myId).setValue("Liked")
+                             false
+                         }
+                     }
+                 }
+                 override fun onCancelled(databaseError: DatabaseError) {
+                     Toast.makeText(context, "Error from likeRepo"+databaseError.message, Toast.LENGTH_SHORT).show()
+                 }
+             })
+         }
 
     }
 
@@ -274,7 +277,6 @@ class Repository @Inject constructor(
         return videoOnlyLiveData
     }
 
-    private  val TAG = "Repository"
     private val postsLiveData=MutableLiveData<Resource<List<Post>>>()
     suspend   fun getPosts(): MutableLiveData<Resource<List<Post>>> {
         postsLiveData.value = Resource.loading(null)
@@ -286,7 +288,6 @@ class Repository @Inject constructor(
                     override fun onDataChange(snapshot: DataSnapshot) {
                         postList.clear()
                         snapshot.children.forEach { child ->
-                            Log.d(TAG, "onDataChange: === ${child.value} ")
                             val post = child.getValue<Post>()
                             postList.add(post!!)
                         }

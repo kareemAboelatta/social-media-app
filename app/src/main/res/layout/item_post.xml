@@ -27,14 +27,16 @@
             android:elevation="@dimen/_2sdp"
             android:layout_margin="@dimen/_2sdp"
             >
+
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/post_userPicture"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_profile"
-                android:layout_width="55dp"
-                android:layout_height="55dp"
-                android:layout_margin="@dimen/_5sdp"
-                ></de.hdodenhof.circleimageview.CircleImageView>
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                app:civ_border_color="@color/colorBlue"
+                app:civ_border_width="@dimen/_2sdp"
+                android:layout_margin="@dimen/_5sdp" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -57,7 +59,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="@dimen/_20sdp"
-                    android:paddingVertical="@dimen/_4sdp"
+                    android:paddingVertical="@dimen/_2sdp"
                     android:background="@drawable/custom_shape">
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -78,7 +80,7 @@
                             android:layout_height="wrap_content"
                             android:text="anyone"
                             android:textColor="@color/black"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
 
 
@@ -191,19 +193,20 @@
             android:orientation="horizontal"
             android:gravity="center"
             >
+
             <Button
                 android:id="@+id/post_like_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Like"
+                android:textAllCaps="false"
                 android:drawableStart="@drawable/ic_like_not"
                 android:layout_margin="@dimen/_5sdp"
                 android:background="@color/trans"
                 android:textColor="@color/colorPrimary"
                 android:drawableTint="@color/colorPrimary"
-                android:backgroundTint="@color/colorPrimary"
-                ></Button>
+                android:backgroundTint="@color/colorPrimary" />
 
 
             <Button
@@ -212,6 +215,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Comment"
+                android:textAllCaps="false"
+
                 android:background="@color/trans"
                 android:drawableStart="@drawable/ic_comment"
                 android:drawableTint="@color/colorPrimary"
@@ -219,7 +224,7 @@
                 android:textColor="@color/colorPrimary"
                 android:backgroundTint="@color/colorPrimary"
 
-                ></Button>
+                />
 
 
             <Button
@@ -228,6 +233,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Read"
+                android:textAllCaps="false"
                 app:icon="@drawable/ic_read"
                 android:background="@color/trans"
                 android:drawableTint="@color/colorPrimary"

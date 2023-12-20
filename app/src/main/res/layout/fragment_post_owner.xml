@@ -49,7 +49,7 @@
                         android:layout_height="@dimen/_138sdp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.498"
-                        android:src="@drawable/kareem_cover"
+                        android:src="@drawable/messi_cover"
                         android:scaleType="centerCrop"
                         app:civ_border_color="@color/colorPrimary"
                         app:civ_border_width="@dimen/_2sdp"

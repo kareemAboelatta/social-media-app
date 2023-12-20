@@ -27,9 +27,9 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/profile_user_image"
                 android:layout_width="55dp"
-                android:layout_height="50dp"
+                android:layout_height="55dp"
                 android:layout_gravity="center_vertical"
-                app:cardCornerRadius="40dp">
+                app:cardCornerRadius="45dp">
 
 
 
@@ -50,8 +50,9 @@
             android:layout_gravity="center_vertical"
             android:layout_marginStart="12dp"
             android:text="Kareem Abo elatta"
+            android:ellipsize="marquee"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
     </LinearLayout>
 </androidx.appcompat.widget.Toolbar>

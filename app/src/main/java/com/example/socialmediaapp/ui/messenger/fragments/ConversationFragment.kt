@@ -1,6 +1,7 @@
 package com.example.socialmediaapp.ui.messenger.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -48,20 +49,31 @@ class ConversationFragment: Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        user = args.user
+
+        Log.d(TAG, "onViewCreated: args.user=== ${user} ")
+
+
+
         activity?.findViewById<View>(R.id.bottom_navigation)?.visibility = View.GONE
         setHasOptionsMenu(true)
     }
 
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentConversationBinding.inflate(inflater, container, false)
-        bindingToolbarBinding = ConversationToolbarBinding.bind(_binding!!.root)
+        bindingToolbarBinding = _binding!!.appBar
         return binding.root
     }
 
+    private  val TAG = "ConversationFragment"
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        user = args.user
+
         binding.messageEdittext.requestFocus()
+
 
         setupUI()
         setupRecycler()
@@ -91,6 +103,8 @@ class ConversationFragment: Fragment() {
                 Status.SUCCESS -> {
                     adapter.messages = it.data!!
                     binding.conversationRv.scrollToPosition(adapter.itemCount - 1)
+
+
                 }
                 Status.ERROR -> Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
                 else -> {}
@@ -123,9 +137,6 @@ class ConversationFragment: Fragment() {
         }
 
     }
-
-
-
 
 
 

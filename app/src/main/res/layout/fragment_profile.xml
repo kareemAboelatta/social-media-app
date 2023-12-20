@@ -32,7 +32,8 @@
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_camera"
                 android:text=" Cover "
-                android:background="@color/colorGray"
+                android:textAllCaps="false"
+                app:cornerRadius="@dimen/_25sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_margin="@dimen/_5sdp"/>
@@ -69,7 +70,7 @@
                         android:layout_height="@dimen/_138sdp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.498"
-                        android:src="@drawable/kareem_cover"
+                        android:src="@drawable/messi_cover"
                         android:scaleType="centerCrop"
                         app:civ_border_color="@color/colorPrimary"
                         app:civ_border_width="@dimen/_2sdp"

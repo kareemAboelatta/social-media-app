@@ -63,7 +63,6 @@ class PostDetailsFragment :  Fragment() {
     @Inject
     lateinit var mycontext: Context
 
-    @Inject
     lateinit var commentAdapter: AdapterComment
 
 
@@ -101,6 +100,40 @@ class PostDetailsFragment :  Fragment() {
     }
 
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        commentAdapter = AdapterComment(
+            requireContext(),
+            glide = glide,
+            myUserId = auth.currentUser?.uid ?: "",
+            onDelete = ::deleteComment
+
+        )
+        commentAdapter.context = requireContext() // we need context of activity to we can show dialog.
+    }
+
+
+    private fun deleteComment(comment: Comment) {
+        val ref = FirebaseDatabase.getInstance().getReference("Posts").child(postId)
+        ref.child("Comments").child(comment.commentId).removeValue() // it will delete the comment
+
+        //now update the comment count
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val comments = "" + dataSnapshot.child("postComments").value
+                val newCommentVal = comments.toInt() - 1
+                ref.child("postComments").setValue(newCommentVal)
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {}
+        })
+
+
+        binding.detPostCommentTV.text= (binding.detPostCommentTV.text.toString().toInt()-1).toString()
+
+        Toast.makeText(context, "Comment deleted..", Toast.LENGTH_SHORT).show()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -240,17 +273,21 @@ class PostDetailsFragment :  Fragment() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
                 if (imVisiable) {
-                    if (dataSnapshot.child(postId!!).hasChild(auth.currentUser?.uid!!)) {
+                    if (dataSnapshot.child(postId).hasChild(auth.currentUser?.uid!!)) {
                         //user has liked for this post
                        binding.detPostLikeBtn.setCompoundDrawablesWithIntrinsicBounds(
                             R.drawable.ic_like, 0, 0, 0
                         )
                         binding.detPostLikeBtn.setText("Liked")
+                        binding.detPostLikesTV.text=""+(binding.detPostLikesTV.text.toString().toInt()+1)
+
                     } else {
                         //user has not liked for this post
                         binding.detPostLikeBtn.setCompoundDrawablesWithIntrinsicBounds(
                             R.drawable.ic_like_not, 0, 0, 0
                         )
+                        binding.detPostLikesTV.text=""+(binding.detPostLikesTV.text.toString().toInt()-1)
+
                         binding.detPostLikeBtn.setText("Like")
                     }
                 }

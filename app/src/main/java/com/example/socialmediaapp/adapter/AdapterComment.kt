@@ -25,20 +25,16 @@ import com.example.socialmediaapp.databinding.ItemCommentBinding
 import java.util.*
 import javax.inject.Inject
 
-class AdapterComment @Inject constructor (
-    @ApplicationContext var context: Context,
-    var repository: Repository,
+class AdapterComment  (
+    var context: Context,
+    var onDelete: (comment: Comment) -> Unit,
+    private var myUserId: String,
     private val glide: RequestManager,
 
-    private var auth: FirebaseAuth
-) : RecyclerView.Adapter<AdapterComment.CommentViewHolder>() {
 
-    var myUserId =auth.currentUser?.uid
+    ) : RecyclerView.Adapter<AdapterComment.CommentViewHolder>() {
 
     var postId :String =""
-
-
-
 
 
 
@@ -88,7 +84,7 @@ class AdapterComment @Inject constructor (
 
             itemCommentLongClick.setOnLongClickListener {
                 if (myUserId == curComment.userId) {
-                    context.createCommentDeletionDialog { deleteComment(curComment.commentId) }.show()
+                    context.createCommentDeletionDialog {onDelete(curComment) }.show()
                 } else {
                     Toast.makeText(context, "Can't delete other's comments.", Toast.LENGTH_SHORT).show()
                 }
@@ -109,8 +105,8 @@ class AdapterComment @Inject constructor (
             .setNegativeButton("Cancel", null)
             .create().apply {
                 setOnShowListener {
-                    getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getColorCompat(R.color.red))
-                    getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(this@createCommentDeletionDialog.resources.getColor((R.color.red)))
+                    getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(this@createCommentDeletionDialog.getColorCompat(R.color.red))
+                    getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(this@createCommentDeletionDialog.getColorCompat(R.color.colorGreen))
                 }
             }
     }
@@ -119,10 +115,9 @@ class AdapterComment @Inject constructor (
     private fun Context.getColorCompat(color: Int) = ContextCompat.getColor(this, color)
 
 
-
-    private fun deleteComment(commentId: String?) {
+/*    private fun deleteComment(commentId: String) {
         val ref = FirebaseDatabase.getInstance().getReference("Posts").child(postId)
-        ref.child("Comments").child(commentId!!).removeValue() // it will delete the comment
+        ref.child("Comments").child(commentId).removeValue() // it will delete the comment
 
         //now update the comment count
         ref.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -135,8 +130,7 @@ class AdapterComment @Inject constructor (
             override fun onCancelled(databaseError: DatabaseError) {}
         })
         Toast.makeText(context, "Comment deleted..", Toast.LENGTH_SHORT).show()
-
-    }
+    }*/
 
     override fun getItemCount(): Int {
         return differ.currentList.size
