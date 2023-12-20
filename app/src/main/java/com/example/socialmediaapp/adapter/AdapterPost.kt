@@ -79,7 +79,7 @@ class AdapterPost @Inject constructor (
             //post data
             //get time from timestamp
             val cal = Calendar.getInstance(Locale.getDefault())
-            cal.timeInMillis = post.postTime.toLong()
+            cal.timeInMillis = if(post.postTime.isNotEmpty())  post.postTime.toLong() else 0
 
             val time = DateFormat.format("dd/MM/yyyy hh:mm aa", cal).toString()
             postTimeIv.text=time

@@ -3,6 +3,7 @@ package com.example.socialmediaapp.repository
 import android.content.Context
 import android.graphics.Paint
 import android.net.Uri
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
@@ -13,9 +14,16 @@ import com.example.socialmediaapp.models.User
 import com.example.socialmediaapp.utils.Constants
 import com.example.socialmediaapp.utils.Resource
 
+
+
+
+
+import com.google.firebase.auth.auth
+import com.google.firebase.database.*
+
+
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import com.google.firebase.database.ktx.getValue
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.StorageReference
 import com.google.mlkit.nl.languageid.LanguageIdentification
@@ -122,20 +130,20 @@ class Repository @Inject constructor(
         var mProcessLike = true
         //get id of the post clicked
         val postId: String = post.postId
-        var myId= auth.currentUser?.uid
+        val myId= auth.currentUser?.uid
         refDatabase.child(Constants.LIKES).addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (mProcessLike) { //already liked ,so remove  like
-                    mProcessLike = if (dataSnapshot.child(postId!!).hasChild(myId!!)) {
+                    mProcessLike = if (dataSnapshot.child(postId).hasChild(myId!!)) {
 
                         refDatabase.child(Constants.POSTS).child(postId).child(Constants.POSTLIKES)
                             .setValue(( -- postLikes))
-                        refDatabase.child(Constants.LIKES).child(postId).child(myId!!).removeValue()
+                        refDatabase.child(Constants.LIKES).child(postId).child(myId).removeValue()
                         false
                     } else { //not liked , liked it
-                        refDatabase.child(Constants.POSTS).child(postId!!).child(Constants.POSTLIKES)
+                        refDatabase.child(Constants.POSTS).child(postId).child(Constants.POSTLIKES)
                             .setValue(( ++ postLikes ))
-                        refDatabase.child(Constants.LIKES).child(postId).child(myId!!).setValue("Liked")
+                        refDatabase.child(Constants.LIKES).child(postId).child(myId).setValue("Liked")
                         false
                     }
                 }
@@ -169,7 +177,7 @@ class Repository @Inject constructor(
         ref.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (mProcessComment) {
-                    val comments = "" + dataSnapshot.child("postComments").value
+                    val comments = ( dataSnapshot.child("postComments").value ?: "0").toString()
                     val newCommentVal = comments.toInt() + 1
                     ref.child("postComments").setValue(newCommentVal)
                     mProcessComment = false
@@ -266,27 +274,37 @@ class Repository @Inject constructor(
         return videoOnlyLiveData
     }
 
+    private  val TAG = "Repository"
     private val postsLiveData=MutableLiveData<Resource<List<Post>>>()
     suspend   fun getPosts(): MutableLiveData<Resource<List<Post>>> {
-        var postList: ArrayList<Post> = ArrayList()
         postsLiveData.value = Resource.loading(null)
-        refDatabase.child(Constants.POSTS)
-            .addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                postList.clear()
-                snapshot.children.forEach { child ->
-                    val post = child.getValue<Post>()
-                    postList.add(post!!)
-                }
-                postsLiveData.value = Resource.success(postList)
-            }
 
-            override fun onCancelled(error: DatabaseError) {
-                postsLiveData.value = Resource.error(error.message, null)
+        try {
+            var postList: ArrayList<Post> = ArrayList()
+            refDatabase.child(Constants.POSTS)
+                .addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        postList.clear()
+                        snapshot.children.forEach { child ->
+                            Log.d(TAG, "onDataChange: === ${child.value} ")
+                            val post = child.getValue<Post>()
+                            postList.add(post!!)
+                        }
+                        postsLiveData.value = Resource.success(postList)
+                    }
 
-            }
-        })
+                    override fun onCancelled(error: DatabaseError) {
+                        postsLiveData.value = Resource.error(error.message, null)
+
+                    }
+                })
+        }catch (e:Exception) {
+            postsLiveData.value = Resource.error(e.message.toString(), null)
+        }
+
+
         return postsLiveData
+
     }
 
     private val postsForSpecificUserLiveData=MutableLiveData<Resource<List<Post>>>()
