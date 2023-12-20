@@ -1,7 +1,9 @@
 package com.example.socialmediaapp.ui.main.fragment
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -13,11 +15,11 @@ import com.example.socialmediaapp.adapter.AdapterPost
 import com.example.socialmediaapp.models.Post
 import com.example.socialmediaapp.utils.Status
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_video.*
+import com.example.socialmediaapp.databinding.FragmentVideoBinding
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class VideosFragment  : Fragment(R.layout.fragment_video) {
+class VideosFragment  : Fragment() {
 
     @Inject
     lateinit var videoAdapter: AdapterPost
@@ -26,11 +28,20 @@ class VideosFragment  : Fragment(R.layout.fragment_video) {
 
     lateinit var postList : ArrayList<Post>
 
+    private var _binding: FragmentVideoBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        postList= ArrayList()
-
+        postList = ArrayList()
     }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        _binding = FragmentVideoBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -41,20 +52,18 @@ class VideosFragment  : Fragment(R.layout.fragment_video) {
         viewModel.videoOnlyLiveData.observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.LOADING -> {
-                    video_progress_bar?.visibility = View.VISIBLE
+                    binding.videoProgressBar.visibility = View.VISIBLE
                 }
                 Status.SUCCESS -> {
-                    video_progress_bar.visibility = View.GONE
+                    binding.videoProgressBar.visibility = View.GONE
                     postList = it.data as ArrayList<Post>
                     videoAdapter.setList(postList)
                 }
                 Status.ERROR -> {
-                    video_progress_bar?.visibility = View.GONE
+                    binding.videoProgressBar.visibility = View.GONE
                     Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
                 }
             }
-
-
         }
 
         videoAdapter.setonItemClickListenerForLike {
@@ -70,6 +79,7 @@ class VideosFragment  : Fragment(R.layout.fragment_video) {
                 bundle
             )
         }
+
         videoAdapter.setOnItemClickListenerForGoingtoOwner {
             val bundle = Bundle().apply {
                 putSerializable("post", it)
@@ -81,14 +91,17 @@ class VideosFragment  : Fragment(R.layout.fragment_video) {
         }
     }
 
-
     private fun recyclerSetup(){
         val linearLayout = LinearLayoutManager(activity)
         linearLayout.stackFromEnd = true
         linearLayout.reverseLayout = true
-        video_rec.layoutManager=linearLayout
+        binding.videoRec.layoutManager = linearLayout
         videoAdapter.setList(postList)
-        video_rec.adapter=videoAdapter
+        binding.videoRec.adapter = videoAdapter
+    }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

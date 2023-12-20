@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class PublishFragment  : Fragment(R.layout.fragment_publish) {
+class PublishFragment  : Fragment() {
 
     @Inject
     lateinit var auth: FirebaseAuth

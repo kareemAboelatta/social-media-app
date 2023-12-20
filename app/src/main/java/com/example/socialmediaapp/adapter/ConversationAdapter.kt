@@ -23,7 +23,7 @@ import com.google.mlkit.nl.translate.TranslatorOptions
 
 import java.util.*
 
-class ConversationAdapter(private val messages: List<Message>, private val context: Context) :
+class ConversationAdapter(var messages: List<Message>, private val context: Context) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -92,7 +92,8 @@ class ConversationAdapter(private val messages: List<Message>, private val conte
     }
 
 
-    val languageIdentifier = LanguageIdentification.getClient()
+    private val languageIdentifier = LanguageIdentification.getClient()
+/*
 
     private fun translateThisIntoMyLanguage(text: String,itemView : View) :String {
         var targetLanguage="i can't wait"
@@ -167,5 +168,6 @@ class ConversationAdapter(private val messages: List<Message>, private val conte
         return targetLanguage
     }
 
+*/
 
 }

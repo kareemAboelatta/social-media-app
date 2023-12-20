@@ -101,7 +101,7 @@
 
 
                         <TextView
-                            android:id="@+id/pubish_text_anyone"
+                            android:id="@+id/publish_text_anyone"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"

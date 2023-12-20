@@ -21,7 +21,6 @@ import com.bumptech.glide.RequestManager
 import com.example.socialmediaapp.R
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_publish.*
 import javax.inject.Inject
 import com.example.socialmediaapp.models.Post
 import com.example.socialmediaapp.models.User
@@ -29,6 +28,7 @@ import com.example.socialmediaapp.models.User
 import androidx.core.content.FileProvider
 
 import android.os.Environment
+import com.example.socialmediaapp.databinding.ActivityPublishBinding
 import com.example.socialmediaapp.utils.Status
 import java.io.File
 
@@ -70,9 +70,17 @@ class PublishActivity : AppCompatActivity() {
     lateinit var myContext: Context
 
 
+
+    private lateinit var binding: ActivityPublishBinding
+
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_publish)
+        binding = ActivityPublishBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
 
         cameraPermissions =arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
         storagePermissions =arrayOf( Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -82,18 +90,20 @@ class PublishActivity : AppCompatActivity() {
             when (it.status) {
                 Status.SUCCESS -> {
                     thisUser = it.data!!
-                    glide.load(thisUser.image).into(publish_my_image)
-                    publish_my_name.text = thisUser.name
+                    glide.load(thisUser.image).into(binding.publishMyImage)
+                    binding.publishMyName.text = thisUser.name
                 }
                 Status.ERROR -> {
                     Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
                 }
+
+                else -> {}
             }
         }
 
-        publish_btn_publish.setOnClickListener {
-            var caption=publish_caption.text.toString()
-            var fans=pubish_text_anyone.text.toString()
+        binding.publishBtnPublish.setOnClickListener {
+            val caption=binding.publishCaption.text.toString()
+            val fans= binding.publishTextAnyone.text.toString()
             if (caption.isEmpty()){
                 Toast.makeText(this, "Enter caption", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener;
@@ -139,12 +149,16 @@ class PublishActivity : AppCompatActivity() {
                                     Toast.makeText(myContext, "${it.message}", Toast.LENGTH_SHORT).show()
 
                                 }
+
+                                else -> {}
                             }
                         }
                     }
                     Status.ERROR->{
                         Toast.makeText(myContext, "${it.message}", Toast.LENGTH_SHORT).show()
                     }
+
+                    else -> {}
                 }
             }
 
@@ -152,24 +166,24 @@ class PublishActivity : AppCompatActivity() {
         }
 
 
-        publish_btn_anyone.setOnClickListener {
-            var popupMenu= PopupMenu(this, publish_btn_anyone)
+        binding.publishBtnAnyone.setOnClickListener {
+            var popupMenu= PopupMenu(this,  binding.publishBtnAnyone)
             popupMenu.menuInflater.inflate(R.menu.anyone_menu, popupMenu.menu)
            // popupMenu.menu.removeItem(R.id.logout)
             popupMenu.setOnMenuItemClickListener{ item ->
                 when (item.itemId) {
                     R.id.menu_anyone ->
-                        pubish_text_anyone.text="Anyone"
+                        binding.publishTextAnyone.text="Anyone"
                     R.id.menu_friends ->
-                        pubish_text_anyone.text="Friends"
+                        binding.publishTextAnyone.text="Friends"
                     R.id.menu_only_me ->
-                        pubish_text_anyone.text="Only me"
+                        binding.publishTextAnyone.text="Only me"
                 }
                 true
             }
             popupMenu.show()
         }
-        publish_btn_bottom.setOnClickListener {
+        binding.publishBtnBottom.setOnClickListener {
             var bottomSheetDialog=BottomSheetDialog(this,R.style.BottomSheetStyle)
 
             var sheetView= LayoutInflater.from(applicationContext)
@@ -178,26 +192,26 @@ class PublishActivity : AppCompatActivity() {
 
             sheetView.findViewById<LinearLayout>(R.id.bottom_image).setOnClickListener {
                 imagePickDialog()
-                publish_caption.setLines(4)
+                binding.publishCaption.setLines(4)
                 bottomSheetDialog.dismiss()
             }
             sheetView.findViewById<LinearLayout>(R.id.bottom_video).setOnClickListener {
                 videoPickDialog()
-                publish_caption.setLines(4)
+                binding.publishCaption.setLines(4)
                 bottomSheetDialog.dismiss()
             }
             sheetView.findViewById<LinearLayout>(R.id.bottom_article).setOnClickListener {
                 Toast.makeText(this, "article", Toast.LENGTH_SHORT).show()
                 bottomSheetDialog.dismiss()
-                publish_caption.setLines(12)
-                publish_video.visibility=View.GONE
-                publish_image.visibility=View.GONE
+                binding.publishCaption.setLines(12)
+                binding.publishVideo.visibility=View.GONE
+                binding.publishImage.visibility=View.GONE
                 imageUri=null
                 videoUri=null
             }
             sheetView.findViewById<LinearLayout>(R.id.bottom_attache).setOnClickListener {
-                publish_video.visibility=View.GONE
-                publish_image.visibility=View.GONE
+                binding.publishVideo.visibility=View.GONE
+                binding.publishImage.visibility=View.GONE
                 imageUri=null
                 videoUri=null
 
@@ -384,8 +398,8 @@ class PublishActivity : AppCompatActivity() {
             if (requestCode ==  IMAGE_PICK_GALLERY_CODE || requestCode ==  IMAGE_PICK_CAMERA_CODE ) {
                 videoUri=null
                 //show picked image
-                publish_image.visibility= View.VISIBLE
-                publish_video.visibility=View.GONE
+                binding.publishImage.visibility= View.VISIBLE
+                binding.publishVideo.visibility=View.GONE
                 if (requestCode==IMAGE_PICK_GALLERY_CODE){
                     imageUri=data?.data
                 }else{
@@ -399,14 +413,14 @@ class PublishActivity : AppCompatActivity() {
                     Toast.makeText(this, ""+imageUri, Toast.LENGTH_SHORT).show()
 
                 }
-                publish_image.setImageURI(imageUri)
+                binding.publishImage.setImageURI(imageUri)
 
             }else if (requestCode ==  VIDEO_PICK_GALLERY_CODE || requestCode ==  VIDEO_PICK_CAMERA_CODE){
                 videoUri = data?.data
                 imageUri=null
                 //show picked video
-                publish_image.visibility= View.GONE
-                publish_video.visibility=View.VISIBLE
+                binding.publishImage.visibility= View.GONE
+                binding.publishVideo.visibility=View.VISIBLE
                 setVideoToVideoView()
             }
 
@@ -416,13 +430,13 @@ class PublishActivity : AppCompatActivity() {
 
     private fun setVideoToVideoView() {
         val mediaController = MediaController(this)
-        mediaController.setAnchorView(publish_video)
+        mediaController.setAnchorView(binding.publishVideo)
         // set media controller to Video view
-        publish_video.setMediaController(mediaController)
-        publish_video.setVideoURI(videoUri)
+        binding.publishVideo.setMediaController(mediaController)
+        binding.publishVideo.setVideoURI(videoUri)
 
-        publish_video.setOnPreparedListener{
-            publish_video.start()
+        binding.publishVideo.setOnPreparedListener{
+            binding.publishVideo.start()
             mediaController.show()
             mediaController.playSoundEffect(SoundEffectConstants.NAVIGATION_DOWN)
         }

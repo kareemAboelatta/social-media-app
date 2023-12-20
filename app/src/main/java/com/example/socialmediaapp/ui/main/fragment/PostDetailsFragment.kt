@@ -8,8 +8,10 @@ import android.speech.tts.TextToSpeech
 import android.text.TextUtils
 import android.text.format.DateFormat
 import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.PopupMenu
 import android.widget.Toast
@@ -22,6 +24,7 @@ import com.bumptech.glide.RequestManager
 import com.example.socialmediaapp.R
 import com.example.socialmediaapp.ui.main.ViewModelMain
 import com.example.socialmediaapp.adapter.AdapterComment
+import com.example.socialmediaapp.databinding.FragmentPostDetailsBinding
 import com.example.socialmediaapp.models.Comment
 import com.example.socialmediaapp.models.Post
 import com.example.socialmediaapp.utils.Status
@@ -35,15 +38,15 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_post_details.*
+
 import java.util.*
 import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class PostDetailsFragment :  Fragment(R.layout.fragment_post_details) {
+class PostDetailsFragment :  Fragment() {
 
     @Inject
     lateinit var glide:RequestManager
@@ -89,14 +92,23 @@ class PostDetailsFragment :  Fragment(R.layout.fragment_post_details) {
 
     lateinit var post:Post
 
+    private var _binding: FragmentPostDetailsBinding? = null
+    private val binding get() = _binding!!
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        _binding = FragmentPostDetailsBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity?.bottom_menu?.visibility = View.GONE
+        activity?.findViewById<ChipNavigationBar>(R.id.bottom_menu)?.visibility = View.GONE
 
-        post=args.post
-
-        hisUserId=args.post.postId
-        postId=args.post.postId
+        post = args.post
+        hisUserId = args.post.userId.toString()
+        postId = args.post.postId
 
         t1 = TextToSpeech(activity) { status ->
             if (status != TextToSpeech.ERROR) {
@@ -104,15 +116,14 @@ class PostDetailsFragment :  Fragment(R.layout.fragment_post_details) {
             }
         }
 
-
-        //user data
-        postLikes=post.postLikes
+        // User data
+        postLikes = post.postLikes
         postImage = post.postAttachment
-        det_uNameIv.text=post.userName
-        commentAdapter.postId=post.postId
-        glide.load(post.userImage).into(det_userPictureIv)
+        binding.detUNameIv.text = post.userName
+        commentAdapter.postId = post.postId
+        glide.load(post.userImage).into(binding.detUserPictureIv)
 
-        det_uNameIv.setOnClickListener {
+        binding.detUNameIv.setOnClickListener {
             val bundle = Bundle().apply {
                 putSerializable("post", post)
             }
@@ -121,120 +132,109 @@ class PostDetailsFragment :  Fragment(R.layout.fragment_post_details) {
                 bundle
             )
         }
-        //post data
-        //get time from timestamp
+
+        // Post data
         val cal = Calendar.getInstance(Locale.getDefault())
         cal.timeInMillis = post.postTime.toLong()
-
         val time = DateFormat.format("dd/MM/yyyy hh:mm aa", cal).toString()
-        det_pTimeIv.text=time
-        det_pTitleIv.text=post.caption
-        det_post_LikesTV.text=post.postLikes.toString()
-        det_post_CommentTV.text=post.postComments.toString()
+        binding.detPTimeIv.text = time
+        binding.detPTitleIv.text = post.caption
+        binding.detPostLikesTV.text = post.postLikes.toString()
+        binding.detPostCommentTV.text = post.postComments.toString()
 
-
+        // Setup based on post type
         when (post.postType) {
             "article" -> {
-                det_pImageIv.visibility=View.GONE
-                det_video.visibility=View.GONE
+                binding.detPImageIv.visibility = View.GONE
+                binding.detVideo.visibility = View.GONE
             }
             "image" -> {
-                det_video.visibility=View.GONE
-                det_pImageIv.visibility=View.VISIBLE
-                glide.load(post.postAttachment).into(det_pImageIv)
+                binding.detVideo.visibility = View.GONE
+                binding.detPImageIv.visibility = View.VISIBLE
+                glide.load(post.postAttachment).into(binding.detPImageIv)
             }
             "video" -> {
-                det_pImageIv.visibility=View.GONE
-                det_video.visibility=View.VISIBLE
+                binding.detPImageIv.visibility = View.GONE
+                binding.detVideo.visibility = View.VISIBLE
 
-
-                var simpleExoPlayer: SimpleExoPlayer = SimpleExoPlayer.Builder(mycontext).build()
-                val video: Uri = Uri.parse(post.postAttachment)
-                val mediaSource: MediaSource =buildMediaSource(video)
+                val simpleExoPlayer = SimpleExoPlayer.Builder(mycontext).build()
+                val videoUri = Uri.parse(post.postAttachment)
+                val mediaSource = buildMediaSource(videoUri)
                 simpleExoPlayer.prepare(mediaSource)
-                simpleExoPlayer.playWhenReady =false
-                det_video.player=simpleExoPlayer
-
-
+                simpleExoPlayer.playWhenReady = false
+                binding.detVideo.player = simpleExoPlayer
             }
         }
 
-        det_post_like_btn.setOnClickListener {
+        binding.detPostLikeBtn.setOnClickListener {
             viewModel.setLike(post)
         }
 
-
-        det_btn_comment.setOnClickListener {
+        binding.detBtnComment.setOnClickListener {
             postComment()
         }
 
         setLikes()
-
         loadComments()
 
-        det_more_btn.setOnClickListener {
-            showMoreOptions(det_more_btn, hisUserId!!, postId!!, postImage!!)
+        binding.detMoreBtn.setOnClickListener {
+            showMoreOptions(binding.detMoreBtn, hisUserId, postId, postImage ?: "")
         }
 
-        det_post_read_btn.setOnClickListener {
+        binding.detPostReadBtn.setOnClickListener {
             t1?.speak(post.caption, TextToSpeech.QUEUE_FLUSH, null)
         }
 
-
-
-
-
+        // Fetching data for this user
         viewModel.getDataForCurrentUser()
-        //data for this user
         viewModel.currentUserLiveData.observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {
-                    myName = "" + it.data?.name
-                    myImage = "" + it.data?.image
-                    glide.load(myImage).error(R.drawable.ic_profile).into(det_cAvatarTv)
-
+                    myName = it.data?.name
+                    myImage = it.data?.image
+                    glide.load(myImage).error(R.drawable.ic_profile).into(binding.detCAvatarTv)
                 }
                 Status.ERROR -> {
                     Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
                 }
+
+                else -> {}
             }
-
         }
-
-
     }
 
-
     private fun loadComments() {
-        //layout (linear) for recycleview
-
         val layoutManager = LinearLayoutManager(activity)
-        det_rec_comments.layoutManager=layoutManager
+        binding.detRecComments.layoutManager = layoutManager
 
         viewModel.loadComments(post.postId)
         viewModel.commentsLiveData.observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.LOADING -> {
-                    det_ProgressBar_comments?.visibility = View.VISIBLE
+                    binding.detProgressBarComments.visibility = View.VISIBLE
                 }
                 Status.SUCCESS -> {
-                    det_ProgressBar_comments.visibility = View.GONE
+                    binding.detProgressBarComments.visibility = View.GONE
                     commentAdapter.differ.submitList(it.data)
-                    det_rec_comments.adapter = commentAdapter
+                    binding.detRecComments.adapter = commentAdapter
                 }
                 Status.ERROR -> {
-                    det_ProgressBar_comments?.visibility = View.GONE
+                    binding.detProgressBarComments.visibility = View.GONE
                     Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
                 }
             }
-
         }
+    }
 
+
+
+
+    private fun buildMediaSource(uri: Uri): MediaSource {
+        val dataSourceFactory: DataSource.Factory = DefaultDataSourceFactory(mycontext, "exoPlayer")
+        return ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource(MediaItem.fromUri(uri))
     }
-    private fun buildMediaSource (uri: Uri) : MediaSource{
-        val dataSourceFactory : DataSource.Factory = DefaultDataSourceFactory(mycontext,"exoPlayer")
-        return ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource((MediaItem.fromUri(uri)))
-    }
+
+
     private fun setLikes() {
         refDatabase.child("Likes").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -242,16 +242,16 @@ class PostDetailsFragment :  Fragment(R.layout.fragment_post_details) {
                 if (imVisiable) {
                     if (dataSnapshot.child(postId!!).hasChild(auth.currentUser?.uid!!)) {
                         //user has liked for this post
-                        det_post_like_btn.setCompoundDrawablesWithIntrinsicBounds(
+                       binding.detPostLikeBtn.setCompoundDrawablesWithIntrinsicBounds(
                             R.drawable.ic_like, 0, 0, 0
                         )
-                        det_post_like_btn.setText("Liked")
+                        binding.detPostLikeBtn.setText("Liked")
                     } else {
                         //user has not liked for this post
-                        det_post_like_btn.setCompoundDrawablesWithIntrinsicBounds(
+                        binding.detPostLikeBtn.setCompoundDrawablesWithIntrinsicBounds(
                             R.drawable.ic_like_not, 0, 0, 0
                         )
-                        det_post_like_btn.setText("Like")
+                        binding.detPostLikeBtn.setText("Like")
                     }
                 }
             }
@@ -263,7 +263,7 @@ class PostDetailsFragment :  Fragment(R.layout.fragment_post_details) {
     private fun postComment() {
 
         //get data from comment edit text
-        val comment= det_commentEt.text.toString()
+        val comment= binding.detCommentEt.text.toString()
         //validate
         if (TextUtils.isEmpty(comment)) {
             Toast.makeText(activity, "Comment is Empty...", Toast.LENGTH_SHORT).show()
@@ -278,8 +278,8 @@ class PostDetailsFragment :  Fragment(R.layout.fragment_post_details) {
 
         //put this data in DB :
         viewModel.postComment(post,myComment)
-        det_commentEt.setText("")
-        det_post_CommentTV.text=""+(det_post_CommentTV.text.toString().toInt()+1)
+        binding.detCommentEt.setText("")
+        binding.detPostCommentTV.text=""+(binding.detPostCommentTV.text.toString().toInt()+1)
     }
 
 
@@ -371,12 +371,15 @@ class PostDetailsFragment :  Fragment(R.layout.fragment_post_details) {
         imVisiable=false
     }
 
+
     override fun onDestroyView() {
         super.onDestroyView()
-        imVisiable=false
-        activity?.bottom_menu?.visibility = View.VISIBLE
-
+        _binding = null
+        activity?.findViewById<ChipNavigationBar>(R.id.bottom_menu)?.visibility = View.VISIBLE
     }
+
+
+
 
     override fun onPause() {
         super.onPause()

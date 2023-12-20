@@ -1,7 +1,9 @@
 package com.example.socialmediaapp.ui.main.fragment
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -10,23 +12,34 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.socialmediaapp.R
 import com.example.socialmediaapp.ui.main.ViewModelMain
 import com.example.socialmediaapp.adapter.AdapterPost
+import com.example.socialmediaapp.databinding.FragmentHomeBinding
 import com.example.socialmediaapp.models.Post
 import com.example.socialmediaapp.utils.Status
 import com.google.firebase.auth.FirebaseAuth
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_home.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(R.layout.fragment_home) {
+class HomeFragment : Fragment() {
+
 
     @Inject
     lateinit var auth: FirebaseAuth
     @Inject
-    lateinit var homeAdapter:AdapterPost
+    lateinit var homeAdapter: AdapterPost
     private val viewModel by viewModels<ViewModelMain>()
-    private var postList : ArrayList<Post> = ArrayList()
+    private var postList: ArrayList<Post> = ArrayList()
+
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -36,15 +49,15 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         viewModel.postsLiveData.observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.LOADING -> {
-                    home_progress_bar?.visibility = View.VISIBLE
+                    binding.homeProgressBar.visibility = View.VISIBLE
                 }
                 Status.SUCCESS -> {
-                    home_progress_bar.visibility = View.GONE
+                    binding.homeProgressBar.visibility = View.GONE
                     postList = it.data as ArrayList<Post>
                     homeAdapter.setList(postList)
                 }
                 Status.ERROR -> {
-                    home_progress_bar?.visibility = View.GONE
+                    binding.homeProgressBar.visibility = View.GONE
                     Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
                 }
             }
@@ -84,16 +97,21 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
 
 
-
     }
 
-    private fun recyclerViewSetUp(){
+    private fun recyclerViewSetUp() {
         val linearLayout = LinearLayoutManager(activity)
         linearLayout.stackFromEnd = true
         linearLayout.reverseLayout = true
-        home_rec.layoutManager=linearLayout
+        binding.homeRec.layoutManager = linearLayout
         homeAdapter.setList(postList)
-        home_rec.adapter=homeAdapter
-
+        binding.homeRec.adapter = homeAdapter
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+
 }

@@ -10,8 +10,7 @@ import java.util.regex.Pattern
 
 object MyValidation {
 
-    fun isValidEmail(context: Context,
-                     useremail: TextInputLayout
+    fun isValidEmail(context: Context, useremail: TextInputLayout
     ): Boolean {
         val email=useremail.editText?.text.toString()
         if (email != "") {

@@ -34,7 +34,7 @@ class AdapterPeople @Inject constructor(
         }
     }
 
-    private val differ = AsyncListDiffer(this, DIFF_CALLBACK)
+    val differ = AsyncListDiffer(this, DIFF_CALLBACK)
     private var onItemClickListener: ((User) -> Unit)? = null
 
     fun setOnItemClickListener(listener: (User) -> Unit) {

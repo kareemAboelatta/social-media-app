@@ -1,8 +1,10 @@
 package com.example.socialmediaapp.ui.messenger.fragments
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -12,18 +14,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.RequestManager
 import com.example.socialmediaapp.R
 import com.example.socialmediaapp.adapter.ConversationAdapter
+import com.example.socialmediaapp.databinding.ConversationToolbarBinding
+import com.example.socialmediaapp.databinding.FragmentConversationBinding
 import com.example.socialmediaapp.models.User
 import com.example.socialmediaapp.ui.messenger.ViewModelMessenger
 import com.example.socialmediaapp.utils.Status
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_messenger.*
-import kotlinx.android.synthetic.main.conversation_toolbar.view.*
-import kotlinx.android.synthetic.main.fragment_conversation.*
+
 import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class ConversationFragment: Fragment(R.layout.fragment_conversation) {
+class ConversationFragment: Fragment() {
 
     lateinit var user: User
     private val args: ConversationFragmentArgs by navArgs()
@@ -37,85 +39,99 @@ class ConversationFragment: Fragment(R.layout.fragment_conversation) {
     @Inject
     lateinit var glide: RequestManager
 
+    private var _binding: FragmentConversationBinding? = null
+    private var bindingToolbarBinding: ConversationToolbarBinding? = null
+    private val binding get() = _binding!!
+
+
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        activity?.findViewById<View>(R.id.bottom_navigation)?.visibility = View.GONE
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        _binding = FragmentConversationBinding.inflate(inflater, container, false)
+        bindingToolbarBinding = ConversationToolbarBinding.bind(_binding!!.root)
+        return binding.root
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        user=args.user
-        message_edittext.requestFocus()
-
-
-
+        user = args.user
+        binding.messageEdittext.requestFocus()
 
         setupUI()
         setupRecycler()
         loadChat()
         sendMessage()
-
-
     }
 
+
     private fun sendMessage() {
-        send_msg_btn.setOnClickListener {
-            val messageBody = message_edittext.text.toString()
+        binding.sendMsgBtn.setOnClickListener {
+            val messageBody = binding.messageEdittext.text.toString()
             if (messageBody.isNotEmpty()) {
                 viewModel.sendMessage(user, messageBody).observe(viewLifecycleOwner) {
                     when (it.status) {
-                        Status.SUCCESS -> {
-                            message_edittext.setText("")
-                        }
-                        Status.ERROR -> {
-                            Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
-                        }
+                        Status.SUCCESS -> binding.messageEdittext.setText("")
+                        Status.ERROR -> Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
+                        else -> {}
                     }
                 }
             }
         }
     }
 
-
     private fun loadChat() {
         viewModel.loadChat(user.id).observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {
                     adapter.messages = it.data!!
-                    conversation_rv?.scrollToPosition(adapter.itemCount - 1)
+                    binding.conversationRv.scrollToPosition(adapter.itemCount - 1)
                 }
-                Status.ERROR -> {
-                    Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
-                }
+                Status.ERROR -> Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
+                else -> {}
             }
         }
     }
 
     private fun setupRecycler() {
-        adapter = ConversationAdapter(emptyList(),requireContext())
-        conversation_rv.layoutManager = LinearLayoutManager(context)
-        conversation_rv.adapter = adapter
+        adapter = ConversationAdapter(emptyList(), requireContext())
+        binding.conversationRv.layoutManager = LinearLayoutManager(context)
+        binding.conversationRv.adapter = adapter
     }
+
+
+
     private fun setupUI() {
 
-        (activity as AppCompatActivity).setSupportActionBar(app_bar.custom_toolbar)
+        (activity as AppCompatActivity).setSupportActionBar(bindingToolbarBinding?.customToolbar)
 
 
         (activity as AppCompatActivity).supportActionBar?.apply {
             setDisplayShowTitleEnabled(false)
             setDisplayHomeAsUpEnabled(true)
         }
-        app_bar.user_name.text=user.name
-        glide.load(user.image)
-            .placeholder(R.drawable.default_user)
-            .into(app_bar.user_image)
+        bindingToolbarBinding?.userName?.text=user.name
+        bindingToolbarBinding?.let {
+            glide.load(user.image)
+                .placeholder(R.drawable.default_user)
+                .into(it.userImage)
+        }
 
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        activity?.bottom_navigation?.visibility = View.GONE
-        setHasOptionsMenu(true)
 
-    }
+
+
+
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId==android.R.id.home){
+        if (item.itemId == android.R.id.home) {
             requireActivity().onBackPressed()
             return true
         }
@@ -124,6 +140,12 @@ class ConversationFragment: Fragment(R.layout.fragment_conversation) {
 
     override fun onDestroy() {
         super.onDestroy()
-        activity?.bottom_navigation?.visibility = View.VISIBLE
+        activity?.findViewById<View>(R.id.bottom_navigation)?.visibility = View.VISIBLE
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+        bindingToolbarBinding = null
     }
 }

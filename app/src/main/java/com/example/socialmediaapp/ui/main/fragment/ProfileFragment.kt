@@ -9,7 +9,9 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.*
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
@@ -24,19 +26,21 @@ import com.example.socialmediaapp.ui.main.MainActivity
 import com.example.socialmediaapp.ui.sign.LoginAndSignUpActivity
 import com.example.socialmediaapp.utils.Status
 import com.google.firebase.auth.FirebaseAuth
-import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_profile.*
-import kotlinx.android.synthetic.main.fragment_profile.prof_bio
-import kotlinx.android.synthetic.main.fragment_profile.prof_image_cover
-import kotlinx.android.synthetic.main.fragment_profile.prof_image_profile
-import kotlinx.android.synthetic.main.fragment_profile.prof_name
-import kotlinx.android.synthetic.main.fragment_profile.prof_rec
+
+
+
+import com.example.socialmediaapp.databinding.FragmentProfileBinding
+import com.ismaeldivita.chipnavigation.ChipNavigationBar
+
+
+
+
 import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class ProfileFragment  : Fragment(R.layout.fragment_profile) {
+class ProfileFragment  : Fragment() {
 
     @Inject
     lateinit var auth: FirebaseAuth
@@ -62,12 +66,21 @@ class ProfileFragment  : Fragment(R.layout.fragment_profile) {
     var name: String? = null
     var bio: String? = null
 
+    private var _binding: FragmentProfileBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        postList= ArrayList()
-        prog= ProgressDialog(activity)
+        postList = ArrayList()
+        prog = ProgressDialog(activity)
         prog.setMessage("Wait a minute...")
     }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        _binding = FragmentProfileBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -75,15 +88,14 @@ class ProfileFragment  : Fragment(R.layout.fragment_profile) {
 
         recyclerViewSetUp()
 
-
-        prof_btn_change_profile.setOnClickListener {
+        binding.profBtnChangeProfile.setOnClickListener {
             showAlertDialogForChangePhotos("profile")
         }
-        prof_btn_change_cover.setOnClickListener {
+        binding.profBtnChangeCover.setOnClickListener {
             showAlertDialogForChangePhotos("cover")
         }
-        prof_btn_edit_pen.setOnClickListener {
-            var popupMenu= PopupMenu(activity, prof_btn_edit_pen)
+        binding.profBtnEditPen.setOnClickListener {
+            var popupMenu= PopupMenu(activity, binding.profBtnEditPen)
             popupMenu.menuInflater.inflate(R.menu.pop_menu, popupMenu.menu)
             popupMenu.menu.removeItem(R.id.logout)
             popupMenu.setOnMenuItemClickListener { item ->
@@ -97,8 +109,8 @@ class ProfileFragment  : Fragment(R.layout.fragment_profile) {
             }
             popupMenu.show()
         }
-        prof_btn_setting.setOnClickListener {
-            var popupMenu= PopupMenu(activity, prof_btn_setting)
+        binding.profBtnSetting.setOnClickListener {
+            var popupMenu= PopupMenu(activity, binding.profBtnSetting)
             popupMenu.menuInflater.inflate(R.menu.pop_menu, popupMenu.menu)
 
             popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
@@ -126,15 +138,15 @@ class ProfileFragment  : Fragment(R.layout.fragment_profile) {
         viewModel.postsForSpecificUserLiveData.observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.LOADING -> {
-                    prof_ProgressBar?.visibility = View.VISIBLE
+                    binding.profProgressBar.visibility = View.VISIBLE
                 }
                 Status.SUCCESS -> {
-                    prof_ProgressBar.visibility = View.GONE
+                    binding.profProgressBar.visibility = View.GONE
                     postList = it.data as ArrayList<Post>
                     adapterPosts.setList(postList)
                 }
                 Status.ERROR -> {
-                    prof_ProgressBar?.visibility = View.GONE
+                    binding.profProgressBar.visibility = View.GONE
                     Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
                 }
             }
@@ -148,17 +160,17 @@ class ProfileFragment  : Fragment(R.layout.fragment_profile) {
             when (it.status) {
                 Status.SUCCESS -> {
                     val user = it.data
-                    prof_name.text = user?.name
-                    prof_bio.text = user?.bio
+                    binding.profName.text = user?.name
+                    binding.profBio.text = user?.bio
 
                     name = user?.name
                     bio = user?.bio
-                    glide.load(user?.image).error(R.drawable.ic_profile).into(prof_image_profile)
+                    glide.load(user?.image).error(R.drawable.ic_profile).into( binding.profImageProfile)
 
 
                     glide.load(user?.cover).error(R.drawable.ic_image_default)
-                        .into(prof_image_cover)
-                    prof_image_cover.scaleType = ImageView.ScaleType.CENTER_CROP
+                        .into( binding.profImageCover)
+                    binding.profImageCover.scaleType = ImageView.ScaleType.CENTER_CROP
 
                     prog.dismiss()
 
@@ -168,6 +180,7 @@ class ProfileFragment  : Fragment(R.layout.fragment_profile) {
 
                 }
 
+                else -> {}
             }
 
 
@@ -185,6 +198,8 @@ class ProfileFragment  : Fragment(R.layout.fragment_profile) {
                     prog.dismiss()
                     Toast.makeText(activity, "${it.message}", Toast.LENGTH_SHORT).show()
                 }
+
+                else -> {}
             }
         }
 
@@ -195,9 +210,9 @@ class ProfileFragment  : Fragment(R.layout.fragment_profile) {
         val linearLayout = LinearLayoutManager(activity)
         linearLayout.stackFromEnd = true
         linearLayout.reverseLayout = true
-        prof_rec.layoutManager=linearLayout
+        binding.profRec.layoutManager=linearLayout
         adapterPosts.setList(postList)
-        prof_rec.adapter=adapterPosts
+        binding.profRec.adapter=adapterPosts
     }
 
     private fun showUpdateNameBioDialog(key: String){
@@ -222,7 +237,7 @@ class ProfileFragment  : Fragment(R.layout.fragment_profile) {
 
         builder.setPositiveButton("Update") { _, _ ->
             val value=editText.text.toString()
-            if (value==null){
+            if (value.isEmpty()){
                 Toast.makeText(activity, "Where's Your new $key", Toast.LENGTH_SHORT).show()
             }else{
                 //update key
@@ -238,6 +253,8 @@ class ProfileFragment  : Fragment(R.layout.fragment_profile) {
                             prog.dismiss()
                             Toast.makeText(activity, "${it.message}", Toast.LENGTH_SHORT).show()
                         }
+
+                        else -> {}
                     }
                 }
             }
@@ -378,7 +395,7 @@ class ProfileFragment  : Fragment(R.layout.fragment_profile) {
 
 
 
-    fun observeChangePhotoOrCover(){
+    private fun observeChangePhotoOrCover(){
         viewModel.changePhotoOrCoverLiveData.observe(viewLifecycleOwner){
             when(it.status){
                 Status.SUCCESS->{
@@ -389,6 +406,8 @@ class ProfileFragment  : Fragment(R.layout.fragment_profile) {
                     prog.dismiss()
                     Toast.makeText(activity, "${it.message}", Toast.LENGTH_SHORT).show()
                 }
+
+                else -> {}
             }
         }
     }

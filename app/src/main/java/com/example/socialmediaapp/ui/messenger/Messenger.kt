@@ -9,38 +9,34 @@ import androidx.activity.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.socialmediaapp.R
+import com.example.socialmediaapp.databinding.ActivityMessengerBinding
 import com.example.socialmediaapp.ui.main.ViewModelMain
 import com.example.socialmediaapp.firebase.FirebaseService
 import com.example.socialmediaapp.utils.Status
-import com.google.firebase.database.DatabaseReference
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_messenger.*
-import javax.inject.Inject
 
 private const val TAG = "Messenger"
 
 @AndroidEntryPoint
 class Messenger : AppCompatActivity() {
 
-
     private val viewModel: ViewModelMain by viewModels()
-
+    private lateinit var binding: ActivityMessengerBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_messenger)
-        FirebaseService.sharedPref=getSharedPreferences("sharedPref", Context.MODE_PRIVATE)
+        binding = ActivityMessengerBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        FirebaseService.sharedPref = getSharedPreferences("sharedPref", Context.MODE_PRIVATE)
 
         uploadToken()
-
         setupBottomNavigation()
     }
 
-
     private fun setupBottomNavigation() {
-        val hostFragment=supportFragmentManager.findFragmentById(R.id.my_nav_host_fragment) as NavHostFragment
-        val navController=hostFragment.navController
-        bottom_navigation.setupWithNavController(navController)
+        val hostFragment = supportFragmentManager.findFragmentById(R.id.my_nav_host_fragment) as NavHostFragment
+        val navController = hostFragment.navController
+        binding.bottomNavigation.setupWithNavController(navController)
     }
 
     private fun uploadToken() {
@@ -53,6 +49,8 @@ class Messenger : AppCompatActivity() {
                 Status.ERROR -> {
                     Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
                 }
+
+                else -> {}
             }
         }
     }

@@ -18,13 +18,8 @@ import com.google.firebase.database.*
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.StorageReference
-import com.google.mlkit.common.model.DownloadConditions
 import com.google.mlkit.nl.languageid.LanguageIdentification
 import com.google.mlkit.nl.translate.TranslateLanguage
-import com.google.mlkit.nl.translate.Translation
-import com.google.mlkit.nl.translate.TranslatorOptions
-import kotlinx.android.synthetic.main.item_post.view.*
-import java.util.*
 
 import javax.inject.Inject
 import kotlin.collections.ArrayList
