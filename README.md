@@ -53,6 +53,26 @@ Welcome to SocialMediaPlus, a cutting-edge social media app that goes beyond the
 - **Language Detection:** Identify the language of texts automatically.
 - **Text Translation:** Seamlessly translate text from one language to another, enhancing user communication.
 
+## Setting Up Firebase
+To run this app, you'll need to set up Firebase in your own project. Here's how:
+
+1. **Create a Firebase Project:**
+   - Go to the [Firebase Console](https://console.firebase.google.com/).
+   - Click on "Add Project" and follow the setup flow.
+   - Once your project is created, you'll be directed to the Firebase project dashboard.
+
+2. **Add Firebase to Your Android App:**
+   - Click on the Android icon to add an Android app to your Firebase project.
+   - Register your app with the package name you've used in your Android project.
+   - Download the `google-services.json` file and place it in the `app/` directory of your project.
+
+3. **Configure Firebase Products:**
+   - In the Firebase console, set up the products you need, like Firestore, Authentication, etc.
+
+4. **Build and Run Your App:**
+   - With Firebase configured, you should be able to build and run the app.
+
+
 ---
 
 ## ⭐ Show Your Support
