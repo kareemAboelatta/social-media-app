@@ -1,6 +1,6 @@
 package com.example.socialmediaapp.network
 
-import com.example.socialmediaapp.utils.Constants
+import com.example.socialmediaapp.common.utils.Constants
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

@@ -5,8 +5,8 @@ import android.net.Uri
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.example.socialmediaapp.models.User
-import com.example.socialmediaapp.utils.Constants
-import com.example.socialmediaapp.utils.Resource
+import com.example.socialmediaapp.common.utils.Constants
+import com.example.socialmediaapp.common.utils.Resource
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
@@ -45,12 +45,12 @@ class RepositoryUser @Inject constructor(
 
     private val createUserLiveData = MutableLiveData<Resource<FirebaseUser>>()
     fun createUser(email: String, password: String) : MutableLiveData<Resource<FirebaseUser>> {
-        createUserLiveData.value=Resource.loading(null)
+        createUserLiveData.value= Resource.loading(null)
         auth.createUserWithEmailAndPassword(email, password)
             .addOnSuccessListener {
-                createUserLiveData.value=Resource.success(auth.currentUser)
+                createUserLiveData.value= Resource.success(auth.currentUser)
             }.addOnFailureListener {
-                createUserLiveData.value=Resource.error(it.localizedMessage ,null)
+                createUserLiveData.value= Resource.error(it.localizedMessage ,null)
 
             }
         return createUserLiveData
@@ -60,7 +60,7 @@ class RepositoryUser @Inject constructor(
 
     private val userPictureLiveData = MutableLiveData<Resource<String>>()
     fun uploadUserPictureOnFireStorage(uri: Uri) :   MutableLiveData<Resource<String>>{
-        userPictureLiveData.value=Resource.loading(null)
+        userPictureLiveData.value= Resource.loading(null)
         auth.currentUser?.uid?.let {  id->
             refStorage.child(Constants.IMAGES).child(id).putFile(uri).
             addOnSuccessListener {
@@ -141,12 +141,12 @@ class RepositoryUser @Inject constructor(
 
     private val successToLoginLiveData = MutableLiveData<Resource<Boolean>>()
     fun signInWithEmailAndPassword(email: String, password: String) : MutableLiveData<Resource<Boolean>> {
-        successToLoginLiveData.value=Resource.loading(null)
+        successToLoginLiveData.value= Resource.loading(null)
         auth.signInWithEmailAndPassword(email, password)
             .addOnSuccessListener {
-                successToLoginLiveData.value=Resource.success(true)
+                successToLoginLiveData.value= Resource.success(true)
             }.addOnFailureListener {
-                successToLoginLiveData.value=Resource.error(it.message.toString(),false)
+                successToLoginLiveData.value= Resource.error(it.message.toString(),false)
 
             }
         return successToLoginLiveData

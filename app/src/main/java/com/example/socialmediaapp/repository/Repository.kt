@@ -11,8 +11,8 @@ import com.example.socialmediaapp.R
 import com.example.socialmediaapp.models.Comment
 import com.example.socialmediaapp.models.Post
 import com.example.socialmediaapp.models.User
-import com.example.socialmediaapp.utils.Constants
-import com.example.socialmediaapp.utils.Resource
+import com.example.socialmediaapp.common.utils.Constants
+import com.example.socialmediaapp.common.utils.Resource
 
 
 
@@ -58,10 +58,10 @@ class Repository @Inject constructor(
                         post.postAttachment = downloadUri
                         val ref = refDatabase.child(Constants.POSTS)
                         ref.child(timeStamp).setValue(post).addOnSuccessListener {
-                            postLiveData.value=Resource.success(true)
+                            postLiveData.value= Resource.success(true)
                             Toast.makeText(context, "Post Published", Toast.LENGTH_SHORT).show()
                         }.addOnFailureListener { e ->
-                            postLiveData.value=Resource.error(e.message.toString(),false)
+                            postLiveData.value= Resource.error(e.message.toString(),false)
                         }
                     }
                 }.addOnFailureListener {
@@ -70,9 +70,9 @@ class Repository @Inject constructor(
         } else {
             val ref = refDatabase.child("Posts")
             ref.child(timeStamp).setValue(post).addOnSuccessListener {
-                postLiveData.value=Resource.success(true)
+                postLiveData.value= Resource.success(true)
             }.addOnFailureListener { e ->
-                postLiveData.value=Resource.error(e.message.toString(),false)
+                postLiveData.value= Resource.error(e.message.toString(),false)
             }
         }
         return postLiveData

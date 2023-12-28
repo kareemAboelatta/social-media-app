@@ -1,7 +1,6 @@
 package com.example.socialmediaapp.ui.main.fragment
 
 import android.Manifest
-import android.app.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Intent
@@ -24,15 +23,13 @@ import com.example.socialmediaapp.R
 import com.example.socialmediaapp.ui.main.ViewModelMain
 import com.example.socialmediaapp.adapter.AdapterPost
 import com.example.socialmediaapp.models.Post
-import com.example.socialmediaapp.ui.main.MainActivity
-import com.example.socialmediaapp.ui.sign.LoginAndSignUpActivity
-import com.example.socialmediaapp.utils.Status
+import com.example.socialmediaapp.auth.presentation.LoginAndSignUpActivity
+import com.example.socialmediaapp.common.utils.Status
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 
 
 import com.example.socialmediaapp.databinding.FragmentProfileBinding
-import com.ismaeldivita.chipnavigation.ChipNavigationBar
 
 
 import javax.inject.Inject

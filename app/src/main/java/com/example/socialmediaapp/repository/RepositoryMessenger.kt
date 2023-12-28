@@ -6,9 +6,9 @@ import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.example.socialmediaapp.models.*
 import com.example.socialmediaapp.network.RetrofitBuilder
-import com.example.socialmediaapp.utils.Constants
-import com.example.socialmediaapp.utils.Resource
-import com.example.socialmediaapp.utils.Utils
+import com.example.socialmediaapp.common.utils.Constants
+import com.example.socialmediaapp.common.utils.Resource
+import com.example.socialmediaapp.common.utils.Utils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError

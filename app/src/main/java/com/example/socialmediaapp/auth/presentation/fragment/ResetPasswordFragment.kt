@@ -1,4 +1,4 @@
-package com.example.socialmediaapp.ui.sign.fragment
+package com.example.socialmediaapp.auth.presentation.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater

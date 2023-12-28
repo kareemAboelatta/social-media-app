@@ -1,4 +1,4 @@
-package com.example.socialmediaapp.ui.sign.fragment
+package com.example.socialmediaapp.auth.presentation.fragment
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,10 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.socialmediaapp.R
-import com.example.socialmediaapp.helpers.MyValidation
+import com.example.socialmediaapp.common.helpers.MyValidation
 import com.example.socialmediaapp.ui.main.MainActivity
-import com.example.socialmediaapp.ui.sign.ViewModelSignUser
-import com.example.socialmediaapp.utils.Status
+import com.example.socialmediaapp.auth.presentation.ViewModelSignUser
+import com.example.socialmediaapp.common.utils.Status
 import com.example.socialmediaapp.databinding.FragmentLoginBinding
 import dagger.hilt.android.AndroidEntryPoint
 

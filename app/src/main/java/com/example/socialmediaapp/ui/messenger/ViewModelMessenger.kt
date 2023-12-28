@@ -9,8 +9,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.socialmediaapp.models.Chat
 import com.example.socialmediaapp.models.User
 import com.example.socialmediaapp.repository.RepositoryMessenger
-import com.example.socialmediaapp.utils.Constants
-import com.example.socialmediaapp.utils.Resource
+import com.example.socialmediaapp.common.utils.Constants
+import com.example.socialmediaapp.common.utils.Resource
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.getValue

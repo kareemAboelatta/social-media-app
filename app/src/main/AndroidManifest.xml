@@ -47,7 +47,7 @@
             android:exported="false"
             />
         <activity
-            android:name=".ui.sign.LoginAndSignUpActivity"
+            android:name=".auth.presentation.LoginAndSignUpActivity"
             android:exported="true"
             android:theme="@style/AppThemeForLogReg">
             <intent-filter>

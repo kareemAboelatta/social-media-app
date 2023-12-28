@@ -19,7 +19,7 @@ import com.example.socialmediaapp.models.Chat
 import com.example.socialmediaapp.models.Post
 import com.example.socialmediaapp.models.User
 import com.example.socialmediaapp.repository.Repository
-import com.example.socialmediaapp.utils.Utils
+import com.example.socialmediaapp.common.utils.Utils
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.util.ArrayList

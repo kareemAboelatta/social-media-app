@@ -1,4 +1,4 @@
-package com.example.socialmediaapp.ui.sign
+package com.example.socialmediaapp.auth.presentation
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity

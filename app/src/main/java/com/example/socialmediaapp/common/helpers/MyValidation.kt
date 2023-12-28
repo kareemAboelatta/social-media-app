@@ -1,4 +1,4 @@
-package com.example.socialmediaapp.helpers
+package com.example.socialmediaapp.common.helpers
 
 import android.content.Context
 import android.util.Patterns

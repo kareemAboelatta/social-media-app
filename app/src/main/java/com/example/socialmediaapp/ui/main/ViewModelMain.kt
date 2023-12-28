@@ -10,7 +10,7 @@ import com.example.socialmediaapp.models.Comment
 import com.example.socialmediaapp.models.Post
 import com.example.socialmediaapp.models.User
 import com.example.socialmediaapp.repository.Repository
-import com.example.socialmediaapp.utils.Resource
+import com.example.socialmediaapp.common.utils.Resource
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import dagger.hilt.android.lifecycle.HiltViewModel

@@ -1,4 +1,4 @@
-package com.example.socialmediaapp.ui.sign
+package com.example.socialmediaapp.auth.presentation
 
 import android.content.Context
 import android.net.Uri
@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.socialmediaapp.models.User
 import com.example.socialmediaapp.repository.RepositoryUser
-import com.example.socialmediaapp.utils.Resource
+import com.example.socialmediaapp.common.utils.Resource
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference

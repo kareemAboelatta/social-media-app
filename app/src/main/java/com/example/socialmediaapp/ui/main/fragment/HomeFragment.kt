@@ -14,7 +14,7 @@ import com.example.socialmediaapp.ui.main.ViewModelMain
 import com.example.socialmediaapp.adapter.AdapterPost
 import com.example.socialmediaapp.databinding.FragmentHomeBinding
 import com.example.socialmediaapp.models.Post
-import com.example.socialmediaapp.utils.Status
+import com.example.socialmediaapp.common.utils.Status
 import com.google.firebase.auth.FirebaseAuth
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import dagger.hilt.android.AndroidEntryPoint

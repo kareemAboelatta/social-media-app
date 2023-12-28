@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".ui.sign.LoginAndSignUpActivity">
+    tools:context=".auth.presentation.LoginAndSignUpActivity">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_frag"

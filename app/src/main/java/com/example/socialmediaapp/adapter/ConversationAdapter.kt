@@ -14,7 +14,7 @@ import com.example.socialmediaapp.R
 import com.example.socialmediaapp.databinding.ReceivedMsgLayoutBinding
 import com.example.socialmediaapp.databinding.SentMsgLayoutBinding
 import com.example.socialmediaapp.models.Message
-import com.example.socialmediaapp.utils.Utils
+import com.example.socialmediaapp.common.utils.Utils
 import com.google.mlkit.common.model.DownloadConditions
 import com.google.mlkit.nl.languageid.LanguageIdentification
 import com.google.mlkit.nl.translate.TranslateLanguage

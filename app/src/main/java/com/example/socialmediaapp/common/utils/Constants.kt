@@ -1,4 +1,4 @@
-package com.example.socialmediaapp.utils
+package com.example.socialmediaapp.common.utils
 
 object Constants {
 

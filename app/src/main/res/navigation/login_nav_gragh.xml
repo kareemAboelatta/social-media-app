@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.socialmediaapp.ui.sign.fragment.LoginFragment"
+        android:name="com.example.socialmediaapp.auth.presentation.fragment.LoginFragment"
         android:label="LoginFragment" >
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
@@ -28,7 +28,7 @@
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.example.socialmediaapp.ui.sign.fragment.RegisterFragment"
+        android:name="com.example.socialmediaapp.auth.presentation.fragment.RegisterFragment"
         android:label="RegisterFragment" >
         <action
             android:id="@+id/action_registerFragment_to_loginFragment"
@@ -41,7 +41,7 @@
     </fragment>
     <fragment
         android:id="@+id/resetPasswordFragment"
-        android:name="com.example.socialmediaapp.ui.sign.fragment.ResetPasswordFragment"
+        android:name="com.example.socialmediaapp.auth.presentation.fragment.ResetPasswordFragment"
         android:label="ResetPasswordFragment" >
         <action
             android:id="@+id/action_resetPasswordFragment_to_loginFragment"
