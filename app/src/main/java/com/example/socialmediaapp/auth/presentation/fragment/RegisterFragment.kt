@@ -45,21 +45,12 @@ class RegisterFragment : Fragment() {
 
 
 
-
-
-
     private var _binding: FragmentRegisterBinding? = null
     private val binding get() = _binding!!
 
 
     var uri: Uri? = null
 
-
-    @Inject
-    lateinit var mycontext: Context
-
-    @Inject
-    lateinit var auth: FirebaseAuth
 
     private val viewModel by viewModels<AuthViewModel>()
 

@@ -15,11 +15,12 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun createUser(userInput: CreateUserInput): User =
         authDatasource.createUser(userInput)
 
-
     override suspend fun signInWithEmailAndPassword(
         email: String,
         password: String
     ): User = authDatasource.signInWithEmailAndPassword(email, password)
+
+    override suspend fun resetPassword(email: String): Boolean = authDatasource.resetPassword(email)
 
 
     // Other private utility methods...

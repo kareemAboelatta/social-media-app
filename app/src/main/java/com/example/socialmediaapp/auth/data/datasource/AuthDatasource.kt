@@ -26,6 +26,7 @@ import javax.inject.Inject
 interface AuthDatasource {
     suspend fun createUser(userInput: CreateUserInput): User
     suspend fun signInWithEmailAndPassword(email: String, password: String): User
+    suspend fun resetPassword(email: String): Boolean
 }
 
 class AuthDatasourceFirebase @Inject constructor(
@@ -33,8 +34,8 @@ class AuthDatasourceFirebase @Inject constructor(
     private var refStorage: StorageReference,
     private var firebaseMessaging: FirebaseMessaging,
     private var auth: FirebaseAuth,
-    @Dispatcher(AppDispatcher.IO)  private var ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
-    @Dispatcher(AppDispatcher.Default)  private var defaultDispatcher: CoroutineDispatcher= Dispatchers.Default,
+    @Dispatcher(AppDispatcher.IO) private var ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
+    @Dispatcher(AppDispatcher.Default) private var defaultDispatcher: CoroutineDispatcher = Dispatchers.Default,
 ) : AuthDatasource {
 
     override suspend fun createUser(userInput: CreateUserInput): User =
@@ -56,12 +57,11 @@ class AuthDatasourceFirebase @Inject constructor(
                 )
 
                 setUserInfoOnDatabase(newUser)
-            }catch (e: FirebaseAuthException) {
+            } catch (e: FirebaseAuthException) {
                 throw CustomAuthException("Failed to create user: ${e.localizedMessage}")
             } catch (e: Exception) {
                 throw CustomDataException("An unexpected error occurred: ${e.localizedMessage}")
             }
-
 
 
         }
@@ -70,14 +70,33 @@ class AuthDatasourceFirebase @Inject constructor(
     override suspend fun signInWithEmailAndPassword(email: String, password: String): User =
         withContext(ioDispatcher) {
 
-            val authResult = auth.signInWithEmailAndPassword(email, password).await()
-            val firebaseUser = authResult.user
+            try {
+                val authResult = auth.signInWithEmailAndPassword(email, password).await()
+                val firebaseUser = authResult.user
 
-            val dataSnapshot =
-                refDatabase.child(Constants.USERS).child(firebaseUser!!.uid).get().await()
-            val user: User = dataSnapshot.getValue(User::class.java)!!
-            user
+                val dataSnapshot =
+                    refDatabase.child(Constants.USERS).child(firebaseUser!!.uid).get().await()
+                val user: User = dataSnapshot.getValue(User::class.java)!!
+                user
+            } catch (e: FirebaseAuthException) {
+                throw CustomAuthException("Failed to signIn user: ${e.localizedMessage}")
+            } catch (e: Exception) {
+                throw CustomDataException("An unexpected error occurred: ${e.localizedMessage}")
+            }
+
         }
+
+    override suspend fun resetPassword(email: String): Boolean = withContext(ioDispatcher) {
+        try {
+            auth.sendPasswordResetEmail(email).await()
+            true
+        } catch (e: FirebaseAuthException) {
+            throw CustomAuthException("Failed to signIn user: ${e.localizedMessage}")
+        } catch (e: Exception) {
+            throw CustomDataException("An unexpected error occurred: ${e.localizedMessage}")
+        }
+    }
+
 
     private suspend fun uploadFile(uri: Uri): String = withContext(defaultDispatcher) {
         val uploadTask = refStorage.child(Constants.IMAGES).putFile(uri).await()
