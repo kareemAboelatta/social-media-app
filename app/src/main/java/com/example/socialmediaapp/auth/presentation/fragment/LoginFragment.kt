@@ -14,8 +14,7 @@ import com.example.socialmediaapp.R
 import com.example.socialmediaapp.auth.presentation.AuthViewModel
 import com.example.socialmediaapp.common.helpers.MyValidation
 import com.example.socialmediaapp.ui.main.MainActivity
-import com.example.socialmediaapp.auth.presentation.ViewModelSignUser
-import com.example.socialmediaapp.common.utils.Status
+import com.example.socialmediaapp.common.ProgressDialogUtil
 import com.example.socialmediaapp.common.utils.UIState
 import com.example.socialmediaapp.databinding.FragmentLoginBinding
 import com.example.socialmediaapp.models.User
@@ -32,6 +31,10 @@ class LoginFragment : Fragment() {
 
     private val viewModel by viewModels<AuthViewModel>()
 
+    private val progressDialogUtil =  ProgressDialogUtil()
+
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,6 +44,11 @@ class LoginFragment : Fragment() {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding.root
     }
+
+
+
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -78,16 +86,21 @@ class LoginFragment : Fragment() {
 
 
     private fun handleState(state: UIState<User>) {
+
         when (state) {
             UIState.Empty -> {}
             is UIState.Error -> {
-                binding.progress.visibility = View.INVISIBLE
-                Toast.makeText(activity, "" + state.error, Toast.LENGTH_SHORT).show()
+                progressDialogUtil.hideProgressDialog()
+
+                Toast.makeText(context, "" + state.error, Toast.LENGTH_SHORT).show()
             }
 
-            UIState.Loading -> binding.progress.visibility = View.VISIBLE
+            UIState.Loading -> {
+                progressDialogUtil.showProgressDialog(requireActivity())
+            }
             is UIState.Success -> {
-                binding.progress.visibility = View.GONE
+                progressDialogUtil.hideProgressDialog()
+
                 activity?.startActivity(Intent(activity, MainActivity::class.java))
                 activity?.finish()
 

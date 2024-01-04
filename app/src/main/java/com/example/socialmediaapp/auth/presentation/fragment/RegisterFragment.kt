@@ -1,8 +1,5 @@
 package com.example.socialmediaapp.auth.presentation.fragment
 
-import android.app.Activity
-import android.content.Context
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -21,15 +18,10 @@ import com.example.socialmediaapp.auth.presentation.AuthViewModel
 import com.example.socialmediaapp.databinding.FragmentRegisterBinding
 import com.example.socialmediaapp.common.helpers.MyValidation
 import com.example.socialmediaapp.models.User
-import com.example.socialmediaapp.auth.presentation.ViewModelSignUser
-import com.example.socialmediaapp.common.utils.Status
+import com.example.socialmediaapp.common.ProgressDialogUtil
 import com.example.socialmediaapp.common.utils.UIState
-import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class RegisterFragment : Fragment() {
@@ -53,6 +45,9 @@ class RegisterFragment : Fragment() {
 
 
     private val viewModel by viewModels<AuthViewModel>()
+
+    private val progressDialogUtil =  ProgressDialogUtil()
+
 
 
     override fun onCreateView(
@@ -113,15 +108,17 @@ class RegisterFragment : Fragment() {
 
     private fun handleState(state: UIState<User>) {
         when (state) {
-            UIState.Empty -> binding.progress.visibility = View.INVISIBLE
+            UIState.Empty -> {}
             is UIState.Error -> {
-                binding.progress.visibility = View.INVISIBLE
+                progressDialogUtil.hideProgressDialog()
                 Toast.makeText(activity, "" + state.error, Toast.LENGTH_SHORT).show()
             }
-            UIState.Loading -> binding.progress.visibility = View.VISIBLE
+            UIState.Loading -> {
+                progressDialogUtil.showProgressDialog(requireActivity())
+            }
             is UIState.Success -> {
                 Toast.makeText(context, "Registration success ", Toast.LENGTH_SHORT).show()
-                binding.progress.visibility = View.INVISIBLE
+                progressDialogUtil.hideProgressDialog()
                 findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
             }
         }

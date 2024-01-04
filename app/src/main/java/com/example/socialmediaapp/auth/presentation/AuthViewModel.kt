@@ -10,6 +10,7 @@ import com.example.socialmediaapp.auth.domain.usecases.SignInWithEmailAndPasswor
 import com.example.socialmediaapp.common.utils.UIState
 import com.example.socialmediaapp.models.User
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -71,6 +72,7 @@ class AuthViewModel @Inject constructor(
         _resetPasswordState.value = UIState.Loading
         viewModelScope.launch {
             runCatching {
+                delay(5000)
                 resetPasswordUseCase(email)
             }.onSuccess { success ->
                 _resetPasswordState.value = UIState.Success(success)

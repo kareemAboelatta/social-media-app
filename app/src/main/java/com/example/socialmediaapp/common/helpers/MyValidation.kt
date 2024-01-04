@@ -48,6 +48,14 @@ object MyValidation {
         }
     }
 
+
+    sealed class ValidationResult {
+        data object Valid : ValidationResult()
+        data class Invalid(val errorMessage: String) : ValidationResult()
+    }
+
+
+
     fun validatePass(
         context: Context,
         userPass: TextInputLayout

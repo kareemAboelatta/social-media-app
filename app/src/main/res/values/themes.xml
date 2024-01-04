@@ -37,6 +37,15 @@
         <item name="helperTextTextColor">@android:color/holo_red_dark</item>
     </style>
 
+
+
+    <style name="CustomAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/custom_dialog_background</item>
+    </style>
+
+
+
+
     <style name="AppThemeForMainActivity"
         parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
