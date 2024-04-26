@@ -39,9 +39,8 @@ android {
 
     buildFeatures {
         viewBinding =  true
+        dataBinding =  true
     }
-
-
 
 
     buildTypes {
@@ -173,5 +172,11 @@ dependencies {
     // ML Kit
     implementation("com.google.mlkit:translate:17.0.2")
     implementation("com.google.mlkit:language-id:17.0.4")
+
+
+    //pickers
+    implementation("io.github.ParkSangGwon:tedimagepicker:1.4.2")
+    implementation("com.github.Shouheng88:compressor:1.6.0")
+    implementation("commons-io:commons-io:2.7")
 }
 

@@ -45,7 +45,7 @@ class ProgressDialogUtil {
             Animation.RELATIVE_TO_SELF, 0.5f,  // Pivot point X
             Animation.RELATIVE_TO_SELF, 0.5f   // Pivot point Y
         )
-        scaleInAnimation.duration = 900 // Duration in milliseconds
+        scaleInAnimation.duration = 200 // Duration in milliseconds
         scaleInAnimation.repeatCount = Animation.INFINITE
 
         // Create the scale-out animation

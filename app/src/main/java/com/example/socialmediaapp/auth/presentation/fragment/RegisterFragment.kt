@@ -15,11 +15,12 @@ import androidx.navigation.fragment.findNavController
 import com.example.socialmediaapp.R
 import com.example.socialmediaapp.auth.domain.models.CreateUserInput
 import com.example.socialmediaapp.auth.presentation.AuthViewModel
-import com.example.socialmediaapp.databinding.FragmentRegisterBinding
-import com.example.socialmediaapp.common.helpers.MyValidation
-import com.example.socialmediaapp.models.User
 import com.example.socialmediaapp.common.ProgressDialogUtil
+import com.example.socialmediaapp.common.helpers.MyValidation
+import com.example.socialmediaapp.common.pickCompressedImage
 import com.example.socialmediaapp.common.utils.UIState
+import com.example.socialmediaapp.databinding.FragmentRegisterBinding
+import com.example.socialmediaapp.models.User
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -27,14 +28,14 @@ import kotlinx.coroutines.launch
 class RegisterFragment : Fragment() {
 
 
-    private  var imagePickerLauncher: ActivityResultLauncher<String> =  registerForActivityResult(
-        ActivityResultContracts.GetContent()) { uri: Uri? ->
+    private var imagePickerLauncher: ActivityResultLauncher<String> = registerForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
         uri?.let {
             this.uri = it
             binding.regImage.setImageURI(uri)
         }
     }
-
 
 
     private var _binding: FragmentRegisterBinding? = null
@@ -46,8 +47,7 @@ class RegisterFragment : Fragment() {
 
     private val viewModel by viewModels<AuthViewModel>()
 
-    private val progressDialogUtil =  ProgressDialogUtil()
-
+    private val progressDialogUtil = ProgressDialogUtil()
 
 
     override fun onCreateView(
@@ -94,7 +94,13 @@ class RegisterFragment : Fragment() {
 
 
         binding.regImage.setOnClickListener {
-            imagePickerLauncher.launch("image/*")
+            pickCompressedImage(
+                progressUtil = progressDialogUtil,
+                onSaveFile = { compressedFile, uri ->
+                    this.uri = uri
+                    binding.regImage.setImageURI(uri)
+                }
+            )
         }
 
 
@@ -113,9 +119,11 @@ class RegisterFragment : Fragment() {
                 progressDialogUtil.hideProgressDialog()
                 Toast.makeText(activity, "" + state.error, Toast.LENGTH_SHORT).show()
             }
+
             UIState.Loading -> {
                 progressDialogUtil.showProgressDialog(requireActivity())
             }
+
             is UIState.Success -> {
                 Toast.makeText(context, "Registration success ", Toast.LENGTH_SHORT).show()
                 progressDialogUtil.hideProgressDialog()
@@ -123,10 +131,6 @@ class RegisterFragment : Fragment() {
             }
         }
     }
-
-
-
-
 
 
     private fun valid(): Boolean {
