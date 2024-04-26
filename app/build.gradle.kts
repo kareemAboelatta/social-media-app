@@ -95,9 +95,9 @@ dependencies {
     implementation("com.google.android.material:material:1.11.0")
 
     //Dagger - Hilt
-    implementation ("com.google.dagger:hilt-android:2.49")
-    kapt ("com.google.dagger:hilt-android-compiler:2.49")
-    kapt ("androidx.hilt:hilt-compiler:1.1.0")
+    implementation ("com.google.dagger:hilt-android:2.50")
+    kapt ("com.google.dagger:hilt-android-compiler:2.50")
+    kapt ("androidx.hilt:hilt-compiler:1.2.0")
 
 
 
