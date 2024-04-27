@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationSet
+import android.view.animation.RotateAnimation
 import android.view.animation.ScaleAnimation
 import android.widget.ImageView
 import android.widget.TextView
@@ -45,7 +46,7 @@ class ProgressDialogUtil {
             Animation.RELATIVE_TO_SELF, 0.5f,  // Pivot point X
             Animation.RELATIVE_TO_SELF, 0.5f   // Pivot point Y
         )
-        scaleInAnimation.duration = 200 // Duration in milliseconds
+        scaleInAnimation.duration = 800 // Duration in milliseconds
         scaleInAnimation.repeatCount = Animation.INFINITE
 
         // Create the scale-out animation

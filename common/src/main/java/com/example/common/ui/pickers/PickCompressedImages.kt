@@ -13,7 +13,7 @@ import me.shouheng.compress.Compress
 import me.shouheng.compress.concrete
 import java.io.File
 
-suspend fun compressImage(context:Context, file: File):String{
+suspend fun compressFile (context:Context, file: File):String{
         val newResult = Compress.with(context, file)
             .setQuality(95)
             .concrete {
@@ -31,7 +31,22 @@ fun Fragment.pickCompressedImage(progressUtil: ProgressDialogUtil, onSaveFile: s
                 val file = FileUtils(this@pickCompressedImage.requireContext()).createTmpFileFromUri(uri)
                 if (file != null) {
                     progressUtil.showProgressDialog(requireActivity())
-                    val compressedFile = compressImage(this@pickCompressedImage.requireContext(), file)
+                    val compressedFile = compressFile(this@pickCompressedImage.requireContext(), file)
+                    progressUtil.hideProgressDialog()
+                    onSaveFile(compressedFile, uri)
+                }
+            }
+        }
+}
+
+fun Fragment.pickCompressedVideo(progressUtil: ProgressDialogUtil, onSaveFile: suspend (String, Uri) -> (Unit)) {
+    TedImagePicker.with(this.requireActivity()).video()
+        .start { uri ->
+            this.lifecycleScope.launch {
+                val file = FileUtils(this@pickCompressedVideo.requireContext()).createTmpFileFromUri(uri)
+                if (file != null) {
+                    progressUtil.showProgressDialog(requireActivity())
+                    val compressedFile = compressFile(this@pickCompressedVideo.requireContext(), file)
                     progressUtil.hideProgressDialog()
                     onSaveFile(compressedFile, uri)
                 }
@@ -49,7 +64,7 @@ fun Fragment.pickMultiCompressedImages(listUris:MutableList<Uri>, progressUtil: 
                     val file = FileUtils(this@pickMultiCompressedImages.requireContext()).createTmpFileFromUri(it)
                     if (file != null) {
                         progressUtil.showProgressDialog(requireActivity())
-                        val compressedFile = compressImage(this@pickMultiCompressedImages.requireContext(), file)
+                        val compressedFile = compressFile(this@pickMultiCompressedImages.requireContext(), file)
                         progressUtil.hideProgressDialog()
                         listImages.add(compressedFile)
                     }

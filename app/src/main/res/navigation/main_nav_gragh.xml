@@ -49,7 +49,7 @@
     </fragment>
     <fragment
         android:id="@+id/publishFragment"
-        android:name="com.example.socialmediaapp.ui.main.fragment.PublishFragment"
+        android:name="com.example.socialmediaapp.main.ui.puplish.PublishFragment"
         android:label="PublishFragment" />
     <fragment
         android:id="@+id/postDetailsFragment"
@@ -73,4 +73,6 @@
             android:id="@+id/action_postOwnerFragment_to_postDetailsFragment"
             app:destination="@id/postDetailsFragment" />
     </fragment>
+
+
 </navigation>

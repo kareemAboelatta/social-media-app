@@ -37,9 +37,7 @@ class MainActivity : AppCompatActivity() {
                     navController.navigate(R.id.profileFragment)
                 }
                 R.id.add_post -> {
-                    startActivity(Intent(this, PublishActivity::class.java))
-                    binding.bottomMenu.setItemSelected(R.id.home)
-                    navController.navigate(R.id.homeFragment)
+                    navController.navigate(R.id.publishFragment)
                 }
                 R.id.messenger -> {
                     startActivity(Intent(this, Messenger::class.java))
