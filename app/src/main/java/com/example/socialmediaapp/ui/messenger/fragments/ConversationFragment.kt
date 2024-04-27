@@ -19,7 +19,7 @@ import com.example.socialmediaapp.databinding.ConversationToolbarBinding
 import com.example.socialmediaapp.databinding.FragmentConversationBinding
 import com.example.socialmediaapp.models.User
 import com.example.socialmediaapp.ui.messenger.ViewModelMessenger
-import com.example.socialmediaapp.common.utils.Status
+import com.example.common.ui.utils.Status
 import dagger.hilt.android.AndroidEntryPoint
 
 import javax.inject.Inject

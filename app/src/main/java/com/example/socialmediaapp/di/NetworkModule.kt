@@ -1,8 +1,8 @@
 package com.example.socialmediaapp.di
 
 
+import com.example.common.ui.utils.Constants
 import com.example.socialmediaapp.network.NotificationApi
-import com.example.socialmediaapp.common.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.messaging.FirebaseMessaging

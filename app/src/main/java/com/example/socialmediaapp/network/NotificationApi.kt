@@ -1,7 +1,7 @@
 package com.example.socialmediaapp.network
 
 import com.example.socialmediaapp.models.PushNotification
-import com.example.socialmediaapp.common.utils.Constants
+import com.example.common.ui.utils.Constants
 import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.Body

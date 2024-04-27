@@ -1,4 +1,4 @@
-package com.example.socialmediaapp.common.utils
+package com.example.common.ui.utils
 
 data class Resource<out T>(val status: Status, val data:T?, val message:String?){
     companion object{

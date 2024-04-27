@@ -16,7 +16,7 @@ import com.example.socialmediaapp.R
 import com.example.socialmediaapp.adapter.ChatsAdapter
 import com.example.socialmediaapp.databinding.FragmentChatsBinding
 import com.example.socialmediaapp.ui.messenger.ViewModelMessenger
-import com.example.socialmediaapp.common.utils.Status
+import com.example.common.ui.utils.Status
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

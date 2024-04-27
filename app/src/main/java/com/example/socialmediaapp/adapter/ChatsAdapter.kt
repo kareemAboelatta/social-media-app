@@ -10,19 +10,15 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.example.socialmediaapp.R
 import com.example.socialmediaapp.databinding.ChatLayoutBinding
-import com.example.socialmediaapp.databinding.ItemPostBinding
 import com.example.socialmediaapp.models.Chat
-import com.example.socialmediaapp.models.Post
 import com.example.socialmediaapp.models.User
 import com.example.socialmediaapp.repository.Repository
-import com.example.socialmediaapp.common.utils.Utils
+import com.example.socialmediaapp.common.Utils
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.qualifiers.ApplicationContext
-import java.util.ArrayList
 import javax.inject.Inject
 
 class ChatsAdapter @Inject constructor (

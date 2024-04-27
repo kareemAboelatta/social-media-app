@@ -15,10 +15,10 @@ import androidx.navigation.fragment.findNavController
 import com.example.socialmediaapp.R
 import com.example.socialmediaapp.auth.domain.models.CreateUserInput
 import com.example.socialmediaapp.auth.presentation.AuthViewModel
-import com.example.socialmediaapp.common.ProgressDialogUtil
+import com.example.common.ui.ProgressDialogUtil
 import com.example.socialmediaapp.common.helpers.MyValidation
-import com.example.socialmediaapp.common.pickCompressedImage
-import com.example.socialmediaapp.common.utils.UIState
+import com.example.common.ui.pickers.pickCompressedImage
+import com.example.common.ui.utils.UIState
 import com.example.socialmediaapp.databinding.FragmentRegisterBinding
 import com.example.socialmediaapp.models.User
 import dagger.hilt.android.AndroidEntryPoint

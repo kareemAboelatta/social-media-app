@@ -12,7 +12,7 @@ import com.example.socialmediaapp.R
 import com.example.socialmediaapp.databinding.ActivityMessengerBinding
 import com.example.socialmediaapp.ui.main.ViewModelMain
 import com.example.socialmediaapp.firebase.FirebaseService
-import com.example.socialmediaapp.common.utils.Status
+import com.example.common.ui.utils.Status
 import dagger.hilt.android.AndroidEntryPoint
 
 private const val TAG = "Messenger"

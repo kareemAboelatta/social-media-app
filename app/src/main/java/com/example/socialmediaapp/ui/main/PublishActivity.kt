@@ -31,7 +31,7 @@ import android.os.Environment
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import com.example.socialmediaapp.databinding.ActivityPublishBinding
-import com.example.socialmediaapp.common.utils.Status
+import com.example.common.ui.utils.Status
 import java.io.File
 
 

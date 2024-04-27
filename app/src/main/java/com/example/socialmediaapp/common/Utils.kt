@@ -1,13 +1,10 @@
-package com.example.socialmediaapp.common.utils
+package com.example.socialmediaapp.common
 
 import android.content.Context
-import android.util.Log
 import com.example.socialmediaapp.firebase.MyFirebase.mAuth
 import com.example.socialmediaapp.models.Message
-import com.google.firebase.auth.FirebaseAuth
 import java.text.SimpleDateFormat
 import java.util.*
-import javax.inject.Inject
 
 class Utils {
 

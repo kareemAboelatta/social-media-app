@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class LoginAndSignUpActivity : AppCompatActivity() {
+class AuthActivity : AppCompatActivity() {
 
     @Inject
     lateinit var auth: FirebaseAuth
@@ -23,7 +23,7 @@ class LoginAndSignUpActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login_and_sign_up)
+        setContentView(R.layout.activity_auth)
         checkUserState()
 
 

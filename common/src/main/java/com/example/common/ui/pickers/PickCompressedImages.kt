@@ -1,10 +1,11 @@
-package com.example.socialmediaapp.common
+package com.example.common.ui.pickers
 
 import android.content.Context
 import android.net.Uri
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.example.socialmediaapp.R
+import com.example.common.R
+import com.example.common.ui.ProgressDialogUtil
 import gun0912.tedimagepicker.builder.TedImagePicker
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

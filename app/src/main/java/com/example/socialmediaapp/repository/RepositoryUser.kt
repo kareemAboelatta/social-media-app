@@ -5,8 +5,8 @@ import android.net.Uri
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.example.socialmediaapp.models.User
-import com.example.socialmediaapp.common.utils.Constants
-import com.example.socialmediaapp.common.utils.Resource
+import com.example.common.ui.utils.Constants
+import com.example.common.ui.utils.Resource
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference

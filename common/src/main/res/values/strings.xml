@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">Social Media App</string>
+
+    <string name="home">Home</string>
+    <string name="profile">Profile</string>
+    <string name="video">Video</string>
+    <string name="post">Post</string>
+
+    <string name="chats">Chats</string>
+    <string name="people">People</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="username">Username</string>
+    <string name="add_friend">Add Friend</string>
+    <string name="accepted">Accepted</string>
+    <string name="rejected">Rejected</string>
+    <string name="max_images">Max 10 Images</string>
+
+
+    <string name="see_original"><u>see original</u>.</string>
+
+
+
+    <string name="on_num">One Number Needed at Least</string>
+    <string name="min_password">Password should include 1Capital letter, 1 Number, and min 8 character, special character are not allowed</string>
+    <string name="min_email">Email must be more than 14 character</string>
+    <string name="min_name">Name must be more than 8 character</string>
+    <string name="email_empty">Please , enter your email</string>
+    <string name="email_invalid">Invalid email</string>
+    <string name="name_invalid">Invalid name</string>
+    <string name="password_empty">Please , enter your password</string>
+    <string name="cap_letter">1 Capital letter Needed At Least</string>
+    <string name="pass_charecters">Password must > 8 characters</string>
+    <string name="pass_no_spec_charecters">Special characters are not allowed</string>
+
+
+</resources>

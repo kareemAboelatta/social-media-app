@@ -23,8 +23,8 @@ import com.example.socialmediaapp.R
 import com.example.socialmediaapp.ui.main.ViewModelMain
 import com.example.socialmediaapp.adapter.AdapterPost
 import com.example.socialmediaapp.models.Post
-import com.example.socialmediaapp.auth.presentation.LoginAndSignUpActivity
-import com.example.socialmediaapp.common.utils.Status
+import com.example.socialmediaapp.auth.presentation.AuthActivity
+import com.example.common.ui.utils.Status
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -149,7 +149,7 @@ class ProfileFragment : Fragment() {
 
                     R.id.logout -> {
                         auth.signOut()
-                        startActivity(Intent(activity, LoginAndSignUpActivity::class.java))
+                        startActivity(Intent(activity, AuthActivity::class.java))
                     }
                 }
                 true

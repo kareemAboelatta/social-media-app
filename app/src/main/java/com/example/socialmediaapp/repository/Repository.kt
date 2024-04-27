@@ -11,8 +11,8 @@ import com.example.socialmediaapp.R
 import com.example.socialmediaapp.models.Comment
 import com.example.socialmediaapp.models.Post
 import com.example.socialmediaapp.models.User
-import com.example.socialmediaapp.common.utils.Constants
-import com.example.socialmediaapp.common.utils.Resource
+import com.example.common.ui.utils.Constants
+import com.example.common.ui.utils.Resource
 
 
 

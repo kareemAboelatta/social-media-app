@@ -1,27 +1,16 @@
 package com.example.socialmediaapp.adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.updatePadding
 import androidx.recyclerview.widget.RecyclerView
-import com.example.socialmediaapp.R
 import com.example.socialmediaapp.databinding.ReceivedMsgLayoutBinding
 import com.example.socialmediaapp.databinding.SentMsgLayoutBinding
 import com.example.socialmediaapp.models.Message
-import com.example.socialmediaapp.common.utils.Utils
-import com.google.mlkit.common.model.DownloadConditions
+import com.example.socialmediaapp.common.Utils
 import com.google.mlkit.nl.languageid.LanguageIdentification
-import com.google.mlkit.nl.translate.TranslateLanguage
-import com.google.mlkit.nl.translate.Translation
-import com.google.mlkit.nl.translate.TranslatorOptions
-
-import java.util.*
 
 class ConversationAdapter(var messages: List<Message>, private val context: Context) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {

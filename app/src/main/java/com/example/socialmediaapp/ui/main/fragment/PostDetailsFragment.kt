@@ -27,7 +27,7 @@ import com.example.socialmediaapp.adapter.AdapterComment
 import com.example.socialmediaapp.databinding.FragmentPostDetailsBinding
 import com.example.socialmediaapp.models.Comment
 import com.example.socialmediaapp.models.Post
-import com.example.socialmediaapp.common.utils.Status
+import com.example.common.ui.utils.Status
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.source.MediaSource

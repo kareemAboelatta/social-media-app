@@ -21,4 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "Social Media App"
 include(":app")
+include(":common")
 

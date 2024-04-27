@@ -1,4 +1,4 @@
-package com.example.socialmediaapp.common
+package com.example.common.ui.pickers
 
 import android.annotation.SuppressLint
 import android.content.ContentResolver

@@ -1,13 +1,13 @@
 package com.example.socialmediaapp.auth.data.datasource
 
 import android.net.Uri
+import com.example.common.ui.utils.Constants
 import com.example.socialmediaapp.auth.domain.models.CreateUserInput
 import com.example.socialmediaapp.common.AppDispatcher
 import com.example.socialmediaapp.common.CustomAuthException
 import com.example.socialmediaapp.common.CustomDataException
 import com.example.socialmediaapp.common.Dispatcher
-import com.example.socialmediaapp.common.utils.Constants
-import com.example.socialmediaapp.common.utils.Resource
+
 import com.example.socialmediaapp.models.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException

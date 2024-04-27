@@ -1,4 +1,4 @@
-package com.example.socialmediaapp.common
+package com.example.common.ui
 
 
 import android.app.AlertDialog
@@ -10,7 +10,7 @@ import android.view.animation.AnimationSet
 import android.view.animation.ScaleAnimation
 import android.widget.ImageView
 import android.widget.TextView
-import com.example.socialmediaapp.R
+import com.example.common.R
 
 
 class ProgressDialogUtil {

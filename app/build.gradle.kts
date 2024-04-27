@@ -25,7 +25,7 @@ android {
 
     defaultConfig {
         applicationId  = "com.example.socialmediaapp"
-        minSdk = 23
+        minSdk = 24
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -86,6 +86,7 @@ dependencies {
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("com.google.firebase:firebase-database-ktx:20.3.0")
     implementation("com.google.firebase:firebase-messaging-ktx:23.4.0")
+    implementation(project(":common"))
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -174,9 +175,6 @@ dependencies {
     implementation("com.google.mlkit:language-id:17.0.4")
 
 
-    //pickers
-    implementation("io.github.ParkSangGwon:tedimagepicker:1.4.2")
-    implementation("com.github.Shouheng88:compressor:1.6.0")
-    implementation("commons-io:commons-io:2.7")
+
 }
 

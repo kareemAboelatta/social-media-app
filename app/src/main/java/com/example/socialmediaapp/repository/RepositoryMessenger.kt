@@ -2,19 +2,17 @@ package com.example.socialmediaapp.repository
 
 import android.content.Context
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.example.socialmediaapp.models.*
 import com.example.socialmediaapp.network.RetrofitBuilder
-import com.example.socialmediaapp.common.utils.Constants
-import com.example.socialmediaapp.common.utils.Resource
-import com.example.socialmediaapp.common.utils.Utils
+import com.example.common.ui.utils.Constants
+import com.example.common.ui.utils.Resource
+import com.example.socialmediaapp.common.Utils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.storage.StorageReference
 import com.google.mlkit.nl.languageid.LanguageIdentification
 import com.google.mlkit.nl.translate.TranslateLanguage
 import kotlinx.coroutines.CoroutineScope
