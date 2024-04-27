@@ -64,9 +64,6 @@ class FirebaseService : FirebaseMessagingService() {
                         getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
                     val notificationID = Random.nextInt()
 
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        createNotificationChannel(notificationManager)
-                    }
 
 
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
@@ -121,24 +118,6 @@ class FirebaseService : FirebaseMessagingService() {
             }
         }
 */
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun createNotificationChannel(notificationManager: NotificationManager) {
-        val channelName = "channelName"
-        val channel =
-            NotificationChannel(
-                CHANNEL_ID,
-                channelName,
-                NotificationManager.IMPORTANCE_HIGH
-            ).apply {
-                description = "My channel description"
-                enableLights(true)
-                enableVibration(true)
-                setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), null)
-                lightColor = Color.GREEN
-            }
-        notificationManager.createNotificationChannel(channel)
     }
 
     override fun onNewToken(token: String) {

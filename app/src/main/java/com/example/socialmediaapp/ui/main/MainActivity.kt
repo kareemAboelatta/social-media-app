@@ -1,8 +1,13 @@
 package com.example.socialmediaapp.ui.main
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.example.socialmediaapp.R
@@ -48,7 +53,35 @@ class MainActivity : AppCompatActivity() {
             binding.bottomMenu.showBadge(R.id.videos, 8)
             binding.bottomMenu.showBadge(R.id.home, 5)
         }
+
+
+        checkAndRequestPermission()
+
     }
+
+
+    private val requestMultiplePermissions =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+            if (!permissions.all { it.value }) checkAndRequestPermission()
+        }
+
+    private fun checkAndRequestPermission() {
+        val permissionsToRequest = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            arrayOf(Manifest.permission.POST_NOTIFICATIONS)
+        } else {
+            arrayOf()
+        }
+
+        val isAllPermissionsGranted = permissionsToRequest.all { permissions ->
+            ContextCompat.checkSelfPermission(
+                applicationContext,
+                permissions
+            ) == PackageManager.PERMISSION_GRANTED
+        }
+        if (!isAllPermissionsGranted) requestMultiplePermissions.launch(permissionsToRequest)
+    }
+
+
 
 
 }
