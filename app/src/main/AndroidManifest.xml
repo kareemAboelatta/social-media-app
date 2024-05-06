@@ -54,10 +54,7 @@
             >
 
         </activity>
-        <activity
-            android:name=".ui.main.PublishActivity"
-            android:exported="false"
-            />
+
         <activity
             android:name=".auth.presentation.AuthActivity"
             android:exported="true"
