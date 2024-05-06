@@ -101,10 +101,7 @@
         <meta-data
             android:name="com.google.mlkit.vision.DEPENDENCIES"
             android:value="langid" />
-        <!-- To use multiple models: android:value="langid,model2,model3" -->
-        <meta-data
-            android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-7572723734808420~2347425842" />
+
     </application>
 
 </manifest>

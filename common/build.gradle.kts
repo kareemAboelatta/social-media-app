@@ -119,15 +119,13 @@ dependencies {
     api("com.google.mlkit:translate:17.0.2")
     api("com.google.mlkit:language-id:17.0.5")
 
-    // AdMob
-    api("com.google.android.gms:play-services-ads:23.0.0")
 
 
 
     //pickers
     api("io.github.ParkSangGwon:tedimagepicker:1.4.2")
     api("com.github.Shouheng88:compressor:1.6.0")
-    api("commons-io:commons-io:2.7")
+    api("commons-io:commons-io:2.13.0")
 
 
 
@@ -142,10 +140,7 @@ dependencies {
 
     // Shimmer
     api("com.facebook.shimmer:shimmer:0.5.0")
-    // ExoPlayer
-    api("com.google.android.exoplayer:exoplayer:2.19.1")
-    api("com.google.android.exoplayer:exoplayer-core:2.19.1")
-    api("com.google.android.exoplayer:exoplayer-ui:2.19.1")
+
     // CircleImageView
     api("de.hdodenhof:circleimageview:3.1.0")
     // Chip Navigation Bar
@@ -155,6 +150,10 @@ dependencies {
 
 
 
+    // ExoPlayer
+    api("com.google.android.exoplayer:exoplayer:2.19.1")
+    api("com.google.android.exoplayer:exoplayer-core:2.19.1")
+    api("com.google.android.exoplayer:exoplayer-ui:2.19.1")
 
 
 }
