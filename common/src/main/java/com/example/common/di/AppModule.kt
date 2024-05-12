@@ -1,15 +1,12 @@
-package com.example.socialmediaapp.di
+package com.example.common.di
 
-import android.app.ProgressDialog
 import android.content.Context
 import android.speech.tts.TextToSpeech
-import android.widget.ProgressBar
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
-import com.example.socialmediaapp.R
+import com.example.common.R
 import com.google.android.exoplayer2.SimpleExoPlayer
-import com.google.firebase.database.FirebaseDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -44,7 +41,7 @@ object AppModule {
     ) = Glide.with(context).setDefaultRequestOptions(
         RequestOptions()
             .placeholder(R.color.blackColor )
-            .error(R.drawable.ic_image_default)
+            .error(R.drawable.logo)
             .diskCacheStrategy(DiskCacheStrategy.DATA)
     )
 

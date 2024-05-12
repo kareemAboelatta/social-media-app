@@ -1,4 +1,4 @@
-package com.example.socialmediaapp.common
+package com.example.common
 
 import javax.inject.Qualifier
 

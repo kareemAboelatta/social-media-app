@@ -1,6 +1,6 @@
-package com.example.socialmediaapp.network
+package com.example.common.data.network
 
-import com.example.socialmediaapp.models.PushNotification
+import com.example.common.domain.model.PushNotification
 import com.example.common.ui.utils.Constants
 import okhttp3.ResponseBody
 import retrofit2.Response

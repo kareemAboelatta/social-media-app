@@ -3,10 +3,10 @@ package com.example.socialmediaapp.auth.data.datasource
 import android.net.Uri
 import com.example.common.ui.utils.Constants
 import com.example.socialmediaapp.auth.domain.models.CreateUserInput
-import com.example.socialmediaapp.common.AppDispatcher
-import com.example.socialmediaapp.common.CustomAuthException
-import com.example.socialmediaapp.common.CustomDataException
-import com.example.socialmediaapp.common.Dispatcher
+import com.example.common.AppDispatcher
+import com.example.common.CustomAuthException
+import com.example.common.CustomDataException
+import com.example.common.Dispatcher
 
 import com.example.socialmediaapp.models.User
 import com.google.firebase.auth.FirebaseAuth
@@ -15,7 +15,6 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.StorageReference
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope

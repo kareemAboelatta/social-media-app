@@ -1,4 +1,4 @@
-package com.example.socialmediaapp.network
+package com.example.common.data.network
 
 import com.example.common.ui.utils.Constants
 import retrofit2.Retrofit

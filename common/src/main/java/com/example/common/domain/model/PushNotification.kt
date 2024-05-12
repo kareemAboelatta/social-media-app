@@ -1,4 +1,4 @@
-package com.example.socialmediaapp.models
+package com.example.common.domain.model
 
 data class PushNotification(
     val data: NotificationData,

@@ -1,8 +1,8 @@
-package com.example.socialmediaapp.di
+package com.example.common.di
 
 
-import com.example.socialmediaapp.common.AppDispatcher
-import com.example.socialmediaapp.common.Dispatcher
+import com.example.common.AppDispatcher
+import com.example.common.Dispatcher
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

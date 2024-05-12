@@ -1,8 +1,8 @@
-package com.example.socialmediaapp.di
+package com.example.common.di
 
 
+import com.example.common.data.network.NotificationApi
 import com.example.common.ui.utils.Constants
-import com.example.socialmediaapp.network.NotificationApi
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.messaging.FirebaseMessaging
@@ -42,7 +42,7 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideMovieService(): NotificationApi{
+    fun provideMovieService(): NotificationApi {
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl(Constants.BASE_URL)
