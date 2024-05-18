@@ -1,11 +1,11 @@
-package com.example.common.ui.pickers
+package com.example.core.ui.pickers
 
 import android.content.Context
 import android.net.Uri
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.example.common.R
-import com.example.common.ui.ProgressDialogUtil
+import com.example.core.R
+import com.example.core.ui.ProgressDialogUtil
 import gun0912.tedimagepicker.builder.TedImagePicker
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -30,9 +30,9 @@ fun Fragment.pickCompressedImage(progressUtil: ProgressDialogUtil, onSaveFile: s
             this.lifecycleScope.launch {
                 val file = FileUtils(this@pickCompressedImage.requireContext()).createTmpFileFromUri(uri)
                 if (file != null) {
-                    progressUtil.showProgressDialog(requireActivity())
+                    progressUtil.showProgress()
                     val compressedFile = compressFile(this@pickCompressedImage.requireContext(), file)
-                    progressUtil.hideProgressDialog()
+                    progressUtil.hideProgress()
                     onSaveFile(compressedFile, uri)
                 }
             }
@@ -45,9 +45,9 @@ fun Fragment.pickCompressedVideo(progressUtil: ProgressDialogUtil, onSaveFile: s
             this.lifecycleScope.launch {
                 val file = FileUtils(this@pickCompressedVideo.requireContext()).createTmpFileFromUri(uri)
                 if (file != null) {
-                    progressUtil.showProgressDialog(requireActivity())
+                    progressUtil.showProgress()
                     val compressedFile = compressFile(this@pickCompressedVideo.requireContext(), file)
-                    progressUtil.hideProgressDialog()
+                    progressUtil.hideProgress()
                     onSaveFile(compressedFile, uri)
                 }
             }
@@ -63,9 +63,9 @@ fun Fragment.pickMultiCompressedImages(listUris:MutableList<Uri>, progressUtil: 
                 list.forEach {
                     val file = FileUtils(this@pickMultiCompressedImages.requireContext()).createTmpFileFromUri(it)
                     if (file != null) {
-                        progressUtil.showProgressDialog(requireActivity())
+                        progressUtil.showProgress()
                         val compressedFile = compressFile(this@pickMultiCompressedImages.requireContext(), file)
-                        progressUtil.hideProgressDialog()
+                        progressUtil.hideProgress()
                         listImages.add(compressedFile)
                     }
                 }

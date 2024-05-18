@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <!--common-->
+    <string name="loading">Loading…</string>
+
+
+    <string name="max_images">Max 10 Images</string>
+
+
+
+</resources>

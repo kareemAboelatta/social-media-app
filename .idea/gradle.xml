@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/auth" />
             <option value="$PROJECT_DIR$/common" />
+            <option value="$PROJECT_DIR$/core" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />

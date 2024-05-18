@@ -1,25 +1,31 @@
-package com.example.common.ui
+package com.example.core.ui
 
 
+import android.app.Activity
 import android.app.AlertDialog
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationSet
-import android.view.animation.RotateAnimation
 import android.view.animation.ScaleAnimation
 import android.widget.ImageView
 import android.widget.TextView
-import com.example.common.R
+import com.example.core.R
+import javax.inject.Inject
+import javax.inject.Singleton
 
 
-class ProgressDialogUtil {
+@Singleton
+class ProgressDialogUtil @Inject constructor(val context: Activity) {
 
     private var progressDialog: AlertDialog? = null
     private var progressIcon: ImageView? = null
 
-    fun showProgressDialog(context: Context, message: String = "Loading..."){
+    init {
+        init()
+    }
+
+    private fun init() {
         val builder = AlertDialog.Builder(context, R.style.CustomAlertDialog)
 
 
@@ -30,7 +36,7 @@ class ProgressDialogUtil {
         progressIcon = dialogView.findViewById(R.id.progressIcon)
 
         val progressMessage: TextView = dialogView.findViewById(R.id.progressMessage)
-        progressMessage.text = message
+        progressMessage.text = context.getString(R.string.loading)
 
 
         builder.setView(dialogView)
@@ -69,17 +75,23 @@ class ProgressDialogUtil {
         progressIcon?.animation = animationSet
 
         progressDialog = builder.create()
+    }
+
+
+    fun showProgress(){
         progressDialog?.show()
     }
 
-
-    fun hideProgressDialog() {
+    fun hideProgress() {
         // Stop the animation
-        progressIcon?.animation?.cancel()
+       if (progressDialog?.isShowing == true) {
+           progressIcon?.animation?.cancel()
+           progressDialog?.cancel()
+           progressDialog?.hide()
+        }
         progressDialog?.dismiss()
-
-
     }
+
 
 
 }

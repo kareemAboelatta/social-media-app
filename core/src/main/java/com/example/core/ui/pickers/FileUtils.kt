@@ -1,4 +1,4 @@
-package com.example.common.ui.pickers
+package com.example.core.ui.pickers
 
 import android.annotation.SuppressLint
 import android.content.ContentResolver
