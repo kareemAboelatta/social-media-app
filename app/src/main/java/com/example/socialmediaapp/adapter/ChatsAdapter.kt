@@ -14,7 +14,7 @@ import com.bumptech.glide.RequestManager
 import com.example.socialmediaapp.R
 import com.example.socialmediaapp.databinding.ChatLayoutBinding
 import com.example.socialmediaapp.models.Chat
-import com.example.socialmediaapp.models.User
+import com.example.common.domain.model.User
 import com.example.socialmediaapp.repository.Repository
 import com.example.socialmediaapp.common.Utils
 import com.google.firebase.auth.FirebaseAuth

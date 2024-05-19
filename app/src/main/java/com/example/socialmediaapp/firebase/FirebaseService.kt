@@ -75,7 +75,7 @@ class FirebaseService : FirebaseMessagingService() {
                     val notification = NotificationCompat.Builder(this, CHANNEL_ID)
                         .setContentTitle(title)
                         .setContentText(message.data["message"])
-                        .setSmallIcon(R.drawable.icon_message)
+                        .setSmallIcon(com.example.core.R.drawable.icon_message)
                         .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                         .setVibrate(longArrayOf(1000, 1000, 1000, 1000, 1000))
                         .setColor(resources.getColor(R.color.colorGreen, null))

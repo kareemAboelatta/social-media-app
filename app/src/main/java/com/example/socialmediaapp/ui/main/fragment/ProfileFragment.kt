@@ -23,8 +23,8 @@ import com.example.socialmediaapp.R
 import com.example.socialmediaapp.ui.main.ViewModelMain
 import com.example.socialmediaapp.adapter.AdapterPost
 import com.example.socialmediaapp.models.Post
-import com.example.socialmediaapp.auth.presentation.AuthActivity
 import com.example.common.ui.utils.Status
+import com.example.core.openAuthActivity
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -149,7 +149,7 @@ class ProfileFragment : Fragment() {
 
                     R.id.logout -> {
                         auth.signOut()
-                        startActivity(Intent(activity, AuthActivity::class.java))
+                        requireActivity().openAuthActivity()
                     }
                 }
                 true
@@ -195,7 +195,7 @@ class ProfileFragment : Fragment() {
 
                     name = user?.name
                     bio = user?.bio
-                    glide.load(user?.image).error(R.drawable.ic_profile)
+                    glide.load(user?.image).error(com.example.core.R.drawable.ic_profile)
                         .into(binding.profImageProfile)
 
 

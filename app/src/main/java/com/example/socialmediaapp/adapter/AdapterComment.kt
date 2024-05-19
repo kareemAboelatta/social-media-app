@@ -79,7 +79,7 @@ class AdapterComment  (
             itemCommentNameTv.text = curComment.userName
             itemCommentTimeTv.text = commentTime
 
-            glide.load(curComment.userImage).error(R.drawable.ic_profile).into(itemCommentAvatarTv)
+            glide.load(curComment.userImage).error(com.example.core.R.drawable.ic_profile).into(itemCommentAvatarTv)
 
 
             itemCommentLongClick.setOnLongClickListener {

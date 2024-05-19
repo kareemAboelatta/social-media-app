@@ -225,7 +225,7 @@ class PostDetailsFragment :  Fragment() {
                 Status.SUCCESS -> {
                     myName = it.data?.name
                     myImage = it.data?.image
-                    glide.load(myImage).error(R.drawable.ic_profile).into(binding.detCAvatarTv)
+                    glide.load(myImage).error(com.example.core.R.drawable.ic_profile).into(binding.detCAvatarTv)
                 }
                 Status.ERROR -> {
                     Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()

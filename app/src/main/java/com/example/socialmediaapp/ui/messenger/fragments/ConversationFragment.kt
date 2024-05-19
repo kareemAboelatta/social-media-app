@@ -17,7 +17,7 @@ import com.example.socialmediaapp.R
 import com.example.socialmediaapp.adapter.ConversationAdapter
 import com.example.socialmediaapp.databinding.ConversationToolbarBinding
 import com.example.socialmediaapp.databinding.FragmentConversationBinding
-import com.example.socialmediaapp.models.User
+import com.example.common.domain.model.User
 import com.example.socialmediaapp.ui.messenger.ViewModelMessenger
 import com.example.common.ui.utils.Status
 import dagger.hilt.android.AndroidEntryPoint

@@ -4,7 +4,7 @@ import android.content.Context
 import android.net.Uri
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
-import com.example.socialmediaapp.models.User
+import com.example.common.domain.model.User
 import com.example.common.ui.utils.Constants
 import com.example.common.ui.utils.Resource
 import com.google.firebase.auth.FirebaseAuth

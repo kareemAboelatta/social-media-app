@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.socialmediaapp">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
 
     <uses-permission android:name="android.permission.CAMERA" />
@@ -29,11 +29,6 @@
         tools:node="remove" />
 
 
-
-
-
-
-
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -44,19 +39,18 @@
         android:theme="@style/Theme.SocialMediaApp">
         <activity
             android:name=".TestActivity"
-            android:exported="true" >
+            android:exported="true">
 
         </activity>
         <activity
             android:name=".ui.messenger.Messenger"
             android:exported="true"
-            android:theme="@style/MyAppCompatTheme"
-            >
+            android:theme="@style/MyAppCompatTheme">
 
         </activity>
 
         <activity
-            android:name=".auth.presentation.AuthActivity"
+            android:name="com.presentation.AuthActivity"
             android:exported="true"
             android:theme="@style/AppThemeForLogReg">
             <intent-filter>
@@ -71,7 +65,6 @@
             android:theme="@style/AppThemeForMainActivity" />
 
 
-
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
@@ -83,15 +76,12 @@
         </provider>
 
 
-
-
         <service
             android:name=".firebase.FirebaseService"
             android:exported="false"
             android:permission="com.google.android.c2dm.permission.SEND"
             android:enabled="true"
-            android:stopWithTask="false"
-            >
+            android:stopWithTask="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
                 <action android:name="com.google.android.c2dm.intent.RECEVIE" />

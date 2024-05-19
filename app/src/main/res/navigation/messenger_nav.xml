@@ -18,7 +18,7 @@
         android:label="ConversationFragment" >
         <argument
             android:name="user"
-            app:argType="com.example.socialmediaapp.models.User" />
+            app:argType="com.example.common.domain.model.User" />
     </fragment>
     <fragment
         android:id="@+id/chatsFragment"

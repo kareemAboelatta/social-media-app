@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    >
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_150sdp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_wavee"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:padding="@dimen/_1sdp"
+        android:layout_marginTop="@dimen/_120sdp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp"
+            android:text="MicroPhone"
+            android:textColor="@color/colorPrimary"
+            android:textSize="35sp"
+            android:textStyle="bold" />
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inputTextLayoutEmail"
+            style="@style/text_input_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:hint="E-mail"
+            app:startIconDrawable="@drawable/ic_action_name"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputTextEmail"
+                android:inputType="textEmailAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_18sdp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inputTextLayoutPassword"
+            style="@style/text_input_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:hint="Password"
+            app:endIconMode="password_toggle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/inputTextLayoutEmail"
+            app:startIconDrawable="@drawable/ic_password">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputTextPassword"
+                android:layout_width="match_parent"
+                android:inputType="textPassword"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_18sdp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+        <LinearLayout
+            android:id="@+id/ln_option"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_margin="@dimen/_5sdp"
+            android:gravity="start"
+            >
+            <androidx.appcompat.widget.SwitchCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:id="@+id/switchRememberMe"
+                app:track="@drawable/track_switch"
+                android:thumb="@drawable/thumb_switch"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Remember Me"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:textStyle="bold"
+                />
+            <TextView
+                android:id="@+id/login_forget"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:text="Forget Password?"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+
+
+        </LinearLayout>
+
+
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            app:cardBackgroundColor="@color/colorPrimary"
+            app:cardCornerRadius="7dp">
+
+            <TextView
+                android:id="@+id/login_btn_LogIn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center"
+                android:text="LOGIN"
+                android:textColor="@color/colorWhite"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/login_btn_Register"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:gravity="center"
+            android:layout_margin="@dimen/_5sdp"
+            android:text="REGISTER NOW"
+            android:textSize="16sp"
+            android:textStyle="bold"
+
+            />
+
+    </LinearLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
