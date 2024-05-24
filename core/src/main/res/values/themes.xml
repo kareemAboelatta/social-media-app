@@ -1,0 +1,56 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+
+
+
+    <style name="text_input_style" parent="@style/Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="boxCornerRadiusBottomEnd">@dimen/_10sdp</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/_10sdp</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/_10sdp</item>
+        <item name="boxCornerRadiusTopStart">@dimen/_10sdp</item>
+        <item name="boxStrokeColor">@color/colorAccent</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="maxLines">1</item>
+        <item name="boxBackgroundColor">@color/colorGrayWhite</item>
+        <item name="helperTextTextColor">@android:color/holo_red_dark</item>
+    </style>
+
+
+
+    <style name="CustomAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/custom_dialog_background</item>
+    </style>
+
+
+    <style name="BottomSheetStyle" parent="Theme.Design.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/BottomSheetDialogTheme</item>
+        <item name="background">@android:color/transparent</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:tint">@android:color/transparent</item>
+    </style>
+
+    <style name="BottomSheetDialogTheme" parent="Widget.Design.BottomSheet.Modal">
+        <item name="background">@android:color/transparent</item>
+
+    </style>
+
+
+
+    <style name="button_primary" parent="Widget.MaterialComponents.Button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/_43sdp</item>
+        <item name="android:textSize">@dimen/_12ssp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginStart">@dimen/_10sdp</item>
+        <item name="android:layout_marginEnd">@dimen/_10sdp</item>
+        <item name="rippleColor">@color/colorGray</item>
+        <item name="buttonTint">@color/white</item>
+        <item name="backgroundTint">@color/white</item>
+        <item name="color">@color/white</item>
+        <item name="cornerRadius">@dimen/_5sdp</item>
+    </style>
+
+</resources>

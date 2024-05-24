@@ -94,7 +94,7 @@ class PostOwnerFragment : Fragment() {
                     val user = it.data
                     binding.profName.text = user?.name
                     binding.profBio.text = user?.bio
-                    glide.load(user?.image).error(R.drawable.ic_profile).into(binding.profImageProfile)
+                    glide.load(user?.image).error(com.example.core.R.drawable.ic_profile).into(binding.profImageProfile)
                     glide.load(user?.cover).error(R.drawable.ic_image_default).into(binding.profImageCover)
                     binding.profImageCover.scaleType = ImageView.ScaleType.CENTER_CROP
                 }

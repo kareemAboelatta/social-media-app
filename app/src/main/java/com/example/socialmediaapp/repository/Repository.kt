@@ -1,29 +1,20 @@
 package com.example.socialmediaapp.repository
 
 import android.content.Context
-import android.graphics.Paint
 import android.net.Uri
-import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
-import com.example.socialmediaapp.R
 import com.example.socialmediaapp.models.Comment
 import com.example.socialmediaapp.models.Post
-import com.example.socialmediaapp.models.User
+import com.example.common.domain.model.User
 import com.example.common.ui.utils.Constants
 import com.example.common.ui.utils.Resource
 
 
-
-
-
-import com.google.firebase.auth.auth
 import com.google.firebase.database.*
 
 
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.*
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.StorageReference
 import com.google.mlkit.nl.languageid.LanguageIdentification

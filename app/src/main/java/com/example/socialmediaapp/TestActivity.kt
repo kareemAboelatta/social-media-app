@@ -7,9 +7,9 @@ import android.util.Log
 import android.widget.Toast
 import com.example.socialmediaapp.firebase.FirebaseService
 import com.example.socialmediaapp.firebase.MyFirebase
-import com.example.socialmediaapp.models.NotificationData
-import com.example.socialmediaapp.models.PushNotification
-import com.example.socialmediaapp.network.RetrofitBuilder
+import com.example.common.domain.model.NotificationData
+import com.example.common.domain.model.PushNotification
+import com.example.common.data.network.RetrofitBuilder
 import com.google.firebase.iid.FirebaseInstanceIdReceiver
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.Gson

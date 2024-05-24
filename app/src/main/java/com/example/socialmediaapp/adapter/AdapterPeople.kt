@@ -3,14 +3,13 @@ package com.example.socialmediaapp.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import com.example.socialmediaapp.R
 import com.example.socialmediaapp.databinding.UserLayoutBinding
-import com.example.socialmediaapp.models.User
+import com.example.common.domain.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.storage.StorageReference

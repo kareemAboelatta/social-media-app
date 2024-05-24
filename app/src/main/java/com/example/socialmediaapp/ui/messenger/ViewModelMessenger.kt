@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.socialmediaapp.models.Chat
-import com.example.socialmediaapp.models.User
+import com.example.common.domain.model.User
 import com.example.socialmediaapp.repository.RepositoryMessenger
 import com.example.common.ui.utils.Constants
 import com.example.common.ui.utils.Resource
@@ -16,7 +16,6 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.getValue
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.plus
 import javax.inject.Inject
 
 

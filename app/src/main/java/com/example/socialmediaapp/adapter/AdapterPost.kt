@@ -95,7 +95,7 @@ class AdapterPost @Inject constructor (
                     postImageAnyone.setImageResource(R.drawable.ic_group);
                 }
                 "Only me"->{
-                    postImageAnyone.setImageResource(R.drawable.ic_profile);
+                    postImageAnyone.setImageResource(com.example.core.R.drawable.ic_profile);
                 }
             }
 

@@ -4,7 +4,10 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.socialmediaapp.models.*
-import com.example.socialmediaapp.network.RetrofitBuilder
+import com.example.common.data.network.RetrofitBuilder
+import com.example.common.domain.model.NotificationData
+import com.example.common.domain.model.PushNotification
+import com.example.common.domain.model.User
 import com.example.common.ui.utils.Constants
 import com.example.common.ui.utils.Resource
 import com.example.socialmediaapp.common.Utils

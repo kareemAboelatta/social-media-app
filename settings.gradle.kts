@@ -1,3 +1,4 @@
+include(":auth")
 
 
 pluginManagement {
@@ -22,4 +23,6 @@ dependencyResolutionManagement {
 rootProject.name = "Social Media App"
 include(":app")
 include(":common")
-
+include(":auth")
+include(":core")
+include(":home")

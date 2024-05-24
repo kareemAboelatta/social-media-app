@@ -1,6 +1,5 @@
 package com.example.socialmediaapp.ui.main
 
-import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 
@@ -8,11 +7,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.socialmediaapp.models.Comment
 import com.example.socialmediaapp.models.Post
-import com.example.socialmediaapp.models.User
+import com.example.common.domain.model.User
 import com.example.socialmediaapp.repository.Repository
 import com.example.common.ui.utils.Resource
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
