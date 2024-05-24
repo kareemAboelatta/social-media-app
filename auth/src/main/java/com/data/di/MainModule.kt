@@ -1,4 +1,4 @@
-package com.di
+package com.data.di
 
 
 import com.data.datasource.AuthDatasource
@@ -20,7 +20,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object AuthModule {
+object MainModule {
 
     @Singleton
     @Provides

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="radius_low">@dimen/_3sdp</dimen>
+    <dimen name="radius">@dimen/_6sdp</dimen>
+    <dimen name="radius_high">@dimen/_8sdp</dimen>
+    <dimen name="radius_very_high">@dimen/_10sdp</dimen>
+
+    <dimen name="padding_low">@dimen/_6sdp</dimen>
+    <dimen name="padding_medium">@dimen/_8sdp</dimen>
+    <dimen name="padding_high">@dimen/_10sdp</dimen>
+
+    <dimen name="margin_very_low">@dimen/_4sdp</dimen>
+    <dimen name="margin_low">@dimen/_6sdp</dimen>
+    <dimen name="margin_medium">@dimen/_8sdp</dimen>
+    <dimen name="margin_high">@dimen/_10sdp</dimen>
+
+
+
+    <dimen name="photo_size_small">@dimen/_50sdp</dimen>
+    <dimen name="photo_size_medium">@dimen/_80sdp</dimen>
+    <dimen name="photo_size_large">@dimen/_100sdp</dimen>
+    <dimen name="photo_size_very_large">@dimen/_120sdp</dimen>
+
+
+</resources>

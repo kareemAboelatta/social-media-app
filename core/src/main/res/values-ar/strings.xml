@@ -2,4 +2,7 @@
 <resources>
     <string name="loading">جاري التحميل</string>
     <string name="max_images">الحد الاقصي 10 صور</string>
+
+    <string name="attach_photos">ارفاق صور</string>
+
 </resources>
