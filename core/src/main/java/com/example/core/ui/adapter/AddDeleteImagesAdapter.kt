@@ -9,7 +9,7 @@ import com.example.core.databinding.PhotoItemLayoutBinding
 import com.example.core.ui.utils.loadImageFromUrl
 
 
-class AddOrderImagesAdapter(
+class AddDeleteImagesAdapter(
     val removeUriImageOnClick: (uri: String, position: Int) -> Unit,
     val onImageClicked: (photo: String ) -> Unit,
     val addImageOnClick: () -> Unit

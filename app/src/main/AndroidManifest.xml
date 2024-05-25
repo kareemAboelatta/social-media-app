@@ -62,7 +62,7 @@
         <activity
             android:name=".ui.main.MainActivity"
             android:exported="true"
-            android:theme="@style/AppThemeForMainActivity" />
+            android:theme="@style/SocialMediaApp" />
 
 
         <provider

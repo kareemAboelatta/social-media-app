@@ -46,16 +46,6 @@
 
 
 
-    <style name="AppThemeForMainActivity"
-        parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimary</item>
-        <item name="colorAccent">@color/purple_500</item>
-
-    </style>
-
-
     <style name="BottomSheetStyle" parent="Theme.Design.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/BottomSheetDialogTheme</item>
         <item name="background">@android:color/transparent</item>

@@ -1,6 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.SocialMediaApp" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+
+
+    <style name="SocialMediaApp" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -33,7 +35,7 @@
         <item name="boxStrokeColor">@color/colorAccent</item>
         <item name="boxStrokeWidth">0dp</item>
         <item name="maxLines">1</item>
-        <item name="boxBackgroundColor">@color/colorGrayWhite</item>
+        <item name="boxBackgroundColor">@color/white</item>
         <item name="helperTextTextColor">@android:color/holo_red_dark</item>
     </style>
 
@@ -69,9 +71,9 @@
         <item name="android:layout_marginStart">@dimen/_10sdp</item>
         <item name="android:layout_marginEnd">@dimen/_10sdp</item>
         <item name="rippleColor">@color/colorGray</item>
-        <item name="buttonTint">@color/white</item>
-        <item name="backgroundTint">@color/white</item>
-        <item name="color">@color/white</item>
+        <item name="buttonTint">@color/colorPrimary</item>
+        <item name="backgroundTint">@color/colorPrimary</item>
+        <item name="color">@color/colorPrimary</item>
         <item name="cornerRadius">@dimen/_5sdp</item>
     </style>
 
