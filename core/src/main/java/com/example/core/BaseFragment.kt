@@ -73,10 +73,14 @@ abstract class BaseFragment<VBinding : ViewBinding>(private val inflate: Inflate
         super.onViewCreated(view, savedInstanceState)
 
         onViewCreated()
+        onClicks()
     }
 
 
     abstract fun onViewCreated()
+     open fun onClicks(){
+
+     }
 
 
     override fun onDestroyView() {

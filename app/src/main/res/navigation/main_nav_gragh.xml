@@ -47,10 +47,17 @@
             android:id="@+id/action_videosFragment_to_postOwnerFragment"
             app:destination="@id/postOwnerFragment" />
     </fragment>
-    <fragment
+<!--    <fragment
         android:id="@+id/publishFragment"
         android:name="com.example.socialmediaapp.main.ui.puplish.PublishFragment"
+        android:label="PublishFragment" />-->
+    <fragment
+        android:id="@+id/publishFragment"
+        android:name="com.example.main.presentation.publish_post.PublishPostFragment"
         android:label="PublishFragment" />
+
+
+
     <fragment
         android:id="@+id/postDetailsFragment"
         android:name="com.example.socialmediaapp.ui.main.fragment.PostDetailsFragment"

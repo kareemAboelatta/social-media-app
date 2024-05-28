@@ -13,14 +13,14 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.RequestManager
-import com.example.core.ui.pickers.pickCompressedImage
-import com.example.core.ui.pickers.pickCompressedVideo
+import com.example.common.domain.model.User
 import com.example.common.ui.utils.Status
 import com.example.core.BaseFragment
+import com.example.core.ui.pickers.pickCompressedImage
+import com.example.core.ui.pickers.pickCompressedVideo
 import com.example.socialmediaapp.R
 import com.example.socialmediaapp.databinding.FragmentPublishBinding
 import com.example.socialmediaapp.models.Post
-import com.example.common.domain.model.User
 import com.example.socialmediaapp.ui.main.ViewModelMain
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
@@ -29,7 +29,7 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class PublishFragment  : BaseFragment<FragmentPublishBinding>(FragmentPublishBinding::inflate) {
+class PublishFragment : BaseFragment<FragmentPublishBinding>(FragmentPublishBinding::inflate) {
 
     @Inject
     lateinit var auth: FirebaseAuth
@@ -40,7 +40,7 @@ class PublishFragment  : BaseFragment<FragmentPublishBinding>(FragmentPublishBin
 
     private val viewModel by viewModels<ViewModelMain>()
 
-    private lateinit var thisUser : User
+    private lateinit var thisUser: User
 
     @Inject
     lateinit var glide: RequestManager
@@ -59,6 +59,7 @@ class PublishFragment  : BaseFragment<FragmentPublishBinding>(FragmentPublishBin
                     glide.load(thisUser.image).into(binding.publishMyImage)
                     binding.publishMyName.text = thisUser.name
                 }
+
                 Status.ERROR -> {
                     Toast.makeText(requireActivity(), it.message, Toast.LENGTH_SHORT).show()
                 }
@@ -67,13 +68,14 @@ class PublishFragment  : BaseFragment<FragmentPublishBinding>(FragmentPublishBin
             }
         }
 
-        onClicks()    }
+    }
+
     //fun onClicks
-    private fun onClicks(){
+    override fun onClicks() {
         binding.publishBtnPublish.setOnClickListener {
-            val caption=binding.publishCaption.text.toString()
-            val fans= binding.publishTextAnyone.text.toString()
-            if (caption.isEmpty()){
+            val caption = binding.publishCaption.text.toString()
+            val fans = binding.publishTextAnyone.text.toString()
+            if (caption.isEmpty()) {
                 Toast.makeText(requireActivity(), "Enter caption", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener;
             }
@@ -90,7 +92,7 @@ class PublishFragment  : BaseFragment<FragmentPublishBinding>(FragmentPublishBin
                 postType = "image"
                 postAttachment = imageUri.toString()
 
-            } else if (imageUri == null ) {
+            } else if (imageUri == null) {
                 //video
                 postType = "video"
                 postAttachment = videoUri.toString()
@@ -102,19 +104,22 @@ class PublishFragment  : BaseFragment<FragmentPublishBinding>(FragmentPublishBin
             )
 
             viewModel.identifyLanguage(caption)
-            viewModel.languageIdentifierLiveData.observe(viewLifecycleOwner){
-                when(it.status){
-                    Status.SUCCESS->{
+            viewModel.languageIdentifierLiveData.observe(viewLifecycleOwner) {
+                when (it.status) {
+                    Status.SUCCESS -> {
                         post.languageCode = it.data.toString()
                         viewModel.uploadPost(post)
-                        viewModel.postLiveData.observe(viewLifecycleOwner){
-                            when(it.status){
-                                Status.SUCCESS->{
+                        viewModel.postLiveData.observe(viewLifecycleOwner) {
+                            when (it.status) {
+                                Status.SUCCESS -> {
                                     findNavController().navigate(R.id.homeFragment)
-                                    Toast.makeText(myContext, "Post Published", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(myContext, "Post Published", Toast.LENGTH_SHORT)
+                                        .show()
                                 }
-                                Status.ERROR->{
-                                    Toast.makeText(myContext, "${it.message}", Toast.LENGTH_SHORT).show()
+
+                                Status.ERROR -> {
+                                    Toast.makeText(myContext, "${it.message}", Toast.LENGTH_SHORT)
+                                        .show()
 
                                 }
 
@@ -122,7 +127,8 @@ class PublishFragment  : BaseFragment<FragmentPublishBinding>(FragmentPublishBin
                             }
                         }
                     }
-                    Status.ERROR->{
+
+                    Status.ERROR -> {
                         Toast.makeText(myContext, "${it.message}", Toast.LENGTH_SHORT).show()
                     }
 
@@ -135,29 +141,32 @@ class PublishFragment  : BaseFragment<FragmentPublishBinding>(FragmentPublishBin
 
 
         binding.publishBtnAnyone.setOnClickListener {
-            var popupMenu= PopupMenu(requireActivity(),  binding.publishBtnAnyone)
+            var popupMenu = PopupMenu(requireActivity(), binding.publishBtnAnyone)
             popupMenu.menuInflater.inflate(R.menu.anyone_menu, popupMenu.menu)
             // popupMenu.menu.removeItem(R.id.logout)
-            popupMenu.setOnMenuItemClickListener{ item ->
+            popupMenu.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     R.id.menu_anyone ->
-                        binding.publishTextAnyone.text="Anyone"
+                        binding.publishTextAnyone.text = "Anyone"
+
                     R.id.menu_friends ->
-                        binding.publishTextAnyone.text="Friends"
+                        binding.publishTextAnyone.text = "Friends"
+
                     R.id.menu_only_me ->
-                        binding.publishTextAnyone.text="Only me"
+                        binding.publishTextAnyone.text = "Only me"
                 }
                 true
             }
             popupMenu.show()
         }
         binding.publishBtnBottom.setOnClickListener {
-            val bottomSheetDialog= BottomSheetDialog(requireActivity(), R.style.BottomSheetStyle)
+            val bottomSheetDialog = BottomSheetDialog(requireActivity(), R.style.BottomSheetStyle)
 
-            val sheetView= LayoutInflater.from(requireActivity())
+            val sheetView = LayoutInflater.from(requireActivity())
                 .inflate(
                     R.layout.bottom_dialog,
-                    requireActivity().findViewById(R.id.dialog_container))
+                    requireActivity().findViewById(R.id.dialog_container)
+                )
 
             sheetView.findViewById<LinearLayout>(R.id.bottom_image).setOnClickListener {
 //                imagePickDialog()
@@ -197,16 +206,16 @@ class PublishFragment  : BaseFragment<FragmentPublishBinding>(FragmentPublishBin
                 Toast.makeText(requireActivity(), "article", Toast.LENGTH_SHORT).show()
                 bottomSheetDialog.dismiss()
                 binding.publishCaption.setLines(9)
-                binding.publishVideo.visibility=View.GONE
-                binding.publishImage.visibility=View.GONE
-                imageUri=null
-                videoUri=null
+                binding.publishVideo.visibility = View.GONE
+                binding.publishImage.visibility = View.GONE
+                imageUri = null
+                videoUri = null
             }
             sheetView.findViewById<LinearLayout>(R.id.bottom_attache).setOnClickListener {
-                binding.publishVideo.visibility=View.GONE
-                binding.publishImage.visibility=View.GONE
-                imageUri=null
-                videoUri=null
+                binding.publishVideo.visibility = View.GONE
+                binding.publishImage.visibility = View.GONE
+                imageUri = null
+                videoUri = null
 
                 Toast.makeText(requireActivity(), "attache", Toast.LENGTH_SHORT).show()
             }
@@ -220,8 +229,6 @@ class PublishFragment  : BaseFragment<FragmentPublishBinding>(FragmentPublishBin
             bottomSheetDialog.show()
 
 
-
-
         }
     }
 
@@ -232,7 +239,7 @@ class PublishFragment  : BaseFragment<FragmentPublishBinding>(FragmentPublishBin
         binding.publishVideo.setMediaController(mediaController)
         binding.publishVideo.setVideoURI(videoUri)
 
-        binding.publishVideo.setOnPreparedListener{
+        binding.publishVideo.setOnPreparedListener {
             binding.publishVideo.start()
             mediaController.show()
             mediaController.playSoundEffect(SoundEffectConstants.NAVIGATION_DOWN)
