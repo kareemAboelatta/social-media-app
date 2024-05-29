@@ -90,26 +90,6 @@
 
 
 
-    <VideoView
-        android:id="@+id/publish_video"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_270sdp"
-        android:layout_weight="1"
-        android:scaleType="centerCrop"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/photo"
-        app:layout_constraintStart_toStartOf="parent" />
-
-
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/photo"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/photo_size_large"
-        app:layout_constraintBottom_toTopOf="@+id/btn_publish"
-        android:padding="@dimen/padding_high"
-        android:orientation="horizontal"
-        />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_attachments"
         android:layout_width="match_parent"
@@ -131,14 +111,43 @@
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/fab_add_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="fake"
+        android:contentDescription="Add Image"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/fab_attachment_menu"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:layout_marginHorizontal="@dimen/margin_medium"
+        android:src="@drawable/ic_add_photo"
+        android:tint="@color/white"
+        />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add_video"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="Add Video"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/fab_add_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:layout_marginHorizontal="@dimen/margin_medium"
+        android:src="@drawable/ic_video"
+        android:tint="@color/white"
+        />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_attachment_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="Attach"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginBottom="@dimen/_70sdp"
         android:layout_marginHorizontal="@dimen/margin_medium"
         android:src="@drawable/ic_menu"
         />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

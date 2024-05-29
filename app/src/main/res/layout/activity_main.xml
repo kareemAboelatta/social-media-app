@@ -26,7 +26,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bottom_menu"
         android:name="androidx.navigation.fragment.NavHostFragment"
-        app:navGraph="@navigation/main_nav_gragh"
+        app:navGraph="@navigation/main_nav"
         app:defaultNavHost="true"
         />
 

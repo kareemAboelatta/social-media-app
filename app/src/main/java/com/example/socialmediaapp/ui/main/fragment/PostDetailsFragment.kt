@@ -26,7 +26,7 @@ import com.example.socialmediaapp.ui.main.ViewModelMain
 import com.example.socialmediaapp.adapter.AdapterComment
 import com.example.socialmediaapp.databinding.FragmentPostDetailsBinding
 import com.example.socialmediaapp.models.Comment
-import com.example.socialmediaapp.models.Post
+import com.example.common.domain.model.Post
 import com.example.common.ui.utils.Status
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
@@ -89,7 +89,7 @@ class PostDetailsFragment :  Fragment() {
 
     private val viewModel by viewModels<ViewModelMain>()
 
-    lateinit var post:Post
+    lateinit var post: Post
 
     private var _binding: FragmentPostDetailsBinding? = null
     private val binding get() = _binding!!
@@ -161,7 +161,7 @@ class PostDetailsFragment :  Fragment() {
                 putSerializable("post", post)
             }
             findNavController().navigate(
-                R.id.action_postDetailsFragment_to_postOwnerFragment,
+                com.example.common.R.id.action_postDetailsFragment_to_postOwnerFragment,
                 bundle
             )
         }

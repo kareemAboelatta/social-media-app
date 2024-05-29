@@ -31,21 +31,21 @@ class MainActivity : AppCompatActivity() {
         binding.bottomMenu.setOnItemSelectedListener { id ->
             when (id) {
                 R.id.home -> {
-                    navController.navigate(R.id.homeFragment)
+                    navController.navigate(com.example.common.R.id.homeFragment)
                 }
                 R.id.profile -> {
-                    navController.navigate(R.id.profileFragment)
+                    navController.navigate(com.example.common.R.id.profileFragment)
                 }
                 R.id.add_post -> {
-                    navController.navigate(R.id.publishFragment)
+                    navController.navigate(com.example.common.R.id.publishFragment)
                 }
                 R.id.messenger -> {
                     startActivity(Intent(this, Messenger::class.java))
                     binding.bottomMenu.setItemSelected(R.id.home)
-                    navController.navigate(R.id.homeFragment)
+                    navController.navigate(com.example.common.R.id.homeFragment)
                 }
                 R.id.videos -> {
-                    navController.navigate(R.id.videosFragment)
+                    navController.navigate(com.example.common.R.id.videosFragment)
                 }
             }
             binding.bottomMenu.showBadge(R.id.videos, 8)

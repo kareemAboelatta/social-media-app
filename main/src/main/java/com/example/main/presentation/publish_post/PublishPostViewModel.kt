@@ -5,6 +5,8 @@ import android.graphics.Bitmap
 import android.media.MediaMetadataRetriever
 import android.net.Uri
 import androidx.lifecycle.ViewModel
+import com.example.common.domain.model.Attachment
+import com.example.common.domain.model.AttachmentType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -18,16 +20,7 @@ data class CreatePostInput(
     val attachments: MutableList<Attachment> = mutableListOf(),
 )
 
-data class Attachment(
-    val attachment: String,
-    val thumbnail: String = "",
-    val type: AttachmentType
-)
 
-enum class AttachmentType {
-    IMAGE,
-    VIDEO
-}
 
 @HiltViewModel
 class PublishPostViewModel : ViewModel() {
@@ -36,22 +29,21 @@ class PublishPostViewModel : ViewModel() {
     val input = _inputPost.asStateFlow()
 
 
-
     fun deleteSelectedAttachment(attachment: Attachment) {
         val attachments = _inputPost.value.attachments.toMutableList().apply {
             remove(attachment)
         }
         updatePostInput(attachments = attachments)
     }
-    fun addPhotoAttachments(attachments: List<String>) {
+    fun addPhotoAttachment(attachment: String) {
         val newAttachments = _inputPost.value.attachments.toMutableList().apply {
-            addAll(attachments.map { Attachment(it, type = AttachmentType.IMAGE) })
+            add( Attachment(attachment, type = AttachmentType.IMAGE) )
         }
         updatePostInput(attachments = newAttachments)
     }
     fun addVideoAttachment(attachment: String, thumbnail: String) {
         val newAttachments = _inputPost.value.attachments.toMutableList().apply {
-            add( Attachment(attachment= attachment, thumbnail = thumbnail, type = AttachmentType.IMAGE))
+            add( Attachment(attachment= attachment, thumbnail = thumbnail, type = AttachmentType.VIDEO))
         }
         updatePostInput(attachments = newAttachments)
     }

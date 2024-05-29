@@ -20,7 +20,7 @@ import com.example.core.ui.pickers.pickCompressedImage
 import com.example.core.ui.pickers.pickCompressedVideo
 import com.example.socialmediaapp.R
 import com.example.socialmediaapp.databinding.FragmentPublishBinding
-import com.example.socialmediaapp.models.Post
+import com.example.common.domain.model.Post
 import com.example.socialmediaapp.ui.main.ViewModelMain
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
@@ -112,7 +112,7 @@ class PublishFragment : BaseFragment<FragmentPublishBinding>(FragmentPublishBind
                         viewModel.postLiveData.observe(viewLifecycleOwner) {
                             when (it.status) {
                                 Status.SUCCESS -> {
-                                    findNavController().navigate(R.id.homeFragment)
+                                    findNavController().navigate(com.example.common.R.id.homeFragment)
                                     Toast.makeText(myContext, "Post Published", Toast.LENGTH_SHORT)
                                         .show()
                                 }

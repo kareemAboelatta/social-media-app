@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.socialmediaapp.R
 import com.example.socialmediaapp.ui.main.ViewModelMain
 import com.example.socialmediaapp.adapter.AdapterPost
-import com.example.socialmediaapp.models.Post
+import com.example.common.domain.model.Post
 import com.example.common.ui.utils.Status
 import dagger.hilt.android.AndroidEntryPoint
 import com.example.socialmediaapp.databinding.FragmentVideoBinding
@@ -75,7 +75,7 @@ class VideosFragment  : Fragment() {
                 putSerializable("post", it)
             }
             findNavController().navigate(
-                R.id.action_videosFragment_to_postDetailsFragment,
+                com.example.common.R.id.action_videosFragment_to_postDetailsFragment,
                 bundle
             )
         }
@@ -85,7 +85,7 @@ class VideosFragment  : Fragment() {
                 putSerializable("post", it)
             }
             findNavController().navigate(
-                R.id.action_videosFragment_to_postOwnerFragment,
+                com.example.common.R.id.action_videosFragment_to_postOwnerFragment,
                 bundle
             )
         }

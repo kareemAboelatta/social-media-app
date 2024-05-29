@@ -15,7 +15,7 @@ import com.bumptech.glide.RequestManager
 import com.example.socialmediaapp.R
 import com.example.socialmediaapp.ui.main.ViewModelMain
 import com.example.socialmediaapp.adapter.AdapterPost
-import com.example.socialmediaapp.models.Post
+import com.example.common.domain.model.Post
 import com.example.common.ui.utils.Status
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject

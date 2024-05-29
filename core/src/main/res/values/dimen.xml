@@ -21,5 +21,10 @@
     <dimen name="photo_size_large">@dimen/_100sdp</dimen>
     <dimen name="photo_size_very_large">@dimen/_120sdp</dimen>
 
+    <dimen name="icon_size_small">@dimen/_25sdp</dimen>
+    <dimen name="icon_size_medium">@dimen/_35sdp</dimen>
+    <dimen name="icon_size_large">@dimen/_45sdp</dimen>
+    <dimen name="icon_size_very_large">@dimen/_55sdp</dimen>
+
 
 </resources>

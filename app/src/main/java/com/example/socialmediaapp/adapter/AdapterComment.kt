@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.content.Context
 import android.text.format.DateFormat
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -14,16 +13,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import com.example.socialmediaapp.R
 import com.example.socialmediaapp.models.Comment
-import com.example.socialmediaapp.models.Post
-import com.example.socialmediaapp.repository.Repository
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.*
-import com.google.firebase.storage.StorageReference
-import dagger.hilt.android.qualifiers.ApplicationContext
 import com.example.socialmediaapp.databinding.ItemCommentBinding
 
 import java.util.*
-import javax.inject.Inject
 
 class AdapterComment  (
     var context: Context,

@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.socialmediaapp.models.Comment
-import com.example.socialmediaapp.models.Post
+import com.example.common.domain.model.Post
 import com.example.common.domain.model.User
 import com.example.socialmediaapp.repository.Repository
 import com.example.common.ui.utils.Resource
@@ -117,7 +117,7 @@ class ViewModelMain  @Inject constructor(
         }
     }
 
-    fun postComment(post:Post,comment: Comment){
+    fun postComment(post: Post, comment: Comment){
         CoroutineScope(Dispatchers.Default).launch {
             repository.postComment(post, comment)
         }

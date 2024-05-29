@@ -5,7 +5,7 @@ import android.net.Uri
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.example.socialmediaapp.models.Comment
-import com.example.socialmediaapp.models.Post
+import com.example.common.domain.model.Post
 import com.example.common.domain.model.User
 import com.example.common.ui.utils.Constants
 import com.example.common.ui.utils.Resource
@@ -152,7 +152,7 @@ class Repository @Inject constructor(
 
 
     var mProcessComment = true
-   suspend fun postComment(post:Post,comment: Comment){
+   suspend fun postComment(post: Post, comment: Comment){
         //put this data in DB :
         refDatabase.child(Constants.POSTS).child(post.postId)
             .child(Constants.COMMENTS).child(comment.timeStamp)

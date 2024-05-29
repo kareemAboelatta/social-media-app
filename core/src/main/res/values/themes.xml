@@ -53,4 +53,27 @@
         <item name="cornerRadius">@dimen/_5sdp</item>
     </style>
 
+
+    <!--shapes-->
+
+    <style name="RoundedCornerImageView" parent="">
+        <item name="shapeAppearance">@style/RoundedShapeAppearance</item>
+    </style>
+
+    <style name="RoundedShapeAppearance" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/radius_high</item>
+    </style>
+
+    <style name="CircularImageView" parent="">
+        <item name="shapeAppearance">@style/CircularShapeAppearance</item>
+    </style>
+
+    <style name="CircularShapeAppearance" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+
+
 </resources>

@@ -26,6 +26,7 @@
 
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorBlack">#000000</color>
+    <color name="colorBlackTrans">#27000000</color>
     <color name="colorGray">#A3A3A3</color>
     <color name="colorGrayWhite">#EDEDEF</color>
     <color name="colorYellow">#FFC107</color>

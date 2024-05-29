@@ -13,7 +13,7 @@ import com.example.socialmediaapp.R
 import com.example.socialmediaapp.ui.main.ViewModelMain
 import com.example.socialmediaapp.adapter.AdapterPost
 import com.example.socialmediaapp.databinding.FragmentHomeBinding
-import com.example.socialmediaapp.models.Post
+import com.example.common.domain.model.Post
 import com.example.common.ui.utils.Status
 import com.google.firebase.auth.FirebaseAuth
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
@@ -68,7 +68,7 @@ class HomeFragment : Fragment() {
                 putSerializable("post", it)
             }
             findNavController().navigate(
-                R.id.action_homeFragment_to_postDetailsFragment,
+                com.example.common.R.id.action_homeFragment_to_postDetailsFragment,
                 bundle
             )
         }
@@ -80,11 +80,11 @@ class HomeFragment : Fragment() {
                 activity?.findViewById<ChipNavigationBar>(R.id.bottom_menu)?.setItemSelected(
                     R.id.profile)
 
-                findNavController().navigate(R.id.profileFragment)
+                findNavController().navigate(com.example.common.R.id.profileFragment)
 
             }else{
                 findNavController().navigate(
-                    R.id.action_homeFragment_to_postOwnerFragment,
+                    com.example.common.R.id.action_homeFragment_to_postOwnerFragment,
                     bundle
                 )
             }

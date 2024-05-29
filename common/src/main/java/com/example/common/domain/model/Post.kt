@@ -1,4 +1,4 @@
-package com.example.socialmediaapp.models
+package com.example.common.domain.model
 import java.io.Serializable
 
 data class Post(
