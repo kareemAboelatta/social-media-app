@@ -1,20 +1,23 @@
 package com.example.common.ui.preview_attachment
 
+import android.net.Uri
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.media3.common.MediaItem
+import androidx.media3.exoplayer.ExoPlayer
 import androidx.recyclerview.widget.RecyclerView
 import com.example.common.databinding.ItemImagePreviewBinding
 import com.example.common.databinding.ItemVideoPreviewBinding
-
 import com.example.common.domain.model.Attachment
 import com.example.common.domain.model.AttachmentType
 import com.example.core.ui.utils.loadImageFromUrl
-import com.google.android.exoplayer2.ExoPlayer
-import com.google.android.exoplayer2.MediaItem
 
 class PreviewAttachmentsAdapter(
     private val attachments: List<Attachment>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    private var currentPlayer: ExoPlayer? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -66,26 +69,43 @@ class PreviewAttachmentsAdapter(
 
     inner class VideoViewHolder(private val binding: ItemVideoPreviewBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        private var player: ExoPlayer? = null
+
+        init {
+            // Release player when ViewHolder is detached
+            binding.root.addOnAttachStateChangeListener(object : View.OnAttachStateChangeListener {
+                override fun onViewAttachedToWindow(v: View) {
+                    // No action needed
+                }
+
+                override fun onViewDetachedFromWindow(v: View) {
+                    releasePlayer()
+                }
+            })
+        }
 
         fun bind(attachment: Attachment) {
-            player = ExoPlayer.Builder(binding.root.context).build().also {
+            currentPlayer = ExoPlayer.Builder(binding.root.context).build().also {
                 binding.videoView.player = it
-                val mediaItem = MediaItem.fromUri(attachment.attachment)
+                val mediaItem = MediaItem.fromUri(Uri.parse(attachment.attachment))
                 it.setMediaItem(mediaItem)
                 it.prepare()
                 it.playWhenReady = true
             }
         }
 
-
-        fun releasePlayer() {
-            player?.release()
-            player = null
+        private fun releasePlayer() {
+            currentPlayer?.let { player ->
+                player.stop()
+//                player.release()
+            }
+            currentPlayer = null
         }
     }
 
-
+    fun stopCurrentPlayer() {
+        currentPlayer?.stop()
+        currentPlayer = null
+    }
 
     companion object {
         private const val VIEW_TYPE_IMAGE = 0

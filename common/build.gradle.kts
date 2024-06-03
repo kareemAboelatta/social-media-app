@@ -3,7 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-parcelize")
     id("kotlin-kapt")
-    id ("dagger.hilt.android.plugin")
+    id("dagger.hilt.android.plugin")
 
     id("androidx.navigation.safeargs")
     id("com.google.gms.google-services")
@@ -59,15 +59,15 @@ dependencies {
 
 
     //Dagger - Hilt
-    api ("com.google.dagger:hilt-android:2.50")
-    kapt ("com.google.dagger:hilt-android-compiler:2.50")
-    kapt ("androidx.hilt:hilt-compiler:1.2.0")
+    api("com.google.dagger:hilt-android:2.50")
+    kapt("com.google.dagger:hilt-android-compiler:2.50")
+    kapt("androidx.hilt:hilt-compiler:1.2.0")
 
 
     // Firebase
-    api("com.google.firebase:firebase-analytics:22.0.0")
-    api("com.google.android.gms:play-services-auth:21.1.1")
-    api(platform("com.google.firebase:firebase-bom:33.0.0"))
+    api("com.google.firebase:firebase-analytics:22.0.1")
+    api("com.google.android.gms:play-services-auth:21.2.0")
+    api(platform("com.google.firebase:firebase-bom:33.1.0"))
     api("com.google.firebase:firebase-auth-ktx:23.0.0")
     api("com.google.firebase:firebase-storage-ktx:21.0.0")
     api("com.google.firebase:firebase-database-ktx:21.0.0")
@@ -87,6 +87,13 @@ dependencies {
     api("com.google.android.exoplayer:exoplayer:2.19.1")
     api("com.google.android.exoplayer:exoplayer-core:2.19.1")
     api("com.google.android.exoplayer:exoplayer-ui:2.19.1")
+
+    api ("androidx.media3:media3-exoplayer:1.3.1")
+    api ("androidx.media3:media3-ui:1.3.1")
+
+
+
+    api("androidx.media3:media3-session:1.3.1")
 
 
 }

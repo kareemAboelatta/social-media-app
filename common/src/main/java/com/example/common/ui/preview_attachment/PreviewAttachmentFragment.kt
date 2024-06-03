@@ -3,6 +3,7 @@ package com.example.common.ui.preview_attachment
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.navigation.fragment.navArgs
+import androidx.viewpager2.widget.ViewPager2
 import com.example.common.databinding.FragmentPreviewAttachmentBinding
 import com.example.common.domain.model.Attachment
 import com.example.core.BaseFragment
@@ -12,20 +13,37 @@ import dagger.hilt.android.AndroidEntryPoint
 class PreviewAttachmentFragment :
     BaseFragment<FragmentPreviewAttachmentBinding>(FragmentPreviewAttachmentBinding::inflate) {
 
-        private val args by navArgs<PreviewAttachmentFragmentArgs>()
+    private val args by navArgs<PreviewAttachmentFragmentArgs>()
+    private lateinit var adapter: PreviewAttachmentsAdapter
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onViewCreated() {
-        val attachments =
-            args.attachments.toList()
+        val attachments = args.attachments.toList()
 
-        attachments.let { setupViewPager(it) }
+        setupViewPager(attachments)
 
     }
 
     private fun setupViewPager(attachments: List<Attachment>) {
-        val adapter = PreviewAttachmentsAdapter(attachments)
+        adapter = PreviewAttachmentsAdapter(attachments)
         binding.viewPager.adapter = adapter
-
+        binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                adapter.stopCurrentPlayer()
+            }
+        })
     }
+
+
+    override fun onPause() {
+        super.onPause()
+        adapter.stopCurrentPlayer()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        adapter.stopCurrentPlayer()
+    }
+
 }

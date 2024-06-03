@@ -11,7 +11,6 @@ import com.example.core.BaseFragment
 import com.example.core.ui.ProgressDialogUtil
 import com.example.core.ui.pickers.pickCompressedImage
 import com.example.core.ui.pickers.pickCompressedVideo
-import com.example.main.R
 import com.example.main.databinding.FragmentPublishPostBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -68,7 +67,10 @@ class PublishPostFragment :
             fabAddVideo.setOnClickListener {
                 pickCompressedVideo(progressUtil = ProgressDialogUtil(requireActivity())) { path, uri ->
                     requireActivity().getVideoThumbnailUri(uri)?.let {
-                        viewModel.addVideoAttachment(attachment = path, thumbnail = it.path ?: "")
+                        viewModel.addVideoAttachment(
+                            attachment = uri.toString(),
+                            thumbnail = it.path ?: ""
+                        )
                     }
                 }
             }
