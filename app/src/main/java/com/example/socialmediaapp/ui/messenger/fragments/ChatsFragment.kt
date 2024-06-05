@@ -85,7 +85,7 @@ class ChatsFragment : Fragment() {
     private fun getCurrentUser() {
         viewModel.currentUser.observe(viewLifecycleOwner) {
             glide.load(it.image)
-                .placeholder(AppCompatResources.getDrawable(requireContext(), R.drawable.default_user))
+                .placeholder(AppCompatResources.getDrawable(requireContext(), com.example.common.R.drawable.default_user))
                 .into(binding.userImage)
         }
     }

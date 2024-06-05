@@ -276,7 +276,7 @@ class PostDetailsFragment :  Fragment() {
                     if (dataSnapshot.child(postId).hasChild(auth.currentUser?.uid!!)) {
                         //user has liked for this post
                        binding.detPostLikeBtn.setCompoundDrawablesWithIntrinsicBounds(
-                            R.drawable.ic_like, 0, 0, 0
+                           com.example.common.R.drawable.ic_like, 0, 0, 0
                         )
                         binding.detPostLikeBtn.setText("Liked")
                         binding.detPostLikesTV.text=""+(binding.detPostLikesTV.text.toString().toInt()+1)
@@ -284,7 +284,7 @@ class PostDetailsFragment :  Fragment() {
                     } else {
                         //user has not liked for this post
                         binding.detPostLikeBtn.setCompoundDrawablesWithIntrinsicBounds(
-                            R.drawable.ic_like_not, 0, 0, 0
+                            com.example.common.R.drawable.ic_like_not, 0, 0, 0
                         )
                         binding.detPostLikesTV.text=""+(binding.detPostLikesTV.text.toString().toInt()-1)
 

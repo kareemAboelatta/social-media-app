@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/post_LikesTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_3sdp"
+            android:layout_weight="1"
+            tools:text="14 like"
+            android:textColor="@color/colorPrimaryDark" />
+
+        <TextView
+            android:id="@+id/post_CommentTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_3sdp"
+            android:layout_weight="1"
+            android:gravity="end"
+            tools:text=" 1.2k Comments"
+            android:textAlignment="textEnd"
+            android:textColor="@color/colorPrimaryDark" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#F5F4F0" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/post_like_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp"
+            android:layout_weight="1"
+            android:background="@color/trans"
+            android:backgroundTint="@color/colorPrimary"
+            android:drawableStart="@drawable/ic_like_not"
+            android:drawableTint="@color/colorPrimary"
+            android:text="Like"
+            android:textAllCaps="false"
+            android:textColor="@color/colorPrimary" />
+
+
+        <Button
+            android:id="@+id/post_comment_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp"
+            android:layout_weight="1"
+            android:background="@color/trans"
+
+            android:backgroundTint="@color/colorPrimary"
+            android:drawableStart="@drawable/ic_comment"
+            android:drawableTint="@color/colorPrimary"
+            android:text="Comment"
+            android:textAllCaps="false"
+            android:textColor="@color/colorPrimary"
+
+            />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/post_read_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp"
+            android:layout_weight="1"
+            android:background="@color/trans"
+            android:backgroundTint="@color/colorPrimary"
+            android:drawableStart="@drawable/ic_read"
+            android:drawableTint="@color/colorPrimary"
+            android:text="Read"
+            android:textAllCaps="false"
+            android:textColor="@color/colorPrimary"
+            app:icon="@drawable/ic_read"
+
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

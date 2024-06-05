@@ -80,7 +80,7 @@ class ChatsAdapter @Inject constructor (
             //---------------
             glide.load(chat.userImageUrl)  //set user image
                 .placeholder(context?.let { it1 ->
-                    AppCompatResources.getDrawable(it1, R.drawable.default_user)
+                    AppCompatResources.getDrawable(it1, com.example.common.R.drawable.default_user)
                 })
                 .into(chatUserImage)
             //---------------

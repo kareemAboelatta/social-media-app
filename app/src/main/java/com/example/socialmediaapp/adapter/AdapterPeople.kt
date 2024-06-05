@@ -47,7 +47,7 @@ class AdapterPeople @Inject constructor(
         val currentUser = differ.currentList[position]
 
         holder.binding.apply {
-            glide.load(currentUser.image).error(R.drawable.default_user).into(userImage)
+            glide.load(currentUser.image).error(com.example.common.R.drawable.default_user).into(userImage)
             userName.text = currentUser.name
             userBio.text = currentUser.bio
 

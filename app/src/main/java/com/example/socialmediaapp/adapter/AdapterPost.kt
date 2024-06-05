@@ -16,7 +16,6 @@ import com.example.socialmediaapp.databinding.ItemPostBinding
 import com.example.common.domain.model.Post
 import com.example.socialmediaapp.repository.Repository
 import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.upstream.DataSource
@@ -201,13 +200,13 @@ class AdapterPost @Inject constructor(
                     if (dataSnapshot.child(postKey).hasChild(myUid!!)) {
                         //user has liked for this post
                         postLikeBtn.setCompoundDrawablesWithIntrinsicBounds(
-                            R.drawable.ic_like, 0, 0, 0
+                            com.example.common.R.drawable.ic_like, 0, 0, 0
                         )
                         postLikeBtn.text = "Liked"
                     } else {
                         //user has not liked for this post
                         postLikeBtn.setCompoundDrawablesWithIntrinsicBounds(
-                            R.drawable.ic_like_not, 0, 0, 0
+                            com.example.common.R.drawable.ic_like_not, 0, 0, 0
                         )
                         postLikeBtn.text = "Like"
                     }

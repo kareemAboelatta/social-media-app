@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_margin="@dimen/_2sdp"
+    android:orientation="vertical"
+    app:cardBackgroundColor="#FCF9F9"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="10dp"
+    app:cardUseCompatPadding="true"
+    app:contentPadding="@dimen/_2sdp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <include
+            android:id="@+id/post_header"
+            layout="@layout/layout_post_header" />
+
+
+
+        <com.borjabravo.readmoretextview.ReadMoreTextView
+            android:id="@+id/post_caption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_2sdp"
+            android:autoLink="all"
+            tools:text="I love my mom"
+            android:textSize="20sp"
+            android:textStyle="normal"
+            app:trimCollapsedText=" Show less"
+            app:trimExpandedText=" Show More"
+            app:trimLength="200"
+            app:trimMode="trimModeLength" />
+
+        <TextView
+            android:id="@+id/post_language"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_2sdp"
+            android:gravity="end"
+            tools:text="translated from en"
+            android:textColor="@color/purple_500"
+            android:textSize="15sp"
+            android:textStyle="normal"
+            android:visibility="gone" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/post_Image"
+            style="@style/CardView"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_200sdp"
+            android:background="#FFF"
+            android:elevation="@dimen/_4sdp"
+            android:scaleType="centerCrop" />
+
+
+
+
+
+        <include
+            android:id="@+id/post_footer"
+            layout="@layout/layout_post_footer" />
+
+
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>

@@ -132,7 +132,7 @@ class ConversationFragment: Fragment() {
         bindingToolbarBinding?.userName?.text=user.name
         bindingToolbarBinding?.let {
             glide.load(user.image)
-                .placeholder(R.drawable.default_user)
+                .placeholder(com.example.common.R.drawable.default_user)
                 .into(it.userImage)
         }
 

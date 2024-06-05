@@ -3,4 +3,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/home_container_nav">
 
+
+    <!--home container-->
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.main.presentation.home_container.home.HomeFragment"
+        android:label="HomeFragment" />
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.socialmediaapp.ui.main.fragment.ProfileFragment"
+        android:label="ProfileFragment" />
+
+    <fragment
+        android:id="@+id/videosFragment"
+        android:name="com.example.socialmediaapp.ui.main.fragment.VideosFragment"
+        android:label="VideosFragment"/>
+
+
+
+
+
+
 </navigation>
