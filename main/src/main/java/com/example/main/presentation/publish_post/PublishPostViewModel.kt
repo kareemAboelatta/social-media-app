@@ -41,14 +41,14 @@ class PublishPostViewModel : ViewModel() {
         }
         updatePostInput(attachments = newAttachments)
     }
-    fun addVideoAttachment(attachment: String, thumbnail: String) {
+    fun addVideoAttachment(attachment: String) {
         val newAttachments = _inputPost.value.attachments.toMutableList().apply {
-            add( Attachment(attachment= attachment, thumbnail = thumbnail, type = AttachmentType.VIDEO))
+            add( Attachment(attachment= attachment, type = AttachmentType.VIDEO))
         }
         updatePostInput(attachments = newAttachments)
     }
 
-    fun updatePostInput(
+    private fun updatePostInput(
         attachments: MutableList<Attachment>? = null,
         caption: String ? = null
     ) {

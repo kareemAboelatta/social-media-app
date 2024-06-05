@@ -73,7 +73,7 @@ class AttachmentsAdapter(
     inner class VideoViewHolder(private val binding: ItemVideoBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(attachment: Attachment) {
-            binding.videoThumbnail.loadImageFromUrl(attachment.thumbnail)
+            binding.videoThumbnail.loadImageFromUrl(attachment.attachment)
             binding.playIcon.visibility = View.VISIBLE
 
             binding.root.setOnClickListener {

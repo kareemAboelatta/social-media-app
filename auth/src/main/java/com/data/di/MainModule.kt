@@ -1,8 +1,8 @@
 package com.data.di
 
 
-import com.data.datasource.AuthDatasource
-import com.data.datasource.AuthDatasourceFirebase
+import com.example.common.data.datasource.AuthDatasource
+import com.example.common.data.datasource.AuthDatasourceFirebase
 import com.data.repository.AuthRepositoryImpl
 import com.domain.repository.AuthRepository
 import com.example.common.AppDispatcher

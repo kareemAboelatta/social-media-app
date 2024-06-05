@@ -7,12 +7,10 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class Attachment(
     val attachment: String,
-    val thumbnail: String = "",
     val type: AttachmentType
 ): Parcelable
 
 @Parcelize
-
 enum class AttachmentType : Parcelable {
     IMAGE,
     VIDEO

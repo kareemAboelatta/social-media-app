@@ -63,15 +63,11 @@ class PublishPostFragment :
                 }
             }
 
-
             fabAddVideo.setOnClickListener {
                 pickCompressedVideo(progressUtil = ProgressDialogUtil(requireActivity())) { path, uri ->
-                    requireActivity().getVideoThumbnailUri(uri)?.let {
-                        viewModel.addVideoAttachment(
-                            attachment = uri.toString(),
-                            thumbnail = it.path ?: ""
-                        )
-                    }
+                    viewModel.addVideoAttachment(
+                        attachment = path
+                    )
                 }
             }
             fabAddImage.setOnClickListener {
