@@ -147,13 +147,19 @@
             style="@style/CardView"
             />
 
-        <com.google.android.exoplayer2.ui.PlayerView
+
+
+        <androidx.media3.ui.PlayerView
             android:id="@+id/post_video"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_270sdp"
             android:layout_weight="1"
             android:scaleType="centerCrop"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            app:use_controller="true"
+            app:auto_show="true"/>
+
+
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -19,9 +19,7 @@ class PreviewAttachmentFragment :
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onViewCreated() {
         val attachments = args.attachments.toList()
-
         setupViewPager(attachments)
-
     }
 
     private fun setupViewPager(attachments: List<Attachment>) {
@@ -35,7 +33,6 @@ class PreviewAttachmentFragment :
         })
     }
 
-
     override fun onPause() {
         super.onPause()
         adapter.stopCurrentPlayer()
@@ -43,6 +40,11 @@ class PreviewAttachmentFragment :
 
     override fun onStop() {
         super.onStop()
+        adapter.stopCurrentPlayer()
+    }
+
+    override fun onDestroy() { // sometimes onDestroy is called without onPause or onStop
+        super.onDestroy()
         adapter.stopCurrentPlayer()
     }
 

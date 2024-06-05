@@ -7,6 +7,7 @@ import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.media3.exoplayer.ExoPlayer
 
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
@@ -32,12 +33,12 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import java.util.*
 import javax.inject.Inject
 
-class AdapterPost @Inject constructor (
+class AdapterPost @Inject constructor(
     @ApplicationContext var context: Context,
     var repository: Repository,
     private val glide: RequestManager,
     private var auth: FirebaseAuth
-) :  RecyclerView.Adapter<AdapterPost.PostViewHolder>(){
+) : RecyclerView.Adapter<AdapterPost.PostViewHolder>() {
 
     inner class PostViewHolder(val binding: ItemPostBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -46,13 +47,14 @@ class AdapterPost @Inject constructor (
     val myLanguage = Locale.getDefault().language
 
     var myUid: String? = null
+
     init {
         myUid = auth.currentUser?.uid
     }
 
-    fun setList(posts: List<Post>){
-        this.posts=posts
-         notifyDataSetChanged()
+    fun setList(posts: List<Post>) {
+        this.posts = posts
+        notifyDataSetChanged()
     }
 
 
@@ -65,32 +67,34 @@ class AdapterPost @Inject constructor (
     }
 
 
-    override fun onBindViewHolder(holder:   PostViewHolder, position: Int) {
-        val   post = posts[position]
+    override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
+        val post = posts[position]
         holder.binding.apply {
 
             //user data
-            postUserName.text=post.userName
+            postUserName.text = post.userName
             glide.load(post.userImage).into(postUserPicture)
             //post data
             //get time from timestamp
             val cal = Calendar.getInstance(Locale.getDefault())
-            cal.timeInMillis = if(post.postTime.isNotEmpty())  post.postTime.toLong() else 0
+            cal.timeInMillis = if (post.postTime.isNotEmpty()) post.postTime.toLong() else 0
 
             val time = DateFormat.format("dd/MM/yyyy hh:mm aa", cal).toString()
-            postTimeIv.text=time
-            postCaption.text=post.caption
-            postLikesTV.text=post.postLikes.toString()
-            postCommentTV.text=post.postComments.toString()
-            postTextAnyone.text=post.postFans
-            when(post.postFans){
-                "Anyone"->{
+            postTimeIv.text = time
+            postCaption.text = post.caption
+            postLikesTV.text = post.postLikes.toString()
+            postCommentTV.text = post.postComments.toString()
+            postTextAnyone.text = post.postFans
+            when (post.postFans) {
+                "Anyone" -> {
                     postImageAnyone.setImageResource(R.drawable.ic_public);
                 }
-                "Friends"->{
+
+                "Friends" -> {
                     postImageAnyone.setImageResource(R.drawable.ic_group);
                 }
-                "Only me"->{
+
+                "Only me" -> {
                     postImageAnyone.setImageResource(com.example.core.R.drawable.ic_profile);
                 }
             }
@@ -99,25 +103,28 @@ class AdapterPost @Inject constructor (
             when (post.postType) {
                 "article" -> {
 
-                    postImage.visibility=View.GONE
-                    postVideo.visibility=View.GONE
+                    postImage.visibility = View.GONE
+                    postVideo.visibility = View.GONE
                 }
+
                 "image" -> {
-                    postVideo.visibility=View.GONE
-                    postImage.visibility=View.VISIBLE
+                    postVideo.visibility = View.GONE
+                    postImage.visibility = View.VISIBLE
                     glide.load(post.postAttachment).into(postImage)
                 }
+
                 "video" -> {
-                    postImage.visibility=View.GONE
-                    postVideo.visibility=View.VISIBLE
+                    postImage.visibility = View.GONE
+                    postVideo.visibility = View.VISIBLE
 
-
-                    var simpleExoPlayer: SimpleExoPlayer = SimpleExoPlayer.Builder(context).build()
-                    val video: Uri = Uri.parse(post.postAttachment)
-                    val mediaSource: MediaSource =buildMediaSource(video)
-                    simpleExoPlayer.prepare(mediaSource)
-                    simpleExoPlayer.playWhenReady =false
-                    postVideo.player=simpleExoPlayer
+                    ExoPlayer.Builder(context).build().also {
+                        postVideo.player = it
+                        val mediaItem =
+                            androidx.media3.common.MediaItem.fromUri(Uri.parse(post.postAttachment))
+                        it.setMediaItem(mediaItem)
+                        it.prepare()
+                        it.playWhenReady = true
+                    }
 
 
                 }
@@ -128,10 +135,10 @@ class AdapterPost @Inject constructor (
                 notifyDataSetChanged()
             }
 
-            setLikes(holder,post.postId)
+            setLikes(holder, post.postId)
 
-            if (post.languageCode != myLanguage && post.languageCode != "und"){
-                translate(post.caption,post.languageCode,myLanguage,holder)
+            if (post.languageCode != myLanguage && post.languageCode != "und") {
+                translate(post.caption, post.languageCode, myLanguage, holder)
             }
 
             postUserPicture.setOnClickListener {
@@ -153,16 +160,17 @@ class AdapterPost @Inject constructor (
 
     }
 
-    private fun buildMediaSource (uri: Uri) : MediaSource{
-        val dataSourceFactory : DataSource.Factory = DefaultDataSourceFactory(context,"exoPlayer")
-        return ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource((MediaItem.fromUri(uri)))
+    private fun buildMediaSource(uri: Uri): MediaSource {
+        val dataSourceFactory: DataSource.Factory = DefaultDataSourceFactory(context, "exoPlayer")
+        return ProgressiveMediaSource.Factory(dataSourceFactory)
+            .createMediaSource((MediaItem.fromUri(uri)))
     }
 
 
     override fun onViewDetachedFromWindow(holder: PostViewHolder) {
         super.onViewDetachedFromWindow(holder)
         holder.binding.apply {
-            if (postVideo.visibility == View.VISIBLE && postVideo.player?.isPlaying == true ){
+            if (postVideo.visibility == View.VISIBLE && postVideo.player?.isPlaying == true) {
                 postVideo.player?.stop()
             }
 
@@ -170,12 +178,11 @@ class AdapterPost @Inject constructor (
     }
 
 
-
-
     private var onItemClickListener: ((Post) -> Unit)? = null
     fun setOnItemClickListener(listener: (Post) -> Unit) {
         onItemClickListener = listener
     }
+
     private var onItemClickListenerForGoingtoOwner: ((Post) -> Unit)? = null
     fun setOnItemClickListenerForGoingtoOwner(listener: (Post) -> Unit) {
         onItemClickListenerForGoingtoOwner = listener
@@ -194,12 +201,14 @@ class AdapterPost @Inject constructor (
                     if (dataSnapshot.child(postKey).hasChild(myUid!!)) {
                         //user has liked for this post
                         postLikeBtn.setCompoundDrawablesWithIntrinsicBounds(
-                            R.drawable.ic_like, 0, 0, 0)
+                            R.drawable.ic_like, 0, 0, 0
+                        )
                         postLikeBtn.text = "Liked"
                     } else {
                         //user has not liked for this post
                         postLikeBtn.setCompoundDrawablesWithIntrinsicBounds(
-                            R.drawable.ic_like_not, 0, 0, 0)
+                            R.drawable.ic_like_not, 0, 0, 0
+                        )
                         postLikeBtn.text = "Like"
                     }
                 }
@@ -211,8 +220,13 @@ class AdapterPost @Inject constructor (
     }
 
 
-    fun translate(text: String,sourceLanguage:String ,myLanguage:String,holder: PostViewHolder):String{
-        var targetLanguage=""
+    fun translate(
+        text: String,
+        sourceLanguage: String,
+        myLanguage: String,
+        holder: PostViewHolder
+    ): String {
+        var targetLanguage = ""
 
         // Create an sourceLanguage-myLanguage translator:
         val options = TranslatorOptions.Builder()
@@ -235,14 +249,16 @@ class AdapterPost @Inject constructor (
                         // Translation successful.
                         targetLanguage = translatedText
                         holder.binding.apply {
-                            postCaption.text=translatedText
-                            postLanguage.visibility= View.VISIBLE
-                            postLanguage.text="translated  from $sourceLanguage ${context.getString(R.string.see_original)}"
-                            postLanguage.paintFlags = postLanguage.getPaintFlags() or Paint.UNDERLINE_TEXT_FLAG
+                            postCaption.text = translatedText
+                            postLanguage.visibility = View.VISIBLE
+                            postLanguage.text =
+                                "translated  from $sourceLanguage ${context.getString(R.string.see_original)}"
+                            postLanguage.paintFlags =
+                                postLanguage.getPaintFlags() or Paint.UNDERLINE_TEXT_FLAG
 
                             postLanguage.setOnClickListener {
-                                postCaption.text=text
-                                postLanguage.visibility= View.GONE
+                                postCaption.text = text
+                                postLanguage.visibility = View.GONE
 
                             }
                         }
@@ -262,7 +278,6 @@ class AdapterPost @Inject constructor (
 
         return targetLanguage
     }
-
 
 
 }

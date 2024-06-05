@@ -13,10 +13,19 @@ import com.example.common.domain.model.Attachment
 import com.example.common.domain.model.AttachmentType
 import com.example.core.ui.utils.loadImageFromUrl
 
+
+/**
+ * RecyclerView.Adapter implementation to display a list of attachments (images and videos).
+ * Handles the binding of data to view holders and manages ExoPlayer instances for video playback.
+ *
+ * @property attachments List of attachments to be displayed.
+ */
+
 class PreviewAttachmentsAdapter(
     private val attachments: List<Attachment>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+    // ExoPlayer instance for the current playing video
     private var currentPlayer: ExoPlayer? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -31,6 +40,7 @@ class PreviewAttachmentsAdapter(
                     )
                 )
             }
+
             VIEW_TYPE_VIDEO -> {
                 VideoViewHolder(
                     ItemVideoPreviewBinding.inflate(
@@ -40,6 +50,7 @@ class PreviewAttachmentsAdapter(
                     )
                 )
             }
+
             else -> throw IllegalArgumentException("Unknown view type $viewType")
         }
     }
@@ -67,21 +78,19 @@ class PreviewAttachmentsAdapter(
         }
     }
 
+    /**
+     * Called when a view created by this adapter has been detached from its window.
+     */
+    override fun onViewDetachedFromWindow(holder: RecyclerView.ViewHolder) {
+        super.onViewDetachedFromWindow(holder)
+        if (holder is VideoViewHolder) {
+            holder.releasePlayer()
+        }
+    }
+
+
     inner class VideoViewHolder(private val binding: ItemVideoPreviewBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
-        init {
-            // Release player when ViewHolder is detached
-            binding.root.addOnAttachStateChangeListener(object : View.OnAttachStateChangeListener {
-                override fun onViewAttachedToWindow(v: View) {
-                    // No action needed
-                }
-
-                override fun onViewDetachedFromWindow(v: View) {
-                    releasePlayer()
-                }
-            })
-        }
 
         fun bind(attachment: Attachment) {
             currentPlayer = ExoPlayer.Builder(binding.root.context).build().also {
@@ -93,17 +102,25 @@ class PreviewAttachmentsAdapter(
             }
         }
 
-        private fun releasePlayer() {
-            currentPlayer?.let { player ->
-                player.stop()
-//                player.release()
-            }
+        /**
+         * Releases the ExoPlayer instance when the item is not visible because of scrolling.
+         * because exo player work on in background thread so it will play even the video is not visible
+         */
+        fun releasePlayer() {
+            binding.videoView.player?.pause()
+            currentPlayer?.playWhenReady = false
+            currentPlayer?.pause()
             currentPlayer = null
         }
     }
 
+
+    /**
+     * Stops and releases the currently playing ExoPlayer instance, if any.
+     */
     fun stopCurrentPlayer() {
-        currentPlayer?.stop()
+        currentPlayer?.playWhenReady = false
+        currentPlayer?.pause()
         currentPlayer = null
     }
 
