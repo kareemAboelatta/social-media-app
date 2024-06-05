@@ -7,7 +7,6 @@ import com.example.common.AppDispatcher
 import com.example.common.CustomAuthException
 import com.example.common.CustomDataException
 import com.example.common.Dispatcher
-import com.example.common.data.datasource.AuthDatasource
 import com.example.common.domain.model.User
 
 import com.google.firebase.auth.FirebaseAuth
