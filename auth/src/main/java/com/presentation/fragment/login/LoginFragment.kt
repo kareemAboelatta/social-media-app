@@ -1,10 +1,11 @@
-package com.presentation.fragment
+package com.presentation.fragment.login
 
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.core.BaseFragment
-import com.presentation.AuthViewModel
 import com.example.auth.R
 import com.example.auth.databinding.FragmentLoginBinding
 import com.example.common.ui.utils.MyValidation
@@ -15,14 +16,15 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class LoginFragment : BaseFragment<FragmentLoginBinding>(inflate = FragmentLoginBinding::inflate) {
 
-    private val viewModel by viewModels<AuthViewModel>()
+    private val viewModel by viewModels<LoginViewModel>()
 
     override fun onViewCreated() {
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.signInUserState.collect { state ->
+
+            viewModel.loginState.flowWithLifecycle(lifecycle,Lifecycle.State.STARTED).collect { state ->
                 state.handleState{
-                    activity?.openMainActivity()
+                    requireActivity().openMainActivity()
                 }
             }
         }
@@ -34,7 +36,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(inflate = FragmentLogin
             if (MyValidation.isValidEmail(requireContext(), binding.inputTextLayoutEmail)
                 && MyValidation.validatePass(requireContext(), binding.inputTextLayoutPassword)
             ) {
-                viewModel.signInWithEmailAndPassword(email, password)
+                viewModel.login(email, password)
             }
         }
 

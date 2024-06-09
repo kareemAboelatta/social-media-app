@@ -9,6 +9,8 @@
     <string name="max_images">Max 10 Images</string>
 
     <string name="attach_photos">Attach photos</string>
+    <string name="something_went_wrong">Something went wrong</string>
+
 
 
 </resources>

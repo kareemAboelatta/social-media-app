@@ -11,7 +11,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
+import com.example.core.domain.utils.FirebaseExceptions
 import com.example.core.ui.ProgressDialogUtil
+import com.example.core.ui.utils.DataState
 import com.example.core.ui.utils.UIState
 import com.example.core.ui.utils.hideKeyboard
 import javax.inject.Inject
@@ -78,9 +80,9 @@ abstract class BaseFragment<VBinding : ViewBinding>(private val inflate: Inflate
 
 
     abstract fun onViewCreated()
-     open fun onClicks(){
+    open fun onClicks() {
 
-     }
+    }
 
 
     override fun onDestroyView() {
@@ -89,22 +91,25 @@ abstract class BaseFragment<VBinding : ViewBinding>(private val inflate: Inflate
         _binding = null
     }
 
-    protected fun<T> UIState<T>.handleState(
-        onError : (String) -> Unit = {},
-        onSuccess: (T) -> Unit ,
-        ) {
+    protected fun <T> UIState<T>.handleState(
+        onError: (String) -> Unit = {},
+        onSuccess: (T) -> Unit,
+    ) {
         when (this) {
             UIState.Empty -> {
                 progressDialogUtil.hideProgress()
             }
+
             is UIState.Error -> {
                 progressDialogUtil.hideProgress()
                 Toast.makeText(context, this.error, Toast.LENGTH_SHORT).show()
                 onError(this.error)
             }
+
             UIState.Loading -> {
                 progressDialogUtil.showProgress()
             }
+
             is UIState.Success -> {
                 progressDialogUtil.hideProgress()
                 onSuccess(this.data)
@@ -112,8 +117,61 @@ abstract class BaseFragment<VBinding : ViewBinding>(private val inflate: Inflate
         }
     }
 
-}
+    protected fun <T> DataState<T>.handleState(
+        onError: (String) -> Unit = {},
+        onSuccess: (T) -> Unit,
+    ) {
+        when (this) {
+            is DataState.Idle -> {
+                progressDialogUtil.hideProgress()
+            }
 
+            is DataState.Error -> {
+                progressDialogUtil.hideProgress()
+                handleError(this.throwable)
+                this.throwable.localizedMessage?.let { onError(it) }
+            }
+
+            is DataState.Loading -> {
+                progressDialogUtil.showProgress()
+            }
+
+            is DataState.Success -> {
+                progressDialogUtil.hideProgress()
+                onSuccess(this.data)
+            }
+        }
+    }
+
+    private fun handleError(
+        throwable: Throwable,
+    ) {
+        when (throwable) {
+            is FirebaseExceptions.AuthException -> {
+                Toast.makeText(requireActivity(), throwable.msg, Toast.LENGTH_SHORT).show()
+            }
+
+            is FirebaseExceptions.StorageException -> {
+                Toast.makeText(requireActivity(), throwable.msg, Toast.LENGTH_SHORT).show()
+            }
+
+            is FirebaseExceptions.DatabaseException -> {
+                Toast.makeText(requireActivity(), throwable.msg, Toast.LENGTH_SHORT).show()
+            }
+
+            else -> {
+                Toast.makeText(
+                    requireActivity(),
+                    throwable.localizedMessage ?: getString(R.string.something_went_wrong),
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+            }
+        }
+    }
+
+
+}
 
 
 fun Activity.openAuthActivity() {

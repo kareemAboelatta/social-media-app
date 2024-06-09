@@ -124,4 +124,19 @@ dependencies {
     api("de.hdodenhof:circleimageview:3.1.0")
 
 
+
+    // Firebase
+    api("com.google.firebase:firebase-analytics:22.0.1")
+    api("com.google.android.gms:play-services-auth:21.2.0")
+    api(platform("com.google.firebase:firebase-bom:33.1.0"))
+    api("com.google.firebase:firebase-auth-ktx:23.0.0")
+    api("com.google.firebase:firebase-storage-ktx:21.0.0")
+    api("com.google.firebase:firebase-database-ktx:21.0.0")
+    api("com.google.firebase:firebase-messaging-ktx:24.0.0")
+    // ML Kit
+    api("com.google.mlkit:translate:17.0.2")
+    api("com.google.mlkit:language-id:17.0.5")
+
+
+
 }

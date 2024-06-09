@@ -1,4 +1,4 @@
-package com.presentation.fragment
+package com.presentation.fragment.register
 
 import android.net.Uri
 import android.widget.Toast
@@ -8,7 +8,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.core.BaseFragment
 import com.example.core.ui.pickers.pickCompressedImage
 import com.domain.models.CreateUserInput
-import com.presentation.AuthViewModel
 import com.example.auth.R
 import com.example.auth.databinding.FragmentRegisterBinding
 import com.example.common.ui.utils.MyValidation
@@ -21,7 +20,7 @@ class RegisterFragment :
 
     var uri: Uri? = null
 
-    private val viewModel by viewModels<AuthViewModel>()
+    private val viewModel by viewModels<RegisterViewModel>()
 
 
     override fun onViewCreated() {

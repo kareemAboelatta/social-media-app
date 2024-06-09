@@ -4,5 +4,6 @@
     <string name="max_images">الحد الاقصي 10 صور</string>
 
     <string name="attach_photos">ارفاق صور</string>
+    <string name="something_went_wrong">حدث خطأ</string>
 
 </resources>
