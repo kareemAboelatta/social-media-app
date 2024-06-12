@@ -3,6 +3,7 @@ package com.example.core
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,7 +22,7 @@ import javax.inject.Inject
 
 typealias Inflate<T> = (LayoutInflater, ViewGroup?, Boolean) -> T
 
-
+ const val HANDLE_STATES_TAG = "BaseFragment"
 abstract class BaseFragment<VBinding : ViewBinding>(private val inflate: Inflate<VBinding>) :
     Fragment() {
 
@@ -121,6 +122,8 @@ abstract class BaseFragment<VBinding : ViewBinding>(private val inflate: Inflate
         onError: (String) -> Unit = {},
         onSuccess: (T) -> Unit,
     ) {
+        Log.d(HANDLE_STATES_TAG, "handleState:DataState: {${this}}")
+
         when (this) {
             is DataState.Idle -> {
                 progressDialogUtil.hideProgress()
@@ -129,6 +132,7 @@ abstract class BaseFragment<VBinding : ViewBinding>(private val inflate: Inflate
             is DataState.Error -> {
                 progressDialogUtil.hideProgress()
                 handleError(this.throwable)
+                Log.d(HANDLE_STATES_TAG, "handleState: DataState.Error:: {${this.throwable}}")
                 this.throwable.localizedMessage?.let { onError(it) }
             }
 
@@ -177,7 +181,7 @@ abstract class BaseFragment<VBinding : ViewBinding>(private val inflate: Inflate
 fun Activity.openAuthActivity() {
     val intent = Intent().setClassName(
         this,
-        "com.auth.presentation.AuthActivity"
+        "com.presentation.AuthActivity"
     )
     startActivity(intent)
     finish()

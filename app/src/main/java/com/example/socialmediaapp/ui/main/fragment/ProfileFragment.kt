@@ -138,7 +138,7 @@ class ProfileFragment : Fragment() {
             var popupMenu = PopupMenu(activity, binding.profBtnSetting)
             popupMenu.menuInflater.inflate(R.menu.pop_menu, popupMenu.menu)
 
-            popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
+            popupMenu.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     R.id.change_name ->
                         showUpdateNameBioDialog("name")
@@ -152,7 +152,7 @@ class ProfileFragment : Fragment() {
                     }
                 }
                 true
-            })
+            }
             popupMenu.show()
         }
 
@@ -235,7 +235,7 @@ class ProfileFragment : Fragment() {
 
     }
 
-    fun recyclerViewSetUp() {
+    private fun recyclerViewSetUp() {
         //put linearLayout in recycle
         val linearLayout = LinearLayoutManager(activity)
         linearLayout.stackFromEnd = true
