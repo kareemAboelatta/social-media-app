@@ -1,6 +1,7 @@
 package com.data.datasource
 
 import android.net.Uri
+import androidx.core.net.toUri
 import com.domain.models.CreateUserInput
 import com.example.common.AppDispatcher
 import com.example.common.CustomAuthException
@@ -8,6 +9,7 @@ import com.example.common.CustomDataException
 import com.example.common.Dispatcher
 import com.example.common.domain.model.User
 import com.example.common.ui.utils.Constants
+import com.example.core.domain.utils.FirebaseExceptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.database.DatabaseReference
@@ -41,10 +43,10 @@ class AuthDatasourceFirebase @Inject constructor(
             val authResult =
                 auth.createUserWithEmailAndPassword(userInput.email, userInput.password).await()
             val firebaseUser = authResult.user
-            val uploadImageResult = async { uploadFile(userInput.image) }.await()
+            val uploadImageResult = async { uploadFile(userInput.image.toUri()) }.await()
 
             val newUser = User(
-                id = firebaseUser!!.uid,
+                id = firebaseUser?.uid ?: throw FirebaseAuthException("USER_NOT_FOUND", "firebaseUser is null" ,),
                 name = userInput.name,
                 email = userInput.email,
                 bio = userInput.bio,

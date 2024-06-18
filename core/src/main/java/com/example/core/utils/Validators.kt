@@ -19,4 +19,5 @@ fun String.isValidPhoneNumber(): Boolean {
 }
 
 
-fun String.isValidBio(minLength: Int = 6): Boolean = this.length > minLength
+fun String.isValidBio(): Boolean = this.length > 2
+fun String.isValidName(): Boolean = this.length > 2

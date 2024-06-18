@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
@@ -22,7 +23,8 @@ import javax.inject.Inject
 
 typealias Inflate<T> = (LayoutInflater, ViewGroup?, Boolean) -> T
 
- const val HANDLE_STATES_TAG = "BaseFragment"
+const val HANDLE_STATES_TAG = "BaseFragment"
+
 abstract class BaseFragment<VBinding : ViewBinding>(private val inflate: Inflate<VBinding>) :
     Fragment() {
 
@@ -77,11 +79,16 @@ abstract class BaseFragment<VBinding : ViewBinding>(private val inflate: Inflate
 
         onViewCreated()
         onClicks()
+        observers()
     }
 
 
     abstract fun onViewCreated()
     open fun onClicks() {
+
+    }
+
+    open fun observers() {
 
     }
 
@@ -104,6 +111,8 @@ abstract class BaseFragment<VBinding : ViewBinding>(private val inflate: Inflate
             is UIState.Error -> {
                 progressDialogUtil.hideProgress()
                 Toast.makeText(context, this.error, Toast.LENGTH_SHORT).show()
+                showErrorToast(this.error)
+
                 onError(this.error)
             }
 
@@ -120,7 +129,7 @@ abstract class BaseFragment<VBinding : ViewBinding>(private val inflate: Inflate
 
     protected fun <T> DataState<T>.handleState(
         onError: (String) -> Unit = {},
-        onSuccess: (T) -> Unit,
+        onSuccess: (T) -> Unit= {},
     ) {
         Log.d(HANDLE_STATES_TAG, "handleState:DataState: {${this}}")
 
@@ -152,28 +161,42 @@ abstract class BaseFragment<VBinding : ViewBinding>(private val inflate: Inflate
     ) {
         when (throwable) {
             is FirebaseExceptions.AuthException -> {
-                Toast.makeText(requireActivity(), throwable.msg, Toast.LENGTH_SHORT).show()
+                showErrorToast(throwable.msg)
             }
 
             is FirebaseExceptions.StorageException -> {
-                Toast.makeText(requireActivity(), throwable.msg, Toast.LENGTH_SHORT).show()
+                showErrorToast(throwable.msg)
             }
 
             is FirebaseExceptions.DatabaseException -> {
-                Toast.makeText(requireActivity(), throwable.msg, Toast.LENGTH_SHORT).show()
+                showErrorToast(throwable.msg)
             }
 
             else -> {
-                Toast.makeText(
-                    requireActivity(),
+                showErrorToast(
                     throwable.localizedMessage ?: getString(R.string.something_went_wrong),
-                    Toast.LENGTH_SHORT
                 )
-                    .show()
             }
         }
     }
 
+
+    fun showToast(msg: String) {
+        Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
+    }
+    fun showToast(
+        @StringRes msg: Int) {
+        Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
+    }
+
+    fun showErrorToast(
+        @StringRes msg: Int) {
+        Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
+    }
+
+    fun showErrorToast(msg: String) {
+        Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
+    }
 
 }
 

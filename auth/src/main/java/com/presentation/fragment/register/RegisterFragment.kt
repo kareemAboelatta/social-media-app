@@ -3,98 +3,124 @@ package com.presentation.fragment.register
 import android.net.Uri
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.core.BaseFragment
 import com.example.core.ui.pickers.pickCompressedImage
-import com.domain.models.CreateUserInput
 import com.example.auth.R
+import com.example.common.R as CommonR
 import com.example.auth.databinding.FragmentRegisterBinding
-import com.example.common.ui.utils.MyValidation
+import com.example.core.domain.utils.ValidationException
+import com.example.core.ui.utils.DataState
+import com.example.core.ui.utils.loadCircleImageFromUrl
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class RegisterFragment :
     BaseFragment<FragmentRegisterBinding>(inflate = FragmentRegisterBinding::inflate) {
 
-    var uri: Uri? = null
-
     private val viewModel by viewModels<RegisterViewModel>()
 
+    override fun onViewCreated() {}
 
-    override fun onViewCreated() {
-        // Observe createUserState
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.createUserState.collect { state ->
-                state.handleState {
-                    Toast.makeText(context, "Registration success ", Toast.LENGTH_SHORT).show()
-                    findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
-                }
-            }
-        }
-
+    override fun onClicks() {
         binding.regBtnRegister.setOnClickListener {
-            val name = binding.inputTextLayoutName.editText?.text.toString()
-            val bio = binding.inputTextLayoutBio.editText?.text.toString()
-            val email = binding.inputTextLayoutEmail.editText?.text.toString()
-            val password = binding.inputTextLayoutPassword.editText?.text.toString()
-
-            if (valid()) {
-
-                val createUserInput = CreateUserInput(
-                    email = email,
-                    password = password,
-                    bio = bio,
-                    image = uri!!,
-                    name = name
-                )
-
-                viewModel.createUser(createUserInput)
-            }
-
-
+            viewModel.updateInput(
+                name = binding.inputTextName.text.toString(),
+                email = binding.inputTextEmail.text.toString(),
+                password = binding.inputTextPassword.text.toString(),
+                bio = binding.inputTextBio.text.toString(),
+            )
+            viewModel.createUser()
         }
 
         binding.regImage.setOnClickListener {
             pickCompressedImage(
                 progressUtil = progressDialogUtil,
-                onSaveFile = { compressedFile, uri ->
-                    this.uri = uri
-                    binding.regImage.setImageURI(uri)
+                onSaveFile = { image, _ ->
+                    viewModel.updateInput(image = image)
                 }
             )
         }
 
 
         binding.regBacktologin.setOnClickListener {
-            findNavController().navigate(
-                R.id.action_registerFragment_to_loginFragment
-            )
+            findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
         }
 
     }
 
 
-    private fun valid(): Boolean {
-        val bio = binding.inputTextLayoutBio.editText?.text.toString()
+    override fun observers() {
+        super.observers()
+        observeRegisterState()
+        observeUserInputState()
+    }
 
-        if (!MyValidation.validateName(requireContext(), binding.inputTextLayoutName)) {
-            return false
-        } else if (bio.isEmpty()) {
-            binding.inputTextLayoutBio.isHelperTextEnabled = true
-            binding.inputTextLayoutBio.helperText = "Require*"
-            return false
-        } else if (!MyValidation.isValidEmail(requireContext(), binding.inputTextLayoutEmail)) {
-            return false
-        } else if (!MyValidation.validatePass(requireContext(), binding.inputTextLayoutPassword)) {
-            return false
-        } else if (uri == null) {
-            Toast.makeText(activity, "Select image !!", Toast.LENGTH_LONG).show()
-            return false
-        } else {
-            return true
+    private fun observeUserInputState() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.inputState.flowWithLifecycle(lifecycle).collectLatest {
+                with(binding){
+                    inputTextName.setTextKeepState(it.name)
+                    inputTextBio.setTextKeepState(it.bio)
+                    inputTextEmail.setTextKeepState(it.email)
+                    inputTextPassword.setTextKeepState(it.password)
+                    regImage.loadCircleImageFromUrl(it.image)
+                }
+            }
         }
     }
+    private fun observeRegisterState() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.createUserState.flowWithLifecycle(lifecycle).collectLatest { state ->
+                when (state) {
+                    is DataState.Error -> {
+                        when (state.throwable) {
+                            is ValidationException.InvalidEmptyNameException -> {
+                                showErrorToast(CommonR.string.name_required)
+                            }
+                            is ValidationException.InvalidNameException -> {
+                                showErrorToast(CommonR.string.name_invalid)
+                            }
+                            is ValidationException.InvalidEmptyBioException -> {
+                                showErrorToast(CommonR.string.bio_required)
+                            }
+                            is ValidationException.InvalidBioException -> {
+                                showErrorToast(CommonR.string.bio_invalid)
+                            }
+                            is ValidationException.InvalidEmptyEmailException -> {
+                                showErrorToast(CommonR.string.email_required)
+                            }
+                            is ValidationException.InvalidEmailException -> {
+                                showErrorToast(CommonR.string.email_invalid)
+                            }
+                            is ValidationException.InvalidEmptyPasswordException -> {
+                                showErrorToast(CommonR.string.password_required)
+                            }
+                            is ValidationException.InvalidPasswordException -> {
+                                showErrorToast(CommonR.string.password_invalid)
+                            }
+                            is ValidationException.InvalidEmptyImageException -> {
+                                showErrorToast(CommonR.string.image_required)
+                            }
+                            else -> {
+                                state.handleState()
+                            }
+                        }
+                    }
+                    else -> {
+                        state.handleState {
+                            showToast(CommonR.string.registration_success)
+                            findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 
 }

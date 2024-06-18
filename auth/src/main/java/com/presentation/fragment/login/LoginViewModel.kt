@@ -2,7 +2,7 @@ package com.presentation.fragment.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.domain.usecases.SignInWithEmailAndPassword
+import com.domain.usecases.SignInUseCase
 import com.example.common.domain.model.User
 import com.example.core.ui.utils.DataState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val signInWithEmailAndPasswordUseCase: SignInWithEmailAndPassword,
+    private val signInUseCaseUseCase: SignInUseCase,
 ) : ViewModel() {
 
 
@@ -23,7 +23,7 @@ class LoginViewModel @Inject constructor(
 
     fun login(email: String, password: String) {
         viewModelScope.launch {
-            signInWithEmailAndPasswordUseCase(email, password).collectLatest {
+            signInUseCaseUseCase(email, password).collectLatest {
                 _loginState.emit(it)
             }
         }

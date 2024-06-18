@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="name_required">الاسم مطلوب</string>
+    <string name="name_invalid">الاسم غير صالح</string>
+    <string name="bio_required">السيرة الذاتية مطلوبة</string>
+    <string name="bio_invalid">السيرة الذاتية غير صالحة</string>
+    <string name="email_required">البريد الإلكتروني مطلوب</string>
+    <string name="email_invalid">البريد الإلكتروني غير صالح</string>
+    <string name="password_required">كلمة المرور مطلوبة</string>
+    <string name="password_invalid">كلمة المرور غير صالحة</string>
+    <string name="image_required">الصورة مطلوبة</string>
+    <string name="registration_success">تم التسجيل بنجاح</string>
+
+
+</resources>
