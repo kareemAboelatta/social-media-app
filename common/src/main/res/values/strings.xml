@@ -30,6 +30,7 @@
     <string name="password_invalid">Invalid password</string>
     <string name="image_required">Image is required</string>
     <string name="registration_success">Registration successful</string>
+    <string name="check_email">"Check your Email Now"</string>
 
 
 </resources>

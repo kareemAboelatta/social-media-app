@@ -11,6 +11,7 @@
     <string name="password_invalid">كلمة المرور غير صالحة</string>
     <string name="image_required">الصورة مطلوبة</string>
     <string name="registration_success">تم التسجيل بنجاح</string>
+    <string name="check_email">يرجى التحقق من بريدك الالكتروني</string>
 
 
 </resources>
