@@ -1,6 +1,7 @@
 package com.example.common.ui.preview_attachment
 
 import android.net.Uri
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -83,8 +84,17 @@ class PreviewAttachmentsAdapter(
      */
     override fun onViewDetachedFromWindow(holder: RecyclerView.ViewHolder) {
         super.onViewDetachedFromWindow(holder)
+
         if (holder is VideoViewHolder) {
             holder.releasePlayer()
+        }
+
+    }
+
+    override fun onViewAttachedToWindow(holder: RecyclerView.ViewHolder) {
+        super.onViewAttachedToWindow(holder)
+        if (holder is VideoViewHolder) {
+            holder.playVideo()
         }
     }
 
@@ -92,28 +102,34 @@ class PreviewAttachmentsAdapter(
     inner class VideoViewHolder(private val binding: ItemVideoPreviewBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
+            var currentPlayerForHolder: ExoPlayer? = null
+
         fun bind(attachment: Attachment) {
             currentPlayer = ExoPlayer.Builder(binding.root.context).build().also {
-                binding.videoView.player = it
                 val mediaItem = MediaItem.fromUri(Uri.parse(attachment.attachment))
                 it.setMediaItem(mediaItem)
                 it.prepare()
-                it.playWhenReady = true
+                binding.videoView.player = it
             }
-        }
+            currentPlayerForHolder = currentPlayer
 
+        }
         /**
          * Releases the ExoPlayer instance when the item is not visible because of scrolling.
          * because exo player work on in background thread so it will play even the video is not visible
          */
         fun releasePlayer() {
-            binding.videoView.player?.pause()
-            currentPlayer?.playWhenReady = false
-            currentPlayer?.pause()
-            currentPlayer = null
+            currentPlayerForHolder?.playWhenReady = false
+            currentPlayerForHolder?.pause()
+        }
+
+        fun playVideo() {
+
+            currentPlayerForHolder?.playWhenReady = true
+            currentPlayerForHolder?.play()
+
         }
     }
-
 
     /**
      * Stops and releases the currently playing ExoPlayer instance, if any.
@@ -121,7 +137,6 @@ class PreviewAttachmentsAdapter(
     fun stopCurrentPlayer() {
         currentPlayer?.playWhenReady = false
         currentPlayer?.pause()
-        currentPlayer = null
     }
 
     companion object {
@@ -129,3 +144,4 @@ class PreviewAttachmentsAdapter(
         private const val VIEW_TYPE_VIDEO = 1
     }
 }
+

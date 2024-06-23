@@ -1,5 +1,6 @@
 package com.example.main.presentation.publish_post
 
+import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.fragment.app.viewModels
@@ -13,10 +14,12 @@ import com.example.core.ui.pickers.pickCompressedImage
 import com.example.core.ui.pickers.pickCompressedVideo
 import com.example.main.databinding.FragmentPublishPostBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import com.example.common.R as commonR
 
 
+private const val TAG = "PublishPostFragment"
 @AndroidEntryPoint
 class PublishPostFragment :
     BaseFragment<FragmentPublishPostBinding>(FragmentPublishPostBinding::inflate) {
@@ -47,8 +50,9 @@ class PublishPostFragment :
 
     private fun observeAttachments() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.input.flowWithLifecycle(lifecycle, Lifecycle.State.STARTED).collect {
+            viewModel.input.flowWithLifecycle(lifecycle, Lifecycle.State.STARTED).collectLatest {
                 attachmentAdapter.submitAttachmentsList(it.attachments)
+                Log.d(TAG, "observeAttachments: items: ${it.attachments}")
             }
         }
     }
@@ -66,7 +70,7 @@ class PublishPostFragment :
             fabAddVideo.setOnClickListener {
                 pickCompressedVideo(progressUtil = ProgressDialogUtil(requireActivity())) { path, uri ->
                     viewModel.addVideoAttachment(
-                        attachment = path
+                        attachment = path // this is the path of the video but the problem is here because its jpeg
                     )
                 }
             }

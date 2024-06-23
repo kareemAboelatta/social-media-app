@@ -25,12 +25,6 @@ class PreviewAttachmentFragment :
     private fun setupViewPager(attachments: List<Attachment>) {
         adapter = PreviewAttachmentsAdapter(attachments)
         binding.viewPager.adapter = adapter
-        binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                adapter.stopCurrentPlayer()
-            }
-        })
     }
 
     override fun onPause() {

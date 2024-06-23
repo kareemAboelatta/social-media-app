@@ -23,6 +23,25 @@ suspend fun compressFile (context:Context, file: File):String{
             }.get(Dispatchers.Main)
         return newResult.path
 }
+suspend fun compressImageFile(context: Context, file: File): String {
+    val newResult = Compress.with(context, file)
+        .setQuality(95)
+        .concrete {
+            withMaxWidth(1536f)
+            withMaxHeight(1536f)
+            withIgnoreIfSmaller(false)
+        }.get(Dispatchers.Main)
+    return newResult.path
+}
+
+// Assuming you have a similar library or method for video compression
+suspend fun compressVideoFile(context: Context, file: File): String {
+    // Implement your video compression logic here
+    // For example, using FFmpeg or any other library
+    // Return the path of the compressed video file
+    return file.path // Placeholder return statement
+}
+
 
 fun Fragment.pickCompressedImage(progressUtil: ProgressDialogUtil, onSaveFile: suspend (String, Uri) -> (Unit)) {
     TedImagePicker.with(this.requireActivity()).image()
@@ -31,7 +50,7 @@ fun Fragment.pickCompressedImage(progressUtil: ProgressDialogUtil, onSaveFile: s
                 val file = FileUtils(this@pickCompressedImage.requireContext()).createTmpFileFromUri(uri)
                 if (file != null) {
                     progressUtil.showProgress()
-                    val compressedFile = compressFile(this@pickCompressedImage.requireContext(), file)
+                    val compressedFile = compressImageFile(this@pickCompressedImage.requireContext(), file)
                     progressUtil.hideProgress()
                     onSaveFile(compressedFile, uri)
                 }
@@ -46,7 +65,7 @@ fun Fragment.pickCompressedVideo(progressUtil: ProgressDialogUtil, onSaveFile: s
                 val file = FileUtils(this@pickCompressedVideo.requireContext()).createTmpFileFromUri(uri)
                 if (file != null) {
                     progressUtil.showProgress()
-                    val compressedFile = compressFile(this@pickCompressedVideo.requireContext(), file)
+                    val compressedFile = compressVideoFile(this@pickCompressedVideo.requireContext(), file)
                     progressUtil.hideProgress()
                     onSaveFile(compressedFile, uri)
                 }
