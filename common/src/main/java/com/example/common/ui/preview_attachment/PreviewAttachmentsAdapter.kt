@@ -1,9 +1,7 @@
 package com.example.common.ui.preview_attachment
 
 import android.net.Uri
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
@@ -102,7 +100,7 @@ class PreviewAttachmentsAdapter(
     inner class VideoViewHolder(private val binding: ItemVideoPreviewBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-            var currentPlayerForHolder: ExoPlayer? = null
+        private var currentPlayerForHolder: ExoPlayer? = null
 
         fun bind(attachment: Attachment) {
             currentPlayer = ExoPlayer.Builder(binding.root.context).build().also {
@@ -114,6 +112,7 @@ class PreviewAttachmentsAdapter(
             currentPlayerForHolder = currentPlayer
 
         }
+
         /**
          * Releases the ExoPlayer instance when the item is not visible because of scrolling.
          * because exo player work on in background thread so it will play even the video is not visible

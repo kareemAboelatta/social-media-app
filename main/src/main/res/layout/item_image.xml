@@ -16,7 +16,7 @@
         android:layout_margin="@dimen/margin_very_low"
         android:scaleType="centerCrop"
         app:shapeAppearanceOverlay="@style/RoundedShapeAppearance"
-
+        android:transitionName="shared_attachment"
         tools:src="@tools:sample/avatars" />
 
     <ImageView
@@ -27,6 +27,7 @@
         android:layout_alignParentEnd="true"
         android:src="@drawable/ic_close_primary"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:layout_margin="@dimen/margin_very_low"
         android:scaleType="centerCrop"
-
+        android:transitionName="shared_attachment"
         app:shapeAppearance="@style/RoundedShapeAppearance"
         tools:src="@tools:sample/avatars" />
 

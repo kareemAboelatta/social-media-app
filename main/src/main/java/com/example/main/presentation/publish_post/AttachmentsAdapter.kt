@@ -11,7 +11,7 @@ import com.example.main.databinding.ItemImageBinding
 import com.example.main.databinding.ItemVideoBinding
 
 class AttachmentsAdapter(
-    val onAttachmentClicked: (attachment: Attachment) -> Unit,
+    val onAttachmentClicked: (attachment: Attachment, position: Int) -> Unit,
     val onRemoveAttachment: (attachment: Attachment) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -62,7 +62,7 @@ class AttachmentsAdapter(
             binding.image.loadImageFromUrl(attachment.attachment)
 
             binding.image.setOnClickListener {
-                onAttachmentClicked(attachment)
+                onAttachmentClicked(attachment, absoluteAdapterPosition)
             }
             binding.deleteIcon.setOnClickListener {
                 onRemoveAttachment(attachment)
@@ -77,7 +77,7 @@ class AttachmentsAdapter(
             binding.playIcon.visibility = View.VISIBLE
 
             binding.root.setOnClickListener {
-                onAttachmentClicked(attachment)
+                onAttachmentClicked(attachment, absoluteAdapterPosition)
             }
             binding.deleteIcon.setOnClickListener {
                 onRemoveAttachment(attachment)

@@ -63,12 +63,15 @@
     <fragment
         android:id="@+id/previewAttachmentFragment"
         android:name="com.example.common.ui.preview_attachment.PreviewAttachmentFragment"
-        android:label="PreviewAttachmentFragment" >
+        android:label="PreviewAttachmentFragment">
         <argument
             android:name="attachments"
             app:argType="com.example.common.domain.model.Attachment[]" />
-    </fragment>
+        <argument
+            android:name="clickedPosition"
+            app:argType="integer" />
 
+    </fragment>
 
 
     <fragment

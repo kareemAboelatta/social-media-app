@@ -7,11 +7,14 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
+import com.example.common.domain.model.AttachmentType
 import com.example.core.BaseFragment
 import com.example.core.ui.ProgressDialogUtil
 import com.example.core.ui.pickers.pickCompressedImage
 import com.example.core.ui.pickers.pickCompressedVideo
+import com.example.main.R
 import com.example.main.databinding.FragmentPublishPostBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -20,6 +23,7 @@ import com.example.common.R as commonR
 
 
 private const val TAG = "PublishPostFragment"
+
 @AndroidEntryPoint
 class PublishPostFragment :
     BaseFragment<FragmentPublishPostBinding>(FragmentPublishPostBinding::inflate) {
@@ -31,23 +35,49 @@ class PublishPostFragment :
     private val viewModel: PublishPostViewModel by viewModels()
     private lateinit var attachmentAdapter: AttachmentsAdapter
     override fun onViewCreated() {
+
+        setupRecyclerView()
+
+    }
+
+    private fun setupRecyclerView() {
         attachmentAdapter = AttachmentsAdapter(
-            onAttachmentClicked = {
-                findNavController().navigate(
-                    PublishPostFragmentDirections.actionToPreviewAttachmentFragment(viewModel.input.value.attachments.toTypedArray())
-                )
+            onAttachmentClicked = { attachment, position ->
+                val viewHolder = binding.rvAttachments.findViewHolderForAdapterPosition(position)
+                if (viewHolder != null) {
+                    val sharedView = viewHolder.itemView.findViewById<View>(
+                        if (attachment.type == AttachmentType.VIDEO) R.id.video_thumbnail else R.id.image
+                    )
+                    val extras = FragmentNavigatorExtras(sharedView to "shared_attachment_$position")
+                    findNavController().navigate(
+                        PublishPostFragmentDirections.actionToPreviewAttachmentFragment(
+                            viewModel.input.value.attachments.toTypedArray(),
+                            position
+                        ),
+                        extras
+                    )
+                } else {
+                    findNavController().navigate(
+                        PublishPostFragmentDirections.actionToPreviewAttachmentFragment(
+                            viewModel.input.value.attachments.toTypedArray(),
+                            position
+                        )
+                    )
+                }
             },
+
             onRemoveAttachment = {
                 viewModel.deleteSelectedAttachment(it)
             }
         )
         binding.rvAttachments.adapter = attachmentAdapter
-
-        observeAttachments()
-
     }
 
 
+    override fun observers() {
+        observeAttachments()
+
+    }
     private fun observeAttachments() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.input.flowWithLifecycle(lifecycle, Lifecycle.State.STARTED).collectLatest {
