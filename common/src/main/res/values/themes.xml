@@ -17,8 +17,7 @@
     </style>
 
 
-    <style name="AppThemeForLogReg"
-        parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="AppThemeForLogReg" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimary</item>
@@ -39,6 +38,18 @@
         <item name="helperTextTextColor">@android:color/holo_red_dark</item>
     </style>
 
+    <!--FullScreenDialogStyle-->
+    <style name="FullScreenDialogStyle" parent="Theme.MaterialComponents.DayNight.Dialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:radius">@dimen/_20sdp</item>
+        <item name="android:windowAnimationStyle">@style/DialogAnimation</item>
+    </style>
+
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+    </style>
 
 
     <style name="CustomAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
@@ -57,7 +68,6 @@
         <item name="background">@android:color/transparent</item>
 
     </style>
-
 
 
     <style name="button_primary" parent="Widget.MaterialComponents.Button">
@@ -79,7 +89,7 @@
 
 
     <!-- Common style for title TextView -->
-    <style name="TextView.Title"  parent="Widget.AppCompat.TextView">
+    <style name="TextView.Title" parent="Widget.AppCompat.TextView">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/black</item>
@@ -90,7 +100,7 @@
     </style>
 
     <!-- Common style for normal TextView -->
-    <style name="TextView.Normal"  parent="Widget.AppCompat.TextView">
+    <style name="TextView.Normal" parent="Widget.AppCompat.TextView">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/black</item>
@@ -99,7 +109,6 @@
         <item name="android:textStyle">normal</item>
         <item name="android:padding">8dp</item>
     </style>
-
 
 
 </resources>

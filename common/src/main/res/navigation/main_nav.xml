@@ -73,6 +73,23 @@
 
     </fragment>
 
+    <action
+        android:id="@+id/action_to_previewAttachmentDialogFragment"
+        app:destination="@id/previewAttachmentDialogFragment" />
+    <dialog
+        android:id="@+id/previewAttachmentDialogFragment"
+        android:name="com.example.common.ui.preview_attachment.PreviewAttachmentDialogFragment"
+        android:label="PreviewAttachmentFragment"
+        >
+        <argument
+            android:name="attachments"
+            app:argType="com.example.common.domain.model.Attachment[]" />
+        <argument
+            android:name="clickedPosition"
+            app:argType="integer" />
+
+    </dialog>
+
 
     <fragment
         android:id="@+id/postDetailsFragment"

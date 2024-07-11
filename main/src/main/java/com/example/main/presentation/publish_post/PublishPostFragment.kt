@@ -50,7 +50,7 @@ class PublishPostFragment :
                     )
                     val extras = FragmentNavigatorExtras(sharedView to "shared_attachment_$position")
                     findNavController().navigate(
-                        PublishPostFragmentDirections.actionToPreviewAttachmentFragment(
+                        PublishPostFragmentDirections.actionToPreviewAttachmentDialogFragment(
                             viewModel.input.value.attachments.toTypedArray(),
                             position
                         ),
@@ -58,7 +58,7 @@ class PublishPostFragment :
                     )
                 } else {
                     findNavController().navigate(
-                        PublishPostFragmentDirections.actionToPreviewAttachmentFragment(
+                        PublishPostFragmentDirections.actionToPreviewAttachmentDialogFragment(
                             viewModel.input.value.attachments.toTypedArray(),
                             position
                         )
