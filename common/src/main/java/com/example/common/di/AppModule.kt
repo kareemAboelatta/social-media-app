@@ -6,6 +6,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.example.common.R
+import com.example.common.data.local.UserPreferences
 import com.google.android.exoplayer2.SimpleExoPlayer
 import dagger.Module
 import dagger.Provides
@@ -19,10 +20,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
-
-    @Singleton
-    @Provides
-    fun provideTestString1() = "This is a string we will inject"
 
 
     @Singleton
@@ -50,5 +47,12 @@ object AppModule {
     @Provides
     fun provideTextToSpeech(@ApplicationContext context: Context):TextToSpeech =
         TextToSpeech(context){}
+
+
+    @Provides
+    @Singleton
+    fun provideUserPreferences(@ApplicationContext context: Context): UserPreferences {
+        return UserPreferences(context)
+    }
 
 }

@@ -1,8 +1,8 @@
 package com.example.main.presentation.publish_post
 
-import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
@@ -15,132 +15,126 @@ import com.example.core.BaseFragment
 import com.example.core.ui.ProgressDialogUtil
 import com.example.core.ui.pickers.pickCompressedImage
 import com.example.core.ui.pickers.pickCompressedVideo
+import com.example.core.ui.utils.loadCircleImageFromUrl
 import com.example.main.databinding.FragmentPublishPostBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import com.example.common.R as commonR
 
-
-private const val TAG = "PublishPostFragment"
-
 @AndroidEntryPoint
-class PublishPostFragment :
-    BaseFragment<FragmentPublishPostBinding>(FragmentPublishPostBinding::inflate) {
-
+class PublishPostFragment : BaseFragment<FragmentPublishPostBinding>(FragmentPublishPostBinding::inflate) {
 
     private var isFabOpen = false
-
-
-    private val viewModel: PublishPostViewModel by viewModels()
+    private val viewModel by viewModels<PublishPostViewModel>()
     private lateinit var attachmentAdapter: AttachmentsAdapter
+
     override fun onViewCreated() {
-
-        setupRecyclerView()
-
+         setupRecyclerView()
+        setupObservers()
+        setupClickListeners()
     }
 
     private fun setupRecyclerView() {
         attachmentAdapter = AttachmentsAdapter(
             onAttachmentClicked = { _, position ->
-                PreviewAttachmentDialogBuilder(requireActivity())
-                    .setStartPosition(position)
-                    .setAttachments(mediaPreviewAttachments = viewModel.input.value.attachments.map {
-                        MediaPreviewAttachment(
-                            type = if (it.type == AttachmentType.VIDEO) MediaPreviewType.VIDEO else MediaPreviewType.IMAGE,
-                            attachment = it.attachment
-                        )
-                    })
-                    .show(parentFragmentManager)
-//                val viewHolder = binding.rvAttachments.findViewHolderForAdapterPosition(position)
-//                if (viewHolder != null) {
-//                    val sharedView = viewHolder.itemView.findViewById<View>(
-//                        if (attachment.type == AttachmentType.VIDEO) R.id.video_thumbnail else R.id.image
-//                    )
-//                    val extras =
-//                        FragmentNavigatorExtras(sharedView to "shared_attachment_$position")
-//
-//                    findNavController().navigate(
-//                        PublishPostFragmentDirections.actionToPreviewAttachmentDialogFragment(
-//                            viewModel.input.value.attachments.toTypedArray(),
-//                            position
-//                        ),
-//                        extras
-//                    )
-//                } else {
-//                    findNavController().navigate(
-//                        PublishPostFragmentDirections.actionToPreviewAttachmentDialogFragment(
-//                            viewModel.input.value.attachments.toTypedArray(),
-//                            position
-//                        )
-//                    )
-//                }
+                showPreviewAttachmentDialog(position)
             },
-
-            onRemoveAttachment = {
-                viewModel.deleteSelectedAttachment(it)
+            onRemoveAttachment = { attachment ->
+                viewModel.deleteSelectedAttachment(attachment)
             }
         )
         binding.rvAttachments.adapter = attachmentAdapter
     }
 
-
-    override fun observers() {
-        observeAttachments()
-
+    private fun showPreviewAttachmentDialog(position: Int) {
+        val mediaPreviewAttachments = viewModel.input.value.attachments.map {
+            MediaPreviewAttachment(
+                type = if (it.type == AttachmentType.VIDEO) MediaPreviewType.VIDEO else MediaPreviewType.IMAGE,
+                attachment = it.attachment
+            )
+        }
+        PreviewAttachmentDialogBuilder(requireActivity())
+            .setStartPosition(position)
+            .setAttachments(mediaPreviewAttachments)
+            .show(parentFragmentManager)
     }
 
-    private fun observeAttachments() {
+    private fun setupObservers() {
+        observeUserData()
+        observeAttachments()
+    }
+
+    private fun observeUserData() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.input.flowWithLifecycle(lifecycle, Lifecycle.State.STARTED).collectLatest {
-                attachmentAdapter.submitAttachmentsList(it.attachments)
-                Log.d(TAG, "observeAttachments: items: ${it.attachments}")
+            viewModel.user.flowWithLifecycle(lifecycle, Lifecycle.State.STARTED).collectLatest { user ->
+                user?.let {
+                    viewModel.updatePostInput(
+                        userId = it.id,
+                        name = it.name,
+                        bio = it.bio,
+                        image = it.image
+                    )
+                }
             }
         }
     }
 
-    override fun onClicks() {
+    private fun observeAttachments() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.input.flowWithLifecycle(lifecycle, Lifecycle.State.STARTED).collectLatest { input ->
+                attachmentAdapter.submitAttachmentsList(input.attachments)
+                binding.etCaption.setTextKeepState(input.caption)
+                binding.userImage.loadCircleImageFromUrl(input.user.image)
+                binding.userName.text = input.user.name
+                binding.userBio.text = input.user.bio
+            }
+        }
+    }
+
+    private fun setupClickListeners() {
         with(binding) {
             fabAttachmentMenu.setOnClickListener {
-                if (isFabOpen) {
-                    closeFabMenu()
-                } else {
-                    openFabMenu()
-                }
+                toggleFabMenu()
             }
 
             fabAddVideo.setOnClickListener {
-                pickCompressedVideo(progressUtil = ProgressDialogUtil(requireActivity())) { path, uri ->
-                    viewModel.addVideoAttachment(
-                        attachment = path // this is the path of the video but the problem is here because its jpeg
-                    )
+                pickCompressedVideo(ProgressDialogUtil(requireActivity())) { path, _ ->
+                    viewModel.addVideoAttachment(path)
                 }
             }
+
             fabAddImage.setOnClickListener {
-                pickCompressedImage(progressUtil = ProgressDialogUtil(requireActivity())) { path, uri ->
-                    viewModel.addPhotoAttachment(attachment = path)
+                pickCompressedImage(ProgressDialogUtil(requireActivity())) { path, _ ->
+                    viewModel.addPhotoAttachment(path)
                 }
             }
+
+            etCaption.doAfterTextChanged { text ->
+                viewModel.updatePostInput(caption = text.toString())
+            }
+        }
+    }
+
+    private fun toggleFabMenu() {
+        if (isFabOpen) {
+            closeFabMenu()
+        } else {
+            openFabMenu()
         }
     }
 
     private fun openFabMenu() {
         isFabOpen = true
         with(binding) {
-            fabAddImage.visibility = View.VISIBLE
-            fabAddVideo.visibility = View.VISIBLE
-            fabAddImage.startAnimation(
-                AnimationUtils.loadAnimation(
-                    requireContext(),
-                    commonR.anim.show
-                )
-            )
-            fabAddVideo.startAnimation(
-                AnimationUtils.loadAnimation(
-                    requireContext(),
-                    commonR.anim.show
-                )
-            )
+            fabAddImage.apply {
+                visibility = View.VISIBLE
+                startAnimation(AnimationUtils.loadAnimation(requireContext(), commonR.anim.show))
+            }
+            fabAddVideo.apply {
+                visibility = View.VISIBLE
+                startAnimation(AnimationUtils.loadAnimation(requireContext(), commonR.anim.show))
+            }
             fabAttachmentMenu.setImageResource(commonR.drawable.ic_close_icon)
         }
     }
@@ -148,23 +142,15 @@ class PublishPostFragment :
     private fun closeFabMenu() {
         isFabOpen = false
         with(binding) {
-            fabAddImage.startAnimation(
-                AnimationUtils.loadAnimation(
-                    requireContext(),
-                    commonR.anim.hide
-                )
-            )
-            fabAddVideo.startAnimation(
-                AnimationUtils.loadAnimation(
-                    requireContext(),
-                    commonR.anim.hide
-                )
-            )
-            fabAddImage.visibility = View.GONE
-            fabAddVideo.visibility = View.GONE
+            fabAddImage.apply {
+                startAnimation(AnimationUtils.loadAnimation(requireContext(), commonR.anim.hide))
+                visibility = View.GONE
+            }
+            fabAddVideo.apply {
+                startAnimation(AnimationUtils.loadAnimation(requireContext(), commonR.anim.hide))
+                visibility = View.GONE
+            }
             fabAttachmentMenu.setImageResource(commonR.drawable.ic_menu)
         }
     }
-
-
 }

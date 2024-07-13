@@ -1,15 +1,11 @@
 package com.aboelatta.universalMediaPreview
 
+import android.app.Dialog
 import android.os.Build
 import android.os.Bundle
 import android.transition.Transition
 import android.transition.TransitionInflater
-import android.view.GestureDetector
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.WindowInsetsController
-import android.view.WindowManager
+import android.view.*
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
@@ -20,7 +16,6 @@ import kotlinx.coroutines.launch
 
 internal class PreviewAttachmentDialogFragment : DialogFragment() {
     private lateinit var binding: FragmentPreviewAttachmentDialogBinding
-    private var visible: Boolean = false
 
     private lateinit var previewAttachmentsAdapter: PreviewAttachmentsAdapter
     private lateinit var gestureDetector: GestureDetector
@@ -28,7 +23,7 @@ internal class PreviewAttachmentDialogFragment : DialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         isCancelable = false
-        setStyle(STYLE_NORMAL, R.style.FullScreenDialogStyle)
+        setStyle(STYLE_NO_FRAME, R.style.FullScreenDialogStyle)
 
         val mediaPreviewAttachments: List<MediaPreviewAttachment> =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -48,9 +43,14 @@ internal class PreviewAttachmentDialogFragment : DialogFragment() {
 
         sharedElementEnterTransition = transition
         sharedElementReturnTransition = transition
-
     }
 
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        return Dialog(requireContext(), R.style.FullScreenDialogStyle).apply {
+            window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+            window?.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -76,14 +76,11 @@ internal class PreviewAttachmentDialogFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupSlider(position = arguments?.getInt(OPENED_POSITION) ?: 0)
-        visible = true
-
-        binding.container.setOnClickListener { toggle() }
 
         gestureDetector = GestureDetector(requireContext(), GestureListener(
-            onTouch = { delayedHide() },
             onSwipeDownTouch = { dismiss() }
         ))
+
         binding.container.setOnTouchListener { v, event ->
             gestureDetector.onTouchEvent(event)
             false
@@ -102,50 +99,9 @@ internal class PreviewAttachmentDialogFragment : DialogFragment() {
             addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
         }
 
-        lifecycleScope.launch {
-            delay(100)
-            hide()
-        }
     }
 
-    private fun toggle() {
-        if (visible) {
-            hide()
-        } else {
-            show()
-        }
-    }
 
-    private fun hide() {
-        binding.fullscreenContentControls.visibility = View.INVISIBLE
-        visible = false
-        lifecycleScope.launch {
-            delay(UI_ANIMATION_DELAY.toLong())
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                activity?.window?.insetsController?.hide(
-                    WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-                )
-            }
-        }
-    }
-
-    private fun show() {
-        visible = true
-
-        lifecycleScope.launch {
-            delay(UI_ANIMATION_DELAY.toLong())
-            binding.fullscreenContentControls.visibility = View.VISIBLE
-            delay(AUTO_HIDE_DELAY_MILLIS)
-            hide()
-        }
-    }
-
-    private fun delayedHide() {
-        lifecycleScope.launch {
-            delay(AUTO_HIDE_DELAY_MILLIS)
-            hide()
-        }
-    }
 
     // close video player  when fragment is destroyed because sometimes onDestroy is called without onStop
     override fun onDestroy() {
@@ -164,8 +120,6 @@ internal class PreviewAttachmentDialogFragment : DialogFragment() {
     }
 
     companion object {
-        private const val AUTO_HIDE_DELAY_MILLIS = 3000L
-        private const val UI_ANIMATION_DELAY = 300
         private const val ATTACHMENTS = "attachments"
         private const val OPENED_POSITION = "openedPosition"
 

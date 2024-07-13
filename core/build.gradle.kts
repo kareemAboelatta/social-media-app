@@ -54,7 +54,7 @@ android {
 dependencies {
 
     api("androidx.core:core-ktx:1.13.1")
-    api("androidx.appcompat:appcompat:1.6.1")
+    api("androidx.appcompat:appcompat:1.7.0")
     api("com.google.android.material:material:1.12.0")
     testApi("junit:junit:4.13.2")
     androidTestApi("androidx.test.ext:junit:1.1.5")
@@ -70,7 +70,7 @@ dependencies {
 
 
     // Lifecycle Components
-    val lifecycle_version = "2.8.0"
+    val lifecycle_version = "2.8.3"
     api("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version")
     api("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
     api("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
@@ -126,9 +126,9 @@ dependencies {
 
 
     // Firebase
-    api("com.google.firebase:firebase-analytics:22.0.1")
+    api("com.google.firebase:firebase-analytics:22.0.2")
     api("com.google.android.gms:play-services-auth:21.2.0")
-    api(platform("com.google.firebase:firebase-bom:33.1.0"))
+    api(platform("com.google.firebase:firebase-bom:33.1.2"))
     api("com.google.firebase:firebase-auth-ktx:23.0.0")
     api("com.google.firebase:firebase-storage-ktx:21.0.0")
     api("com.google.firebase:firebase-database-ktx:21.0.0")
@@ -136,6 +136,11 @@ dependencies {
     // ML Kit
     api("com.google.mlkit:translate:17.0.2")
     api("com.google.mlkit:language-id:17.0.5")
+
+
+
+    api( "androidx.datastore:datastore-preferences:1.1.1")
+    api( "com.google.code.gson:gson:2.10.1" )// For JSON serialization/deserialization
 
 
 

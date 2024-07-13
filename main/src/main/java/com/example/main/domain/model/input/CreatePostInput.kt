@@ -11,7 +11,7 @@ data class CreatePostInput(
 )
 
 data class User(
-    val id: String? = null,
+    val userId: String? = null,
     val name: String? = null,
     val bio: String? = null,
     val image: String? = null

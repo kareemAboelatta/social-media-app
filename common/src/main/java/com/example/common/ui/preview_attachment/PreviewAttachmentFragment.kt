@@ -17,7 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class PreviewAttachmentFragment :
     BaseFragment<FragmentPreviewAttachmentBinding>(FragmentPreviewAttachmentBinding::inflate) {
 
-    private val args by navArgs<PreviewAttachmentFragmentArgs>()
+//    private val args by navArgs<PreviewAttachmentFragmentArgs>()
     private lateinit var adapter: PreviewAttachmentsAdapter
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -34,9 +34,9 @@ class PreviewAttachmentFragment :
         @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onViewCreated() {
 
-        val openedPosition: Int = args.clickedPosition
-        val attachments = args.attachments.toList()
-        setupViewPager(attachments = attachments, position = openedPosition)
+//        val openedPosition: Int = args.clickedPosition
+//        val attachments = args.attachments.toList()
+//        setupViewPager(attachments = attachments, position = openedPosition)
         postponeEnterTransition()
         binding.viewPager.doOnPreDraw { startPostponedEnterTransition() }
     }

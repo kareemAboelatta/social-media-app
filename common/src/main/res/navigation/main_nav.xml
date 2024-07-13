@@ -56,39 +56,41 @@
         android:label="PublishFragment" />
 
 
-    <action
-        android:id="@+id/action_to_previewAttachmentFragment"
-        app:destination="@id/previewAttachmentFragment" />
+    <!--    <action
 
-    <fragment
-        android:id="@+id/previewAttachmentFragment"
-        android:name="com.example.common.ui.preview_attachment.PreviewAttachmentFragment"
-        android:label="PreviewAttachmentFragment">
-        <argument
-            android:name="attachments"
-            app:argType="com.example.common.domain.model.Attachment[]" />
-        <argument
-            android:name="clickedPosition"
-            app:argType="integer" />
+<action
+    android:id="@+id/action_to_previewAttachmentFragment"
+    app:destination="@id/previewAttachmentFragment" />
 
-    </fragment>
 
-    <action
-        android:id="@+id/action_to_previewAttachmentDialogFragment"
-        app:destination="@id/previewAttachmentDialogFragment" />
-    <dialog
-        android:id="@+id/previewAttachmentDialogFragment"
-        android:name="com.example.common.ui.preview_attachment.PreviewAttachmentDialogFragment"
-        android:label="PreviewAttachmentFragment"
-        >
-        <argument
-            android:name="attachments"
-            app:argType="com.example.common.domain.model.Attachment[]" />
-        <argument
-            android:name="clickedPosition"
-            app:argType="integer" />
+<fragment
+android:id="@+id/previewAttachmentFragment"
+android:name="com.example.common.ui.preview_attachment.PreviewAttachmentFragment"
+android:label="PreviewAttachmentFragment">
+<argument
+    android:name="attachments"
+    app:argType="com.example.common.domain.model.Attachment[]" />
+<argument
+    android:name="clickedPosition"
+    app:argType="integer" />
 
-    </dialog>
+</fragment>
+
+   android:id="@+id/action_to_previewAttachmentDialogFragment"
+   app:destination="@id/previewAttachmentDialogFragment" />
+<dialog
+   android:id="@+id/previewAttachmentDialogFragment"
+   android:name="com.example.common.ui.preview_attachment.PreviewAttachmentDialogFragment"
+   android:label="PreviewAttachmentFragment"
+   >
+   <argument
+       android:name="attachments"
+       app:argType="com.example.common.domain.model.Attachment[]" />
+   <argument
+       android:name="clickedPosition"
+       app:argType="integer" />
+
+</dialog>-->
 
 
     <fragment

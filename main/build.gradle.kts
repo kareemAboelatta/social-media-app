@@ -3,6 +3,8 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
     id("kotlin-parcelize")
+    id ("dagger.hilt.android.plugin")
+
     id("com.google.devtools.ksp")
 
 }
@@ -39,10 +41,19 @@ android {
         dataBinding =  true
     }
 
+    kapt{
+        correctErrorTypes = true
+
+    }
 
 
 }
 dependencies {
     implementation(project(":common"))
+
+    //Dagger - Hilt
+    implementation ("com.google.dagger:hilt-android:2.50")
+    kapt ("com.google.dagger:hilt-android-compiler:2.50")
+    kapt ("androidx.hilt:hilt-compiler:1.2.0")
 
 }

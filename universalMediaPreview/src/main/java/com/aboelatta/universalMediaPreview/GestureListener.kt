@@ -5,7 +5,7 @@ import android.view.MotionEvent
 import kotlin.math.abs
 
 internal class GestureListener(
-    val onTouch: () -> Unit,
+    val onTouch: () -> Unit = {},
     val onSwipeDownTouch: () -> Unit,
 ) : GestureDetector.SimpleOnGestureListener() {
     private val SWIPE_THRESHOLD = 100

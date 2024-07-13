@@ -6,6 +6,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.auth.R
 import com.example.auth.databinding.FragmentLoginBinding
+import com.example.common.domain.model.User
 import com.example.core.BaseFragment
 import com.example.core.domain.utils.ValidationException
 import com.example.core.openMainActivity
@@ -50,7 +51,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(inflate = FragmentLogin
                         }
                     } else {
                         state.handleState {
-                            requireActivity().openMainActivity()
+                            saveUserAndOpenMainActivity(it)
                         }
                     }
 
@@ -60,11 +61,18 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(inflate = FragmentLogin
     }
 
 
+    private fun saveUserAndOpenMainActivity(user: User) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.updateUser(user)
+            requireActivity().openMainActivity()
+        }
+    }
+
     override fun onClicks() {
 
         binding.loginBtnLogIn.setOnClickListener {
-            val email: String = binding.inputTextLayoutEmail.editText!!.text.toString()
-            val password: String = binding.inputTextLayoutPassword.editText!!.text.toString()
+            val email: String = binding.inputTextEmail.text.toString()
+            val password: String = binding.inputTextPassword.text.toString()
             viewModel.login(email, password)
         }
 

@@ -4,12 +4,9 @@ import android.net.Uri
 import androidx.core.net.toUri
 import com.domain.models.CreateUserInput
 import com.example.common.AppDispatcher
-import com.example.common.CustomAuthException
-import com.example.common.CustomDataException
 import com.example.common.Dispatcher
 import com.example.common.domain.model.User
 import com.example.common.ui.utils.Constants
-import com.example.core.domain.utils.FirebaseExceptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.database.DatabaseReference
@@ -46,7 +43,10 @@ class AuthDatasourceFirebase @Inject constructor(
             val uploadImageResult = async { uploadFile(userInput.image.toUri()) }.await()
 
             val newUser = User(
-                id = firebaseUser?.uid ?: throw FirebaseAuthException("USER_NOT_FOUND", "firebaseUser is null" ,),
+                id = firebaseUser?.uid ?: throw FirebaseAuthException(
+                    "USER_NOT_FOUND",
+                    "firebaseUser is null",
+                ),
                 name = userInput.name,
                 email = userInput.email,
                 bio = userInput.bio,
@@ -62,14 +62,24 @@ class AuthDatasourceFirebase @Inject constructor(
             val authResult = auth.signInWithEmailAndPassword(email, password).await()
             val firebaseUser = authResult.user
 
-            val dataSnapshot = refDatabase.child(Constants.USERS).child(firebaseUser!!.uid).get().await()
-            val user: User = dataSnapshot.getValue(User::class.java)!!
+            val dataSnapshot =
+                refDatabase.child(Constants.USERS).child(
+                    firebaseUser?.uid ?: throw FirebaseAuthException(
+                        "USER_NOT_FOUND",
+                        "cannot get user from database",
+                    )
+                ).get().await()
+            val user: User = dataSnapshot.getValue(User::class.java) ?: throw FirebaseAuthException(
+                "USER_NOT_FOUND",
+                "cannot get user from database",
+            )
+
             user
         }
 
     override suspend fun resetPassword(email: String): Boolean = withContext(ioDispatcher) {
-            auth.sendPasswordResetEmail(email).await()
-            true
+        auth.sendPasswordResetEmail(email).await()
+        true
     }
 
 

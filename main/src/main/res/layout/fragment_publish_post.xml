@@ -25,7 +25,7 @@
 
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/publish_my_image"
+                android:id="@+id/user_image"
                 android:layout_width="@dimen/photo_size_small"
                 android:layout_height="@dimen/photo_size_small"
                 android:layout_gravity="start"
@@ -40,17 +40,29 @@
 
 
             <TextView
-                android:id="@+id/publish_my_name"
+                android:id="@+id/user_name"
                 style="@style/TextView.Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:lines="1"
                 android:textColor="@color/black"
+                android:layout_marginVertical="@dimen/margin_medium"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/publish_my_image"
+                app:layout_constraintStart_toEndOf="@+id/user_image"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Kareem Aboelatta" />
+
+            <TextView
+                android:id="@+id/user_bio"
+                style="@style/TextView.Normal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/user_image"
+                app:layout_constraintTop_toBottomOf="@+id/user_name"
+                tools:text="Android Developer" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
