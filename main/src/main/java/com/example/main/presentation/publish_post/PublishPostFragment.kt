@@ -7,14 +7,14 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.FragmentNavigatorExtras
-import androidx.navigation.fragment.findNavController
+import com.aboelatta.universalMediaPreview.MediaPreviewAttachment
+import com.aboelatta.universalMediaPreview.MediaPreviewType
+import com.aboelatta.universalMediaPreview.PreviewAttachmentDialogBuilder
 import com.example.common.domain.model.AttachmentType
 import com.example.core.BaseFragment
 import com.example.core.ui.ProgressDialogUtil
 import com.example.core.ui.pickers.pickCompressedImage
 import com.example.core.ui.pickers.pickCompressedVideo
-import com.example.main.R
 import com.example.main.databinding.FragmentPublishPostBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -42,28 +42,39 @@ class PublishPostFragment :
 
     private fun setupRecyclerView() {
         attachmentAdapter = AttachmentsAdapter(
-            onAttachmentClicked = { attachment, position ->
-                val viewHolder = binding.rvAttachments.findViewHolderForAdapterPosition(position)
-                if (viewHolder != null) {
-                    val sharedView = viewHolder.itemView.findViewById<View>(
-                        if (attachment.type == AttachmentType.VIDEO) R.id.video_thumbnail else R.id.image
-                    )
-                    val extras = FragmentNavigatorExtras(sharedView to "shared_attachment_$position")
-                    findNavController().navigate(
-                        PublishPostFragmentDirections.actionToPreviewAttachmentDialogFragment(
-                            viewModel.input.value.attachments.toTypedArray(),
-                            position
-                        ),
-                        extras
-                    )
-                } else {
-                    findNavController().navigate(
-                        PublishPostFragmentDirections.actionToPreviewAttachmentDialogFragment(
-                            viewModel.input.value.attachments.toTypedArray(),
-                            position
+            onAttachmentClicked = { _, position ->
+                PreviewAttachmentDialogBuilder(requireActivity())
+                    .setStartPosition(position)
+                    .setAttachments(mediaPreviewAttachments = viewModel.input.value.attachments.map {
+                        MediaPreviewAttachment(
+                            type = if (it.type == AttachmentType.VIDEO) MediaPreviewType.VIDEO else MediaPreviewType.IMAGE,
+                            attachment = it.attachment
                         )
-                    )
-                }
+                    })
+                    .show(parentFragmentManager)
+//                val viewHolder = binding.rvAttachments.findViewHolderForAdapterPosition(position)
+//                if (viewHolder != null) {
+//                    val sharedView = viewHolder.itemView.findViewById<View>(
+//                        if (attachment.type == AttachmentType.VIDEO) R.id.video_thumbnail else R.id.image
+//                    )
+//                    val extras =
+//                        FragmentNavigatorExtras(sharedView to "shared_attachment_$position")
+//
+//                    findNavController().navigate(
+//                        PublishPostFragmentDirections.actionToPreviewAttachmentDialogFragment(
+//                            viewModel.input.value.attachments.toTypedArray(),
+//                            position
+//                        ),
+//                        extras
+//                    )
+//                } else {
+//                    findNavController().navigate(
+//                        PublishPostFragmentDirections.actionToPreviewAttachmentDialogFragment(
+//                            viewModel.input.value.attachments.toTypedArray(),
+//                            position
+//                        )
+//                    )
+//                }
             },
 
             onRemoveAttachment = {
@@ -78,6 +89,7 @@ class PublishPostFragment :
         observeAttachments()
 
     }
+
     private fun observeAttachments() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.input.flowWithLifecycle(lifecycle, Lifecycle.State.STARTED).collectLatest {

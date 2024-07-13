@@ -56,6 +56,7 @@ android {
 dependencies {
 
     api(project(":core"))
+    api(project(":universalMediaPreview"))
 
 
     //Dagger - Hilt

@@ -160,7 +160,7 @@ class PublishFragment : BaseFragment<FragmentPublishBinding>(FragmentPublishBind
             popupMenu.show()
         }
         binding.publishBtnBottom.setOnClickListener {
-            val bottomSheetDialog = BottomSheetDialog(requireActivity(), R.style.BottomSheetStyle)
+            val bottomSheetDialog = BottomSheetDialog(requireActivity())
 
             val sheetView = LayoutInflater.from(requireActivity())
                 .inflate(

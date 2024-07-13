@@ -81,10 +81,12 @@
         android:gravity="top">
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:id="@+id/et_caption"
+            android:maxLines="10"
             android:gravity="top"
             android:textAlignment="gravity"
+
             />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -98,6 +100,7 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:padding="@dimen/padding_high"
         android:orientation="horizontal"
+        tools:listitem="@layout/item_add_image"
         />
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_publish"
