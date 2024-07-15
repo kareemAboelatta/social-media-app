@@ -4,6 +4,7 @@
     <string name="home">Home</string>
     <string name="profile">Profile</string>
     <string name="video">Video</string>
+    <string name="more">More</string>
     <string name="post">Post</string>
 
     <string name="chats">Chats</string>
@@ -31,6 +32,11 @@
     <string name="image_required">Image is required</string>
     <string name="registration_success">Registration successful</string>
     <string name="check_email">"Check your Email Now"</string>
+
+
+
+    <string name="create_post_hint">What\'s on your mind, %1$s ..?</string>
+
 
 
 </resources>

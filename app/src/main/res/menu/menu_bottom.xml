@@ -14,7 +14,7 @@
         app:cnb_iconColor="@color/colorBlue" />
     <item
         android:id="@+id/videos"
-        android:icon="@drawable/ic_video"
+        android:icon="@drawable/ic_video_unselected"
         android:title="Videos"
         app:cnb_iconColor="@color/colorGreen" />
 

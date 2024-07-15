@@ -10,7 +10,7 @@
         android:id="@+id/post_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_10sdp"
+        android:layout_margin="@dimen/margin_high"
         android:orientation="vertical"
         android:padding="@dimen/_15sdp"
         app:cardBackgroundColor="@color/white"
@@ -83,8 +83,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="@dimen/_15sdp"
-        tools:hint="What's on your mind?"
         android:id="@+id/tf_caption"
+
         style="@style/text_input_style"
         app:layout_constraintBottom_toTopOf="@+id/rv_attachments"
         app:layout_constraintTop_toBottomOf="@+id/post_header"
@@ -96,6 +96,7 @@
             android:layout_height="match_parent"
             android:id="@+id/et_caption"
             android:maxLines="10"
+            android:focusable="true"
             android:gravity="top"
             android:textAlignment="gravity"
 
@@ -149,7 +150,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginBottom="@dimen/_10sdp"
         android:layout_marginHorizontal="@dimen/margin_medium"
-        android:src="@drawable/ic_video"
+        android:src="@drawable/ic_video_unselected"
         android:tint="@color/white"
         />
 

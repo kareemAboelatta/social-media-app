@@ -16,6 +16,7 @@ import com.example.core.ui.ProgressDialogUtil
 import com.example.core.ui.pickers.pickCompressedImage
 import com.example.core.ui.pickers.pickCompressedVideo
 import com.example.core.ui.utils.loadCircleImageFromUrl
+import com.example.main.R
 import com.example.main.databinding.FragmentPublishPostBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -23,14 +24,15 @@ import kotlinx.coroutines.launch
 import com.example.common.R as commonR
 
 @AndroidEntryPoint
-class PublishPostFragment : BaseFragment<FragmentPublishPostBinding>(FragmentPublishPostBinding::inflate) {
+class PublishPostFragment :
+    BaseFragment<FragmentPublishPostBinding>(FragmentPublishPostBinding::inflate) {
 
     private var isFabOpen = false
     private val viewModel by viewModels<PublishPostViewModel>()
     private lateinit var attachmentAdapter: AttachmentsAdapter
 
     override fun onViewCreated() {
-         setupRecyclerView()
+        setupRecyclerView()
         setupObservers()
         setupClickListeners()
     }
@@ -67,28 +69,35 @@ class PublishPostFragment : BaseFragment<FragmentPublishPostBinding>(FragmentPub
 
     private fun observeUserData() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.user.flowWithLifecycle(lifecycle, Lifecycle.State.STARTED).collectLatest { user ->
-                user?.let {
-                    viewModel.updatePostInput(
-                        userId = it.id,
-                        name = it.name,
-                        bio = it.bio,
-                        image = it.image
-                    )
+            viewModel.user.flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+                .collectLatest { user ->
+                    user?.let {
+                        viewModel.updatePostInput(
+                            userId = it.id,
+                            name = it.name,
+                            bio = it.bio,
+                            image = it.image
+                        )
+                    }
                 }
-            }
         }
     }
 
     private fun observeAttachments() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.input.flowWithLifecycle(lifecycle, Lifecycle.State.STARTED).collectLatest { input ->
-                attachmentAdapter.submitAttachmentsList(input.attachments)
-                binding.etCaption.setTextKeepState(input.caption)
-                binding.userImage.loadCircleImageFromUrl(input.user.image)
-                binding.userName.text = input.user.name
-                binding.userBio.text = input.user.bio
-            }
+            viewModel.input.flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+                .collectLatest { input ->
+                    attachmentAdapter.submitAttachmentsList(input.attachments)
+                    binding.etCaption.setTextKeepState(input.caption)
+                    binding.userImage.loadCircleImageFromUrl(input.user.image)
+                    binding.userName.text = input.user.name
+                    binding.userBio.text = input.user.bio
+                    val hint =
+                        getString(com.example.common.R.string.create_post_hint, input.user.name)
+                    binding.etCaption.hint = hint
+                    binding.etCaption.requestFocus()
+
+                }
         }
     }
 

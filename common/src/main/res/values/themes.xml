@@ -35,6 +35,8 @@
         <item name="boxCornerRadiusTopEnd">@dimen/_10sdp</item>
         <item name="boxCornerRadiusTopStart">@dimen/_10sdp</item>
         <item name="boxStrokeColor">@color/colorAccent</item>
+        <item name="hintEnabled">false</item>
+        <item name="hintAnimationEnabled">false</item>
         <item name="boxStrokeWidth">0dp</item>
         <item name="maxLines">1</item>
         <item name="boxBackgroundColor">@color/white</item>
