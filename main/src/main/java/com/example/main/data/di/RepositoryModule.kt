@@ -1,5 +1,7 @@
 package com.example.main.data.di
 
+import com.example.main.data.repository.PostsRepositoryImp
+import com.example.main.domain.repository.PostsRepository
 import com.google.android.datatransport.runtime.dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
@@ -14,7 +16,7 @@ object MainModule {
 
     @Singleton
     @Provides
-    fun providerMyName()= "Kareem"
+    fun providerMyName() : PostsRepository = PostsRepositoryImp()
 
 
 }

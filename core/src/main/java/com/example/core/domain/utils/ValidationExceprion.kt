@@ -16,4 +16,8 @@ sealed class ValidationException : Exception() {
     data object InvalidEmptyImageException : ValidationException()
 
 
+
+    data object InvalidEmptyContentException : ValidationException()
+
+
 }

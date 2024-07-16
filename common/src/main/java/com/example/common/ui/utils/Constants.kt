@@ -13,6 +13,7 @@ object Constants {
     val CHAT_MESSAGES="ChatMessages"
     val LAST_MESSAGE="Last-Message"
     val IMAGES: String="images"
+    val VIDEOS: String="videos"
 
     const val BASE_URL="https://fcm.googleapis.com"
     const val CONTENT_TYPE="application/json"
