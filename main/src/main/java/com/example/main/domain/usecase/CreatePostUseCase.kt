@@ -2,6 +2,7 @@ package com.example.main.domain.usecase
 
 import com.example.core.domain.utils.ValidationException
 import com.example.core.ui.utils.DataState
+import com.example.main.domain.model.Post
 import com.example.main.domain.model.input.CreatePostInput
 import com.example.main.domain.repository.PostsRepository
 import kotlinx.coroutines.flow.Flow
@@ -13,7 +14,7 @@ class CreatePostUseCase @Inject constructor(
     private val postsRepository: PostsRepository
 ) {
 
-    operator fun invoke(input: CreatePostInput): Flow<DataState<Unit>> = flow {
+    suspend operator fun invoke(input: CreatePostInput): Flow<DataState<Post>> = flow {
         if (input.user.userId == null) {
             emit(DataState.Error(ValidationException.InvalidEmailException))
         } else  if (input.attachments.isEmpty() or input.caption.isEmpty()) {

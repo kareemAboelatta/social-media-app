@@ -5,19 +5,25 @@ import androidx.lifecycle.viewModelScope
 import com.example.common.data.local.UserPreferences
 import com.example.common.domain.model.Attachment
 import com.example.common.domain.model.AttachmentType
+import com.example.core.ui.utils.DataState
+import com.example.main.domain.model.Post
 import com.example.main.domain.model.input.CreatePostInput
+import com.example.main.domain.usecase.CreatePostUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
 @HiltViewModel
 class PublishPostViewModel @Inject constructor(
-    private val userPreferences: UserPreferences
+    private val userPreferences: UserPreferences,
+    private val createPostUseCase: CreatePostUseCase
 ) : ViewModel() {
 
     private val _inputPost = MutableStateFlow(CreatePostInput())
@@ -27,6 +33,19 @@ class PublishPostViewModel @Inject constructor(
     val user = userPreferences.user
         .stateIn(viewModelScope, SharingStarted.Lazily, null)
 
+
+    private val _uploadPostResponse =
+        MutableStateFlow<DataState<Post>>(DataState.Idle)
+    val uploadPostResponse
+        get() = _uploadPostResponse.asStateFlow()
+
+    fun createPost() {
+        viewModelScope.launch {
+            createPostUseCase(_inputPost.value).collectLatest {
+                _uploadPostResponse.value = it
+            }
+        }
+    }
 
     fun deleteSelectedAttachment(attachment: Attachment) {
         val attachments = _inputPost.value.attachments.toMutableList().apply {

@@ -12,10 +12,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import java.io.IOException
+import javax.inject.Inject
 
 private val Context.dataStore by preferencesDataStore(name = "user_prefs")
 
-class UserPreferences(context: Context) {
+class UserPreferences @Inject constructor(context: Context) {
 
     private val dataStore = context.dataStore
     private val gson = Gson()

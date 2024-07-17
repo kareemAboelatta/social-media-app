@@ -2,6 +2,7 @@ package com.example.main.presentation.publish_post
 
 import android.view.View
 import android.view.animation.AnimationUtils
+import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -36,6 +37,18 @@ class PublishPostFragment :
         setupObservers()
         setupClickListeners()
     }
+
+    override fun observers() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.uploadPostResponse.flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+                .collectLatest {
+                    it.handleState {
+                        Toast.makeText(requireActivity(), "Post Published", Toast.LENGTH_SHORT).show()
+                    }
+                }
+        }
+    }
+
 
     private fun setupRecyclerView() {
         attachmentAdapter = AttachmentsAdapter(
@@ -121,6 +134,10 @@ class PublishPostFragment :
 
             etCaption.doAfterTextChanged { text ->
                 viewModel.updatePostInput(caption = text.toString())
+            }
+
+            btnPublish.setOnClickListener {
+                viewModel.createPost()
             }
         }
     }
