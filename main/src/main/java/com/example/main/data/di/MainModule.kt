@@ -6,12 +6,12 @@ import com.example.main.data.datasource.PostDatasource
 import com.example.main.data.datasource.PostDatasourceFirebase
 import com.example.main.data.repository.PostsRepositoryImp
 import com.example.main.domain.repository.PostsRepository
-import com.google.android.datatransport.runtime.dagger.Provides
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.storage.StorageReference
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dagger.Module
+import dagger.Provides
 import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Singleton
 
@@ -22,7 +22,7 @@ object MainModule {
 
 
     @Singleton
-    @dagger.Provides
+    @Provides
     fun providePostDatasource(
         refDatabase: DatabaseReference,
         refStorage: StorageReference,
