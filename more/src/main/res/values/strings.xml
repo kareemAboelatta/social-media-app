@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="choose_app_language">Choose app language</string>
+    <string name="english">English</string>
+    <string name="arabic">العربية</string>
+
+
+
+    <string name="about_us">About Us</string>
+    <string name="terms_conditions">Terms and Conditions</string>
+
+    <string name="edit_profile">Edit Profile</string>
+    <string name="change_language">Change Language</string>
+
+
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+
+
+    <string name="logout_confirmation_message">Are you sure you want to log out?</string>
+    <string name="dismiss">Dismiss</string>
+
+
+
+    <string name="logout">Logout</string>
+    <string name="save">Save</string>
+    <string name="enter_email">Enter E-mail</string>
+    <string name="bio">Bio</string>
+
+</resources>

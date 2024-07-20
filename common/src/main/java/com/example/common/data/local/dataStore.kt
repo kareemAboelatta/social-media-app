@@ -24,11 +24,7 @@ class UserPreferences @Inject constructor(context: Context) {
 
     val user: Flow<User?> = dataStore.data
         .catch { exception ->
-            if (exception is IOException) {
                 emit(emptyPreferences())
-            } else {
-                throw exception
-            }
         }
         .map { preferences ->
             preferences[USER_KEY]?.let {
@@ -42,4 +38,20 @@ class UserPreferences @Inject constructor(context: Context) {
             preferences[USER_KEY] = userJson
         }
     }
+
+
+/**
+   Function to delete user data.
+  - use it for logout
+*/
+    suspend fun deleteUserData() {
+        dataStore.edit { preferences ->
+            preferences.remove(USER_KEY)
+        }
+    }
+
+/**
+    Function to check if the user is logged in
+*/
+    fun isUserLoggedIn(): Flow<Boolean> = user.map { it != null }
 }

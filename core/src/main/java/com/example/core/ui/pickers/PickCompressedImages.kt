@@ -5,7 +5,7 @@ import android.net.Uri
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.core.R
-import com.example.core.ui.ProgressDialogUtil
+import com.example.core.ui.utils.ProgressDialogUtil
 import gun0912.tedimagepicker.builder.TedImagePicker
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

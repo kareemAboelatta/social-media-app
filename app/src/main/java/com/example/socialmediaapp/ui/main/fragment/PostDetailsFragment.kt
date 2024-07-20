@@ -72,7 +72,7 @@ class PostDetailsFragment :  Fragment() {
     var postLikes : Int =0
 
 
-    val args:PostDetailsFragmentArgs by navArgs()
+    val args: PostDetailsFragmentArgs by navArgs()
 
 
     var postImage: String? = null
@@ -137,7 +137,6 @@ class PostDetailsFragment :  Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity?.findViewById<ChipNavigationBar>(R.id.bottom_menu)?.visibility = View.GONE
 
         post = args.post
         hisUserId = args.post.userId.toString()
@@ -408,12 +407,6 @@ class PostDetailsFragment :  Fragment() {
         imVisiable=false
     }
 
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-        activity?.findViewById<ChipNavigationBar>(R.id.bottom_menu)?.visibility = View.VISIBLE
-    }
 
 
 

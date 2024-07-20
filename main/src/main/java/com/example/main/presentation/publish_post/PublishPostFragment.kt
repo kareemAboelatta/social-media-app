@@ -13,11 +13,10 @@ import com.aboelatta.universalMediaPreview.MediaPreviewType
 import com.aboelatta.universalMediaPreview.PreviewAttachmentDialogBuilder
 import com.example.common.domain.model.AttachmentType
 import com.example.core.BaseFragment
-import com.example.core.ui.ProgressDialogUtil
+import com.example.core.ui.utils.ProgressDialogUtil
 import com.example.core.ui.pickers.pickCompressedImage
 import com.example.core.ui.pickers.pickCompressedVideo
 import com.example.core.ui.utils.loadCircleImageFromUrl
-import com.example.main.R
 import com.example.main.databinding.FragmentPublishPostBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest

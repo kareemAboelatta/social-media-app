@@ -16,11 +16,24 @@
     </style>
 
 
+    <style name="toolbar_title" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">@dimen/_12ssp</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
 
     <style name="CustomAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:windowBackground">@drawable/custom_dialog_background</item>
     </style>
 
+    <!--    dialog-->
+    <style name="DialogStyle" parent="Base.Theme.AppCompat.Dialog">
+        <item name="android:windowMinWidthMajor">97%</item>
+        <item name="android:windowMinWidthMinor">97%</item>
+        <item name="dialogCornerRadius">16dp</item>
+    </style>
 
     <style name="BottomSheetStyle" parent="Theme.Design.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/BottomSheetDialogTheme</item>

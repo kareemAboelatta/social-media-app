@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="choose_app_language">اختر لغة التطبيق</string>
+    <string name="english">English</string>
+    <string name="arabic">العربية</string>
+
+    <string name="about_us">معلومات عنا</string>
+    <string name="terms_conditions">الشروط والأحكام</string>
+
+    <string name="edit_profile">تعديل الملف الشخصي</string>
+    <string name="change_language">تغيير اللغة</string>
+
+    <string name="edit">تعديل</string>
+    <string name="delete">حذف</string>
+
+
+    <string name="logout_confirmation_message">هل أنت متأكد أنك تريد تسجيل الخروج؟</string>
+    <string name="dismiss">إلغاء</string>
+
+
+
+    <string name="logout">تسجيل الخروج</string>
+    <string name="save">حفظ</string>
+    <string name="enter_email">أدخل البريد الإلكتروني</string>
+    <string name="bio">السيرة الذاتية</string>
+
+</resources>

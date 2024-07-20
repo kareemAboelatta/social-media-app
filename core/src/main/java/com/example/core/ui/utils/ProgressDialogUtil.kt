@@ -1,4 +1,4 @@
-package com.example.core.ui
+package com.example.core.ui.utils
 
 
 import android.app.Activity

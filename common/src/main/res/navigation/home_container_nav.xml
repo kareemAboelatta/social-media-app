@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/home_container_nav">
+    android:id="@+id/home_container_nav"
+    app:startDestination="@id/homeFragment">
 
 
     <!--home container-->
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.main.presentation.home_container.home.HomeFragment"
+        android:name="com.example.socialmediaapp.ui.main.fragment.HomeFragment"
         android:label="HomeFragment" />
 
     <fragment
@@ -18,6 +19,11 @@
     <fragment
         android:id="@+id/videosFragment"
         android:name="com.example.socialmediaapp.ui.main.fragment.VideosFragment"
+        android:label="VideosFragment"/>
+
+    <fragment
+        android:id="@+id/moreFragment"
+        android:name="com.example.more.ui.MoreFragment"
         android:label="VideosFragment"/>
 
 

@@ -72,7 +72,7 @@ class HomeFragment : Fragment() {
                 bundle
             )
         }
-        homeAdapter.setOnItemClickListenerForGoingtoOwner {
+/*        homeAdapter.setOnItemClickListenerForGoingtoOwner {
             val bundle = Bundle().apply {
                 putSerializable("post", it)
             }
@@ -89,7 +89,7 @@ class HomeFragment : Fragment() {
                 )
             }
 
-        }
+        }*/
         homeAdapter.setonItemClickListenerForLike {
             viewModel.setLike(it)
         }

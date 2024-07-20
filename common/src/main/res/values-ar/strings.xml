@@ -19,7 +19,7 @@
 
 
     <string name="create_post_hint">ماذا يدور في ذهنك، %1$s؟</string>
-
+    <string name="data_updated">تم تحديث البيانات</string>
 
 
 </resources>

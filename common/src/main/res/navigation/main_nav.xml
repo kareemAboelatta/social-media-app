@@ -2,9 +2,16 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_nav"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/homeContainerFragment">
 
     <!--home container-->
+
+
+    <fragment
+        android:id="@+id/homeContainerFragment"
+        android:name="com.example.common.ui.HomeContainerFragment"
+        android:label="HomeContainerFragment"/>
+
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.socialmediaapp.ui.main.fragment.HomeFragment"
@@ -21,6 +28,8 @@
             android:id="@+id/action_homeFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
     </fragment>
+
+
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.socialmediaapp.ui.main.fragment.ProfileFragment"
@@ -56,41 +65,6 @@
         android:label="PublishFragment" />
 
 
-    <!--    <action
-
-<action
-    android:id="@+id/action_to_previewAttachmentFragment"
-    app:destination="@id/previewAttachmentFragment" />
-
-
-<fragment
-android:id="@+id/previewAttachmentFragment"
-android:name="com.example.common.ui.preview_attachment.PreviewAttachmentFragment"
-android:label="PreviewAttachmentFragment">
-<argument
-    android:name="attachments"
-    app:argType="com.example.common.domain.model.Attachment[]" />
-<argument
-    android:name="clickedPosition"
-    app:argType="integer" />
-
-</fragment>
-
-   android:id="@+id/action_to_previewAttachmentDialogFragment"
-   app:destination="@id/previewAttachmentDialogFragment" />
-<dialog
-   android:id="@+id/previewAttachmentDialogFragment"
-   android:name="com.example.common.ui.preview_attachment.PreviewAttachmentDialogFragment"
-   android:label="PreviewAttachmentFragment"
-   >
-   <argument
-       android:name="attachments"
-       app:argType="com.example.common.domain.model.Attachment[]" />
-   <argument
-       android:name="clickedPosition"
-       app:argType="integer" />
-
-</dialog>-->
 
 
     <fragment
@@ -104,6 +78,8 @@ android:label="PreviewAttachmentFragment">
             android:id="@+id/action_postDetailsFragment_to_postOwnerFragment"
             app:destination="@id/postOwnerFragment" />
     </fragment>
+
+
     <fragment
         android:id="@+id/postOwnerFragment"
         android:name="com.example.socialmediaapp.ui.main.fragment.PostOwnerFragment"
@@ -115,6 +91,21 @@ android:label="PreviewAttachmentFragment">
             android:id="@+id/action_postOwnerFragment_to_postDetailsFragment"
             app:destination="@id/postDetailsFragment" />
     </fragment>
+
+
+    <fragment
+        android:id="@+id/languageFragment"
+        android:name="com.example.more.lanugue.LanguageFragment" />
+
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.example.more.ui.edit_profile.EditProfileFragment" />
+
+    <dialog
+        android:id="@+id/logoutDialogFragment"
+        android:name="com.example.more.logout.LogoutDialogFragment" />
+
+
 
 
 </navigation>

@@ -1,7 +1,7 @@
 package com.example.core.di
 
 import android.app.Activity
-import com.example.core.ui.ProgressDialogUtil
+import com.example.core.ui.utils.ProgressDialogUtil
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,7 +14,7 @@ object ActivityModule {
 
     @Provides
     @ActivityScoped
-    fun provideProgressUtil(activity: Activity): ProgressDialogUtil{
+    fun provideProgressUtil(activity: Activity): ProgressDialogUtil {
         return ProgressDialogUtil(activity)
     }
 

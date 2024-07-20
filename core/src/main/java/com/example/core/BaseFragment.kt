@@ -14,7 +14,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.example.core.domain.utils.FirebaseExceptions
-import com.example.core.ui.ProgressDialogUtil
+import com.example.core.ui.utils.ProgressDialogUtil
 import com.example.core.ui.utils.DataState
 import com.example.core.ui.utils.UIState
 import com.example.core.ui.utils.hideKeyboard
@@ -213,7 +213,7 @@ fun Activity.openAuthActivity() {
 fun Activity.openMainActivity() {
     val intent = Intent().setClassName(
         this,
-        "com.example.socialmediaapp.ui.main.MainActivity"
+        "com.example.common.ui.MainActivity"
     )
     startActivity(intent)
     finish()

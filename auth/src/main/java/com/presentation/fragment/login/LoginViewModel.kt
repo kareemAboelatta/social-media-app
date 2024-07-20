@@ -28,8 +28,6 @@ class LoginViewModel @Inject constructor(
     val loginState get() = _loginState.asSharedFlow()
 
 
-    val user = userPreferences.user
-        .stateIn(viewModelScope, SharingStarted.Lazily, null)
 
     suspend fun updateUser(user: User) = withContext(Dispatchers.IO) {
         userPreferences.updateUser(user)

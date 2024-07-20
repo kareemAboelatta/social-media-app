@@ -57,7 +57,6 @@ class PostOwnerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity?.findViewById<ChipNavigationBar>(R.id.bottom_menu)?.visibility = View.GONE
 
         val post = args.post
         recyclerViewSetUp()
@@ -115,11 +114,6 @@ class PostOwnerFragment : Fragment() {
         binding.profRec.layoutManager = linearLayout
         adapterPosts.setList(postList)
         binding.profRec.adapter = adapterPosts
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        activity?.findViewById<ChipNavigationBar>(R.id.bottom_menu)?.visibility = View.VISIBLE
     }
 
     override fun onDestroyView() {
