@@ -5,6 +5,7 @@ import com.domain.repository.AuthRepository
 import com.example.common.domain.model.User
 import com.example.core.domain.utils.ValidationException
 import com.example.core.ui.utils.DataState
+import com.example.core.utils.isValidBio
 import com.example.core.utils.isValidEmail
 import com.example.core.utils.isValidName
 import com.example.core.utils.isValidPassword
@@ -22,11 +23,11 @@ class CreateUserUseCase @Inject constructor(
             emit(DataState.Error(ValidationException.InvalidEmptyImageException))
         } else if (input.name.isEmpty()) {
             emit(DataState.Error(ValidationException.InvalidEmptyNameException))
-        } else if (input.name.isValidName()) {
+        } else if (input.name.isValidName().not()) {
             emit(DataState.Error(ValidationException.InvalidNameException))
         } else if (input.bio.isEmpty()) {
             emit(DataState.Error(ValidationException.InvalidEmptyBioException))
-        } else if (input.bio.isValidEmail().not()) {
+        } else if (input.bio.isValidBio().not()) {
             emit(DataState.Error(ValidationException.InvalidBioException))
         } else if (input.email.isEmpty()) {
             emit(DataState.Error(ValidationException.InvalidEmptyEmailException))

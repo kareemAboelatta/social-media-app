@@ -37,7 +37,7 @@ class RegisterFragment :
             viewModel.createUser()
         }
 
-        binding.regImage.setOnClickListener {
+        binding.editAvatar.setOnClickListener {
             pickCompressedImage(
                 progressUtil = progressDialogUtil,
                 onSaveFile = { image, _ ->
@@ -68,7 +68,7 @@ class RegisterFragment :
                     inputTextBio.setTextKeepState(it.bio)
                     inputTextEmail.setTextKeepState(it.email)
                     inputTextPassword.setTextKeepState(it.password)
-                    regImage.loadCircleImageFromUrl(it.image)
+                    ivProfile.loadCircleImageFromUrl(it.image)
                 }
             }
         }

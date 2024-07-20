@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white">
 
 
@@ -33,16 +34,33 @@
             android:textStyle="bold" />
 
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/reg_image"
-            android:layout_width="@dimen/_120sdp"
-            android:layout_height="@dimen/_120sdp"
+
+        <FrameLayout
+            android:layout_width="@dimen/_140sdp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:src="@drawable/ic_add_photo_white"
-            app:civ_border_color="@color/colorWhite"
-            app:civ_border_width="@dimen/_2sdp"
-            app:civ_border_overlay="false"
-            />
+            android:layout_margin="@dimen/_16sdp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_profile"
+                android:layout_width="@dimen/_120sdp"
+                android:layout_height="@dimen/_120sdp"
+                android:layout_gravity="center_horizontal"
+                tools:contentDescription="Prfile image"
+                tools:src="@tools:sample/avatars"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/RoundedShapeAppearance" />
+
+
+            <ImageView
+                android:id="@+id/edit_avatar"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_gravity="center|end"
+                android:src="@drawable/ic_add_photo_white" />
+
+        </FrameLayout>
+
 
 
         <LinearLayout

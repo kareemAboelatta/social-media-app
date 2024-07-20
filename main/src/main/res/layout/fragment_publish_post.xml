@@ -96,6 +96,7 @@
             android:layout_height="match_parent"
             android:id="@+id/et_caption"
             android:maxLines="10"
+            android:minLines="4"
             android:focusable="true"
             android:gravity="top"
             android:textAlignment="gravity"
