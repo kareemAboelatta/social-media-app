@@ -71,12 +71,6 @@
 
 
 
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="match_parent"
-        app:layout_constraintTop_toBottomOf="@+id/post_header"
-        android:layout_height="0dp">
-
-    </com.google.android.material.card.MaterialCardView>
 
 
     <com.google.android.material.textfield.TextInputLayout
@@ -84,7 +78,6 @@
         android:layout_height="0dp"
         android:layout_margin="@dimen/_15sdp"
         android:id="@+id/tf_caption"
-
         style="@style/text_input_style"
         app:layout_constraintBottom_toTopOf="@+id/rv_attachments"
         app:layout_constraintTop_toBottomOf="@+id/post_header"
@@ -98,6 +91,7 @@
             android:maxLines="10"
             android:minLines="4"
             android:focusable="true"
+            android:text="what's on your mind?"
             android:gravity="top"
             android:textAlignment="gravity"
 
@@ -152,7 +146,6 @@
         android:id="@+id/fab_attachment_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="Attach"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginBottom="@dimen/_70sdp"
@@ -165,7 +158,7 @@
         android:id="@+id/btn_publish"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="Publish"
+        android:text="@string/publish"
         style="@style/button_primary"
         app:layout_constraintBottom_toBottomOf="parent"
         />

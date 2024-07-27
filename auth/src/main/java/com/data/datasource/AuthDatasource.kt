@@ -18,6 +18,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
+import java.io.File
 import javax.inject.Inject
 
 interface AuthDatasource {
@@ -40,7 +41,7 @@ class AuthDatasourceFirebase @Inject constructor(
             val authResult =
                 auth.createUserWithEmailAndPassword(userInput.email, userInput.password).await()
             val firebaseUser = authResult.user
-            val uploadImageResult = async { uploadFile(userInput.image.toUri()) }.await()
+            val uploadImageResult = async { uploadFile(File(userInput.image).toUri()) }.await()
 
             val newUser = User(
                 id = firebaseUser?.uid ?: throw FirebaseAuthException(

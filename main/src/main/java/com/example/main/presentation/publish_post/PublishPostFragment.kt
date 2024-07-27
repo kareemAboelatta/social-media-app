@@ -13,10 +13,13 @@ import com.aboelatta.universalMediaPreview.MediaPreviewType
 import com.aboelatta.universalMediaPreview.PreviewAttachmentDialogBuilder
 import com.example.common.domain.model.AttachmentType
 import com.example.core.BaseFragment
+import com.example.core.domain.utils.ValidationException
 import com.example.core.ui.utils.ProgressDialogUtil
 import com.example.core.ui.pickers.pickCompressedImage
 import com.example.core.ui.pickers.pickCompressedVideo
+import com.example.core.ui.utils.DataState
 import com.example.core.ui.utils.loadCircleImageFromUrl
+import com.example.main.R
 import com.example.main.databinding.FragmentPublishPostBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -41,9 +44,21 @@ class PublishPostFragment :
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.uploadPostResponse.flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
                 .collectLatest {
-                    it.handleState {
-                        Toast.makeText(requireActivity(), "Post Published", Toast.LENGTH_SHORT).show()
+                    if (it is DataState.Error) {
+                        when (it.throwable) {
+                            is ValidationException.InvalidEmptyContentException->{
+                                showErrorToast(com.example.core.R.string.attach_photos)
+                            }
+                            else -> {
+                                it.handleState {  }
+                            }
+                        }
+                    }else{
+                        it.handleState {
+                            Toast.makeText(requireActivity(), "Post Published", Toast.LENGTH_SHORT).show()
+                        }
                     }
+
                 }
         }
     }

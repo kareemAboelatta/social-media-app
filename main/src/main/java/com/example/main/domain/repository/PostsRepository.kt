@@ -7,4 +7,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface PostsRepository {
     suspend fun createPost(input: CreatePostInput): Flow<DataState<Post>>
+    suspend fun getAllPosts(): Flow<DataState<List<Post>>>
+    suspend fun fetchVideoPosts(): Flow<DataState<List<Post>>>
+
 }

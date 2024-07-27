@@ -17,11 +17,14 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
+import java.io.File
 import javax.inject.Inject
 
 interface PostDatasource {
 
     suspend fun uploadPost(postInput: CreatePostInput): Post
+    suspend fun fetchAllPosts(): List<Post>
+    suspend fun fetchVideoPosts(): List<Post>
 
 }
 
@@ -31,6 +34,18 @@ class PostDatasourceFirebase @Inject constructor(
     @Dispatcher(AppDispatcher.IO) private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
     @Dispatcher(AppDispatcher.Default) private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
 ) : PostDatasource {
+
+    override suspend fun fetchAllPosts(): List<Post> = withContext(ioDispatcher) {
+        val snapshot = refDatabase.child(Constants.POSTS).get().await()
+        snapshot.children.mapNotNull { it.getValue(Post::class.java) }
+    }
+
+
+    override suspend fun fetchVideoPosts(): List<Post> = withContext(ioDispatcher) {
+        val snapshot = refDatabase.child(Constants.POSTS).get().await()
+        snapshot.children.mapNotNull { it.getValue(Post::class.java) }
+            .filter { it.attachments.size == 1 && it.attachments.first().type == AttachmentType.VIDEO }
+    }
 
     override suspend fun uploadPost(postInput: CreatePostInput): Post =
         withContext(ioDispatcher) {
@@ -52,7 +67,7 @@ class PostDatasourceFirebase @Inject constructor(
     private suspend fun uploadAttachments(attachments: List<Attachment>): List<Attachment> =
         coroutineScope {
             attachments.map { attachment ->
-                async { uploadFile(attachment.attachment.toUri(), attachment.type) }
+                async { uploadFile(File(attachment.attachment).toUri(), attachment.type) }
             }.map { it.await() }
         }
 
@@ -65,6 +80,7 @@ class PostDatasourceFirebase @Inject constructor(
         val downloadUrl = uploadTask.storage.downloadUrl.await().toString()
         Attachment(downloadUrl, type)
     }
+
 
     private suspend fun setPostInfoOnDatabase(post: Post): Post = coroutineScope {
         refDatabase.child(Constants.POSTS).child(post.id).setValue(post).await()

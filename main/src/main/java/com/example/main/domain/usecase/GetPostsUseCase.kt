@@ -10,14 +10,14 @@ import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class CreatePostUseCase @Inject constructor(
+class GetPostsUseCase @Inject constructor(
     private val postsRepository: PostsRepository
 ) {
 
     suspend operator fun invoke(input: CreatePostInput): Flow<DataState<Post>> = flow {
         if (input.user.userId == null) {
             emit(DataState.Error(ValidationException.InvalidEmailException))
-        } else  if (input.attachments.isEmpty() and input.caption.isEmpty()) {
+        } else  if (input.attachments.isEmpty() or input.caption.isEmpty()) {
             emit(DataState.Error(ValidationException.InvalidEmptyContentException))
         } else  {
             emitAll(postsRepository.createPost(input))

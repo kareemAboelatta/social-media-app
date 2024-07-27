@@ -21,7 +21,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(inflate = FragmentLogin
 
     private val viewModel by viewModels<LoginViewModel>()
 
-    override fun onViewCreated() {}
+    override fun onViewCreated() {
+        binding.inputTextEmail.requestFocus()
+    }
 
     override fun observers() {
         viewLifecycleOwner.lifecycleScope.launch {

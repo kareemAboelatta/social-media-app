@@ -8,7 +8,7 @@
     <!--home container-->
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.socialmediaapp.ui.main.fragment.HomeFragment"
+        android:name="com.example.main.presentation.home.HomeFragment"
         android:label="HomeFragment" />
 
     <fragment

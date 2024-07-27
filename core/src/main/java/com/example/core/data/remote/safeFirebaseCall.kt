@@ -17,6 +17,8 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withTimeout
 import java.io.IOException
 
+
+private const val TAG = "safeFirebaseCall"
 suspend fun <T> safeFirebaseCall(
     firebaseCall: suspend () -> T
 ): Flow<DataState<T>> = flow {
@@ -51,8 +53,12 @@ fun <T> handleFirebaseError(throwable: Throwable): DataState<T> {
             DataState.Error(FirebaseExceptions.DatabaseException(errorMessage))
         }
         is StorageException -> {
-            val errorMessage = getFirebaseStorageErrorMessage(throwable.message)
-            DataState.Error(FirebaseExceptions.StorageException(errorMessage))
+//            val errorMessage = getFirebaseStorageErrorMessage(throwable.message)
+            Log.d(TAG, "handleFirebaseError: throwable(( : $throwable")
+            Log.d(TAG, "handleFirebaseError: throwable.message : ${throwable.message}")
+            Log.d(TAG, "handleFirebaseError: throwable.errorCode : ${throwable.errorCode}")
+            Log.d(TAG, "handleFirebaseError: throwable.localizedMessage : ${throwable.localizedMessage}")
+            DataState.Error(FirebaseExceptions.StorageException(throwable.localizedMessage.toString()))
         }
         else -> DataState.Error(FirebaseExceptions.UnknownException)
     }

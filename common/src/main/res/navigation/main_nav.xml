@@ -103,7 +103,7 @@
 
     <dialog
         android:id="@+id/logoutDialogFragment"
-        android:name="com.example.more.logout.LogoutDialogFragment" />
+        android:name="com.example.more.ui.logout.LogoutDialogFragment" />
 
 
 

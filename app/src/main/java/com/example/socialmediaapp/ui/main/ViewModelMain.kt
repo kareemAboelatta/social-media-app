@@ -106,7 +106,7 @@ class ViewModelMain  @Inject constructor(
     var commentsLiveData=MutableLiveData<Resource<List<Comment>>>()
     fun loadComments(postId:String){
         viewModelScope.launch {
-            commentsLiveData=repository.loadComments(postId)
+            commentsLiveData =repository.loadComments(postId)
         }
 
     }

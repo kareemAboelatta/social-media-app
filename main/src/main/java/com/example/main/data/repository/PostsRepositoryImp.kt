@@ -17,4 +17,14 @@ class PostsRepositoryImp @Inject constructor(
         safeFirebaseCall {
             postDatasource.uploadPost(input)
         }
+
+    override suspend fun getAllPosts(): Flow<DataState<List<Post>>> =
+        safeFirebaseCall {
+            postDatasource.fetchAllPosts()
+        }
+
+    override suspend fun fetchVideoPosts(): Flow<DataState<List<Post>>> =
+        safeFirebaseCall {
+            postDatasource.fetchVideoPosts()
+        }
 }

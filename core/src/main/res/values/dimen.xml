@@ -16,6 +16,7 @@
 
 
 
+    <dimen name="photo_size_very_small">@dimen/_35sdp</dimen>
     <dimen name="photo_size_small">@dimen/_45sdp</dimen>
     <dimen name="photo_size_medium">@dimen/_80sdp</dimen>
     <dimen name="photo_size_large">@dimen/_100sdp</dimen>

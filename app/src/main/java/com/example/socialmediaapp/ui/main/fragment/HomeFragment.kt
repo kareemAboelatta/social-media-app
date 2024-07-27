@@ -41,63 +41,63 @@ class HomeFragment : Fragment() {
 
 
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        recyclerViewSetUp()
-        viewModel.getPosts()
-
-        viewModel.postsLiveData.observe(viewLifecycleOwner) {
-            when (it.status) {
-                Status.LOADING -> {
-                    binding.homeProgressBar.visibility = View.VISIBLE
-                }
-                Status.SUCCESS -> {
-                    binding.homeProgressBar.visibility = View.GONE
-                    postList = it.data as ArrayList<Post>
-                    homeAdapter.setList(postList)
-                }
-                Status.ERROR -> {
-                    binding.homeProgressBar.visibility = View.GONE
-                    Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-
-        homeAdapter.setOnItemClickListener {
-            val bundle = Bundle().apply {
-                putSerializable("post", it)
-            }
-            findNavController().navigate(
-                com.example.common.R.id.action_homeFragment_to_postDetailsFragment,
-                bundle
-            )
-        }
-/*        homeAdapter.setOnItemClickListenerForGoingtoOwner {
-            val bundle = Bundle().apply {
-                putSerializable("post", it)
-            }
-            if (it.userId == auth.currentUser?.uid ){
-                activity?.findViewById<ChipNavigationBar>(R.id.bottom_menu)?.setItemSelected(
-                    R.id.profile)
-
-                findNavController().navigate(com.example.common.R.id.profileFragment)
-
-            }else{
-                findNavController().navigate(
-                    com.example.common.R.id.action_homeFragment_to_postOwnerFragment,
-                    bundle
-                )
-            }
-
-        }*/
-        homeAdapter.setonItemClickListenerForLike {
-            viewModel.setLike(it)
-        }
-
-
-
-
-    }
+//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        super.onViewCreated(view, savedInstanceState)
+//        recyclerViewSetUp()
+//        viewModel.getPosts()
+//
+//        viewModel.postsLiveData.observe(viewLifecycleOwner) {
+//            when (it.status) {
+//                Status.LOADING -> {
+//                    binding.homeProgressBar.visibility = View.VISIBLE
+//                }
+//                Status.SUCCESS -> {
+//                    binding.homeProgressBar.visibility = View.GONE
+//                    postList = it.data as ArrayList<Post>
+//                    homeAdapter.setList(postList)
+//                }
+//                Status.ERROR -> {
+//                    binding.homeProgressBar.visibility = View.GONE
+//                    Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
+//                }
+//            }
+//        }
+//
+//        homeAdapter.setOnItemClickListener {
+//            val bundle = Bundle().apply {
+//                putSerializable("post", it)
+//            }
+//            findNavController().navigate(
+//                com.example.common.R.id.action_homeFragment_to_postDetailsFragment,
+//                bundle
+//            )
+//        }
+///*        homeAdapter.setOnItemClickListenerForGoingtoOwner {
+//            val bundle = Bundle().apply {
+//                putSerializable("post", it)
+//            }
+//            if (it.userId == auth.currentUser?.uid ){
+//                activity?.findViewById<ChipNavigationBar>(R.id.bottom_menu)?.setItemSelected(
+//                    R.id.profile)
+//
+//                findNavController().navigate(com.example.common.R.id.profileFragment)
+//
+//            }else{
+//                findNavController().navigate(
+//                    com.example.common.R.id.action_homeFragment_to_postOwnerFragment,
+//                    bundle
+//                )
+//            }
+//
+//        }*/
+//        homeAdapter.setonItemClickListenerForLike {
+//            viewModel.setLike(it)
+//        }
+//
+//
+//
+//
+//    }
 
     private fun recyclerViewSetUp() {
         val linearLayout = LinearLayoutManager(activity)
