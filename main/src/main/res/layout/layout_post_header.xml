@@ -17,7 +17,7 @@
         android:layout_height="@dimen/_50sdp"
         android:layout_margin="@dimen/_5sdp"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_profile"
+        tools:src="@tools:sample/avatars"
         app:civ_border_color="@color/colorBlue"
         app:civ_border_width="@dimen/_2sdp" />
 
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             tools:text="Kareem Aboelatta"
             android:textColor="#000"
-            android:textSize="24sp"
+            android:textSize="@dimen/text_size_large"
             android:textStyle="bold" />
 
 
@@ -44,7 +44,6 @@
             tools:text="Android Developer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
             android:textSize="14sp" />
 
 

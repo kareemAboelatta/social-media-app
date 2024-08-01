@@ -172,4 +172,18 @@
     </style>
 
 
+    <style name="simple_card" parent="Widget.MaterialComponents.CardView">
+        <item name="cardCornerRadius">@dimen/radius_low</item>
+        <item name="cardElevation">@dimen/elevation_very_low</item>
+        <item name="android:padding">@dimen/padding_high</item>
+        <item name="android:layout_marginStart">@dimen/margin_medium</item>
+        <item name="android:layout_marginEnd">@dimen/margin_medium</item>
+        <item name="android:layout_marginTop">@dimen/margin_medium</item>
+        <item name="android:layout_marginBottom">@dimen/margin_medium</item>
+    </style>
+
+
+
+
+
 </resources>

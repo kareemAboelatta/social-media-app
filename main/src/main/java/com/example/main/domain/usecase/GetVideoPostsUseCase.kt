@@ -8,12 +8,12 @@ import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class GetPostsUseCase @Inject constructor(
+class GetVideoPostsUseCase @Inject constructor(
     private val postsRepository: PostsRepository
 ) {
 
     suspend operator fun invoke(): Flow<DataState<List<Post>>> = flow {
-        emitAll(postsRepository.getAllPosts())
+        emitAll(postsRepository.fetchVideoPosts())
     }
 
 }

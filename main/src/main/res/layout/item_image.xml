@@ -19,15 +19,6 @@
         android:transitionName="shared_attachment"
         tools:src="@tools:sample/avatars" />
 
-    <ImageView
-        android:id="@+id/delete_icon"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/icon_size_small"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:src="@drawable/ic_close_primary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 
