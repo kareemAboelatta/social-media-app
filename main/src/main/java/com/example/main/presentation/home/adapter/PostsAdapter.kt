@@ -1,4 +1,209 @@
 package com.example.main.presentation.home.adapter
 
-class PostsAdapter  {
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
+import com.example.common.domain.model.Attachment
+import com.example.main.databinding.ItemPostWithFourAttachmentBinding
+import com.example.main.databinding.ItemPostWithMultiAttachmentsBinding
+import com.example.main.databinding.ItemPostWithSingleAttachmentBinding
+import com.example.main.databinding.ItemPostWithThreeAttachmentBinding
+import com.example.main.databinding.ItemPostWithTwoAttachmentBinding
+import com.example.main.domain.model.Post
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.flexbox.JustifyContent
+
+
+class PostsAdapter(
+    val onPostClicked: (post: Post, position: Int) -> Unit,
+    val onAttachmentClicked: (attachments: List<Attachment>, position: Int) -> Unit,
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+
+    private val differCallback = object : DiffUtil.ItemCallback<Post>() {
+        override fun areItemsTheSame(oldItem: Post, newItem: Post): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: Post, newItem: Post): Boolean {
+            return oldItem == newItem
+        }
+    }
+
+    private val differ = AsyncListDiffer(this, differCallback)
+
+    fun submitList(list: List<Post>) {
+        differ.submitList(list)
+    }
+
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val inflater = LayoutInflater.from(parent.context)
+        return when (viewType) {
+            VIEW_TYPE_SINGLE_ATTACHMENT -> {
+                SingleAttachmentViewHolder(
+                    ItemPostWithSingleAttachmentBinding.inflate(
+                        inflater,
+                        parent,
+                        false
+                    )
+                )
+            }
+
+            VIEW_TYPE_TWO_ATTACHMENT -> {
+                TwoAttachmentsViewHolder(
+                    ItemPostWithTwoAttachmentBinding.inflate(
+                        inflater,
+                        parent,
+                        false
+                    )
+                )
+            }
+
+            VIEW_TYPE_THREE_ATTACHMENT -> {
+                ThreeAttachmentsViewHolder(
+                    ItemPostWithThreeAttachmentBinding.inflate(
+                        inflater,
+                        parent,
+                        false
+                    )
+                )
+            }
+
+            VIEW_TYPE_FOUR_ATTACHMENT -> {
+                FourAttachmentsViewHolder(
+                    ItemPostWithFourAttachmentBinding.inflate(
+                        inflater,
+                        parent,
+                        false
+                    )
+                )
+            }
+
+            VIEW_TYPE_MULTI_ATTACHMENT -> {
+                MultiAttachmentsViewHolder(
+                    ItemPostWithMultiAttachmentsBinding.inflate(
+                        inflater,
+                        parent,
+                        false
+                    )
+                )
+            }
+
+            else -> throw IllegalArgumentException("Unknown view type $viewType")
+        }
+    }
+
+    override fun getItemCount(): Int {
+        return differ.currentList.size // +1 for the add button
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return when (differ.currentList[position].attachments.size) {
+            1 -> VIEW_TYPE_SINGLE_ATTACHMENT
+            2 -> VIEW_TYPE_TWO_ATTACHMENT
+            3 -> VIEW_TYPE_THREE_ATTACHMENT
+            4 -> VIEW_TYPE_FOUR_ATTACHMENT
+            else -> {
+                VIEW_TYPE_MULTI_ATTACHMENT
+            }
+        }
+
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when (getItemViewType(position)) {
+            VIEW_TYPE_SINGLE_ATTACHMENT -> (holder as SingleAttachmentViewHolder).bind(differ.currentList[position])
+            VIEW_TYPE_TWO_ATTACHMENT -> (holder as TwoAttachmentsViewHolder).bind(differ.currentList[position])
+            VIEW_TYPE_THREE_ATTACHMENT -> (holder as ThreeAttachmentsViewHolder).bind(differ.currentList[position])
+            VIEW_TYPE_FOUR_ATTACHMENT -> (holder as FourAttachmentsViewHolder).bind(differ.currentList[position])
+            VIEW_TYPE_MULTI_ATTACHMENT -> (holder as MultiAttachmentsViewHolder).bind(differ.currentList[position])
+        }
+    }
+
+
+    inner class SingleAttachmentViewHolder(private val binding: ItemPostWithSingleAttachmentBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(post: Post) {
+            binding.rvAttachments.apply {
+                adapter = PostAttachmentsAdapter(
+                    onAttachmentClicked = { attachments, pos ->
+                        onAttachmentClicked(attachments, pos)
+                    }
+                )
+            }
+
+        }
+    }
+
+    inner class TwoAttachmentsViewHolder(private val binding: ItemPostWithTwoAttachmentBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(post: Post) {
+            binding.rvAttachments.apply {
+                adapter = PostAttachmentsAdapter(
+                    onAttachmentClicked = { attachments, pos ->
+                        onAttachmentClicked(attachments, pos)
+                    }
+                )
+            }
+
+        }
+    }
+
+    inner class ThreeAttachmentsViewHolder(private val binding: ItemPostWithThreeAttachmentBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(post: Post) {
+
+            val layoutManager = FlexboxLayoutManager(binding.root.context)
+            layoutManager.flexDirection = FlexDirection.COLUMN
+            layoutManager.justifyContent = JustifyContent.FLEX_END
+
+            binding.rvAttachments.apply {
+                setLayoutManager(layoutManager)
+                adapter = PostAttachmentsAdapter(
+                    onAttachmentClicked = { attachments, pos ->
+                        onAttachmentClicked(attachments, pos)
+                    }
+                )
+            }
+
+        }
+    }
+
+    inner class FourAttachmentsViewHolder(private val binding: ItemPostWithFourAttachmentBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(post: Post) {
+
+            binding.rvAttachments.apply {
+                adapter = PostAttachmentsAdapter(
+                    onAttachmentClicked = { attachments, pos ->
+                        onAttachmentClicked(attachments, pos)
+                    }
+                )
+            }
+
+
+        }
+    }
+
+    inner class MultiAttachmentsViewHolder(private val binding: ItemPostWithMultiAttachmentsBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(post: Post) {
+
+
+        }
+    }
+
+
+    companion object {
+        private const val VIEW_TYPE_SINGLE_ATTACHMENT = 0
+        private const val VIEW_TYPE_TWO_ATTACHMENT = 1
+        private const val VIEW_TYPE_THREE_ATTACHMENT = 2
+        private const val VIEW_TYPE_FOUR_ATTACHMENT = 3
+        private const val VIEW_TYPE_MULTI_ATTACHMENT = 4
+    }
+
 }

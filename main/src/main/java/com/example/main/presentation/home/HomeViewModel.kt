@@ -31,6 +31,9 @@ class HomeViewModel @Inject constructor(
     val postsResponse
         get() = _postsResponse.asStateFlow()
 
+    init {
+        fetchPosts()
+    }
 
     fun fetchPosts() {
         viewModelScope.launch {

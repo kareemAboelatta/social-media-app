@@ -127,7 +127,8 @@ abstract class BaseFragment<VBinding : ViewBinding>(private val inflate: Inflate
         }
     }
 
-    protected fun <T> DataState<T>.handleState(
+    protected fun <T> DataState<T>.
+            handleState(
         onError: (String) -> Unit = {},
         onSuccess: (T) -> Unit= {},
     ) {

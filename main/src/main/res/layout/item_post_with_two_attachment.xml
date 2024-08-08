@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin_medium"
+    style="@style/simple_card"
+    app:cardElevation="@dimen/elevation_low"
+    app:cardUseCompatPadding="true"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/post_header"
+            layout="@layout/layout_post_header" />
+
+
+        <com.borjabravo.readmoretextview.ReadMoreTextView
+            android:id="@+id/post_caption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_2sdp"
+            android:autoLink="all"
+            android:textSize="20sp"
+            android:textStyle="normal"
+            app:trimCollapsedText=" Show less"
+            app:trimExpandedText=" Show More"
+            app:trimLength="200"
+            app:trimMode="trimModeLength"
+            tools:text="I love my mom" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_attachments"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_200sdp"
+            tools:src="@tools:sample/avatars"
+            android:scaleType="centerCrop"
+            app:spanCount="2"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            tools:listitem="@layout/item_image_preview"/>
+
+        <include
+            android:id="@+id/post_footer"
+            layout="@layout/layout_post_footer" />
+
+
+    </LinearLayout>
+
+
+</com.google.android.material.card.MaterialCardView>

@@ -2,8 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="@dimen/margin_low"
-    android:layout_width="@dimen/photo_size_large"
-    android:layout_height="@dimen/photo_size_large"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:scaleType="centerCrop"
     xmlns:tools="http://schemas.android.com/tools"
     tools:src="@color/black" >
@@ -19,15 +19,7 @@
         android:transitionName="shared_attachment"
         tools:src="@tools:sample/avatars" />
 
-    <ImageView
-        android:id="@+id/delete_icon"
-        android:layout_width="@dimen/icon_size_small"
-        android:layout_height="@dimen/icon_size_small"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:src="@drawable/ic_close_primary"
-        app:layout_constraintEnd_toEndOf="@+id/image"
-        app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

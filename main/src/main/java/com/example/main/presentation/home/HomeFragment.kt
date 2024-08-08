@@ -1,5 +1,6 @@
 package com.example.main.presentation.home
 
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
@@ -9,6 +10,7 @@ import com.example.common.R
 import com.example.core.BaseFragment
 import com.example.core.ui.utils.loadCircleImageFromUrl
 import com.example.main.databinding.FragmentHomeBinding
+import com.example.main.presentation.home.adapter.PostsAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -19,14 +21,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
 
     private val viewModel by viewModels<HomeViewModel>()
-
+    private lateinit var postsAdapter: PostsAdapter
     private val parentNavController by lazy {
 
         Navigation.findNavController(requireActivity(), R.id.container)
     }
 
     override fun onViewCreated() {
-
+        postsAdapter = PostsAdapter(
+            onAttachmentClicked = { attachments, position -> },
+            onPostClicked = { post, position -> }
+        )
+        binding.rvPosts.adapter = postsAdapter
     }
 
     override fun onClicks() {
@@ -39,6 +45,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     override fun observers() {
         observeUserData()
+        observePosts()
+    }
+
+    private fun observePosts() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.postsResponse.flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+                .collectLatest {
+                    it.handleState {
+                        Toast.makeText(requireActivity(), "observePosts:: $it", Toast.LENGTH_SHORT).show()
+                        postsAdapter.submitList(it)
+                    }
+                }
+        }
     }
 
     private fun observeUserData() {

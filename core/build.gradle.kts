@@ -117,6 +117,8 @@ dependencies {
     api("com.intuit.sdp:sdp-android:1.1.1")
     api("com.intuit.ssp:ssp-android:1.1.1")
 
+    api ("com.google.android.flexbox:flexbox:3.0.0")
+
     // Shimmer
     api("com.facebook.shimmer:shimmer:0.5.0")
 

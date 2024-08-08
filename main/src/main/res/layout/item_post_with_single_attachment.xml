@@ -35,12 +35,14 @@
             app:trimMode="trimModeLength"
             tools:text="I love my mom" />
 
-        <ImageView
-            android:id="@+id/post_Image"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_attachments"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_200sdp"
             tools:src="@tools:sample/avatars"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            tools:listitem="@layout/item_image_preview"/>
 
         <include
             android:id="@+id/post_footer"

@@ -103,9 +103,9 @@ class HomeFragment : Fragment() {
         val linearLayout = LinearLayoutManager(activity)
         linearLayout.stackFromEnd = true
         linearLayout.reverseLayout = true
-        binding.homeRec.layoutManager = linearLayout
+        binding.rvPosts.layoutManager = linearLayout
         homeAdapter.setList(postList)
-        binding.homeRec.adapter = homeAdapter
+        binding.rvPosts.adapter = homeAdapter
     }
 
     override fun onDestroyView() {
