@@ -9,10 +9,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.common.domain.model.Attachment
 import com.example.common.domain.model.AttachmentType
 import com.example.core.ui.utils.loadImageFromUrl
-import com.example.main.databinding.ItemImagePreviewBinding
-import com.example.main.databinding.ItemVideoPreviewBinding
+import com.example.main.databinding.ItemAttachmentPlusPreviewBinding
+import com.example.main.databinding.ItemImageWithFixHeightPreviewBinding
+import com.example.main.databinding.ItemVideoWithFixHeightPreviewBinding
 
-class PostAttachmentsAdapter(
+class PostMultiAttachmentsAdapter(
     val onAttachmentClicked: (attachments: List<Attachment>, position: Int) -> Unit,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -37,12 +38,16 @@ class PostAttachmentsAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return when (viewType) {
+            VIEW_TYPE_MORE -> {
+                AttachmentPlusViewHolder(ItemAttachmentPlusPreviewBinding.inflate(inflater, parent, false))
+            }
+
             VIEW_TYPE_IMAGE -> {
-                ImageViewHolder(ItemImagePreviewBinding.inflate(inflater, parent, false))
+                ImageViewHolder(ItemImageWithFixHeightPreviewBinding.inflate(inflater, parent, false))
             }
 
             VIEW_TYPE_VIDEO -> {
-                VideoViewHolder(ItemVideoPreviewBinding.inflate(inflater, parent, false))
+                VideoViewHolder(ItemVideoWithFixHeightPreviewBinding.inflate(inflater, parent, false))
             }
 
             else -> throw IllegalArgumentException("Unknown view type $viewType")
@@ -50,10 +55,11 @@ class PostAttachmentsAdapter(
     }
 
     override fun getItemCount(): Int {
-        return differ.currentList.size // +1 for the add button
+        return 4
     }
 
     override fun getItemViewType(position: Int): Int {
+        if (position == 3 ) return VIEW_TYPE_MORE
         return when (differ.currentList[position].type) {
             AttachmentType.IMAGE -> VIEW_TYPE_IMAGE
             AttachmentType.VIDEO -> VIEW_TYPE_VIDEO
@@ -65,11 +71,25 @@ class PostAttachmentsAdapter(
         when (getItemViewType(position)) {
             VIEW_TYPE_IMAGE -> (holder as ImageViewHolder).bind(differ.currentList[position])
             VIEW_TYPE_VIDEO -> (holder as VideoViewHolder).bind(differ.currentList[position])
+            VIEW_TYPE_MORE -> (holder as AttachmentPlusViewHolder).bind(differ.currentList[position])
         }
     }
 
 
-    inner class ImageViewHolder(private val binding: ItemImagePreviewBinding) :
+    inner class AttachmentPlusViewHolder(private val binding: ItemAttachmentPlusPreviewBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(attachment: Attachment) {
+            binding.tvRemain.text = "+ ${differ.currentList.size - 4}"
+            binding.attachment.loadImageFromUrl(attachment.attachment)
+
+            binding.attachment.setOnClickListener {
+                onAttachmentClicked(differ.currentList,absoluteAdapterPosition)
+            }
+
+        }
+    }
+
+    inner class ImageViewHolder(private val binding: ItemImageWithFixHeightPreviewBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(attachment: Attachment) {
             binding.image.loadImageFromUrl(attachment.attachment)
@@ -81,7 +101,7 @@ class PostAttachmentsAdapter(
         }
     }
 
-    inner class VideoViewHolder(private val binding: ItemVideoPreviewBinding) :
+    inner class VideoViewHolder(private val binding: ItemVideoWithFixHeightPreviewBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(attachment: Attachment) {
             binding.videoThumbnail.loadImageFromUrl(attachment.attachment)
@@ -98,5 +118,6 @@ class PostAttachmentsAdapter(
     companion object {
         private const val VIEW_TYPE_IMAGE = 0
         private const val VIEW_TYPE_VIDEO = 1
+        private const val VIEW_TYPE_MORE = 2
     }
 }

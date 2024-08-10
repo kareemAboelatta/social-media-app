@@ -4,17 +4,16 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.common.domain.model.Attachment
+import com.example.core.ui.utils.loadCircleImageFromUrl
 import com.example.main.databinding.ItemPostWithFourAttachmentBinding
 import com.example.main.databinding.ItemPostWithMultiAttachmentsBinding
 import com.example.main.databinding.ItemPostWithSingleAttachmentBinding
 import com.example.main.databinding.ItemPostWithThreeAttachmentBinding
 import com.example.main.databinding.ItemPostWithTwoAttachmentBinding
 import com.example.main.domain.model.Post
-import com.google.android.flexbox.FlexDirection
-import com.google.android.flexbox.FlexboxLayoutManager
-import com.google.android.flexbox.JustifyContent
 
 
 class PostsAdapter(
@@ -128,12 +127,21 @@ class PostsAdapter(
     inner class SingleAttachmentViewHolder(private val binding: ItemPostWithSingleAttachmentBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(post: Post) {
-            binding.rvAttachments.apply {
-                adapter = PostAttachmentsAdapter(
-                    onAttachmentClicked = { attachments, pos ->
-                        onAttachmentClicked(attachments, pos)
+            with(binding) {
+                tvCaption.text = post.caption
+                rvAttachments.apply {
+                    adapter = PostFixedHeightAttachmentsAdapter(
+                        onAttachmentClicked = { attachments, pos ->
+                            onAttachmentClicked(attachments, pos)
+                        }
+                    ).apply {
+                        submitList(post.attachments)
                     }
-                )
+                }
+                with(postHeader) {
+                    postUserPicture.loadCircleImageFromUrl(post.user.image)
+                    postUserName.text = post.user.name
+                }
             }
 
         }
@@ -142,47 +150,86 @@ class PostsAdapter(
     inner class TwoAttachmentsViewHolder(private val binding: ItemPostWithTwoAttachmentBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(post: Post) {
-            binding.rvAttachments.apply {
-                adapter = PostAttachmentsAdapter(
-                    onAttachmentClicked = { attachments, pos ->
-                        onAttachmentClicked(attachments, pos)
+            with(binding) {
+                tvCaption.text = post.caption
+                rvAttachments.apply {
+                    adapter = PostAttachmentsAdapter(
+                        onAttachmentClicked = { attachments, pos ->
+                            onAttachmentClicked(attachments, pos)
+                        }
+                    ).apply {
+                        submitList(post.attachments)
                     }
-                )
+                }
+                with(postHeader) {
+                    postUserPicture.loadCircleImageFromUrl(post.user.image)
+                    postUserName.text = post.user.name
+                }
             }
+
 
         }
     }
 
     inner class ThreeAttachmentsViewHolder(private val binding: ItemPostWithThreeAttachmentBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
         fun bind(post: Post) {
+            with(binding) {
+                tvCaption.text = post.caption
 
-            val layoutManager = FlexboxLayoutManager(binding.root.context)
-            layoutManager.flexDirection = FlexDirection.COLUMN
-            layoutManager.justifyContent = JustifyContent.FLEX_END
-
-            binding.rvAttachments.apply {
-                setLayoutManager(layoutManager)
-                adapter = PostAttachmentsAdapter(
-                    onAttachmentClicked = { attachments, pos ->
-                        onAttachmentClicked(attachments, pos)
+                val layoutManager = GridLayoutManager(binding.root.context, 2)
+                layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                    override fun getSpanSize(position: Int): Int {
+                        return when (position) {
+                            0, 1 -> 1 // First two items take 1 span each
+                            2 -> 2 // Third item takes 2 spans (full width)
+                            else -> 1
+                        }
                     }
-                )
-            }
+                }
 
+                rvAttachments.layoutManager = layoutManager
+                rvAttachments.adapter = PostFixedHeightAttachmentsAdapter(
+                    onAttachmentClicked = { attachments, pos ->
+                        onAttachmentClicked(post.attachments, pos)
+                    }
+                ).apply {
+                    submitList(post.attachments)
+                }
+
+                with(postHeader) {
+                    postUserPicture.loadCircleImageFromUrl(post.user.image)
+                    postUserName.text = post.user.name
+                }
+            }
         }
     }
 
     inner class FourAttachmentsViewHolder(private val binding: ItemPostWithFourAttachmentBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(post: Post) {
+            with(binding) {
+                tvCaption.text = post.caption
 
-            binding.rvAttachments.apply {
-                adapter = PostAttachmentsAdapter(
-                    onAttachmentClicked = { attachments, pos ->
-                        onAttachmentClicked(attachments, pos)
+                binding.rvAttachments.apply {
+                    adapter = PostFixedHeightAttachmentsAdapter(
+                        onAttachmentClicked = { attachments, pos ->
+                            onAttachmentClicked(attachments, pos)
+                        }
+                    ).apply {
+                        submitList(post.attachments)
                     }
-                )
+                }
+
+                with(postHeader) {
+                    postUserPicture.loadCircleImageFromUrl(post.user.image)
+                    postUserName.text = post.user.name
+                }
+                with(postFooter) {
+                    postCommentTV.text = "${post.postInfo.postComments} comments"
+                    postLikesTV.text = "${post.postInfo.postLikes} likes"
+                }
             }
 
 
@@ -192,6 +239,28 @@ class PostsAdapter(
     inner class MultiAttachmentsViewHolder(private val binding: ItemPostWithMultiAttachmentsBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(post: Post) {
+            with(binding) {
+                tvCaption.text = post.caption
+
+                binding.rvAttachments.apply {
+                    adapter = PostMultiAttachmentsAdapter(
+                        onAttachmentClicked = { attachments, pos ->
+                            onAttachmentClicked(attachments, pos)
+                        }
+                    ).apply {
+                        submitList(post.attachments)
+                    }
+                }
+
+                with(postHeader) {
+                    postUserPicture.loadCircleImageFromUrl(post.user.image)
+                    postUserName.text = post.user.name
+                }
+                with(postFooter) {
+                    postCommentTV.text = "${post.postInfo.postComments} comments"
+                    postLikesTV.text = "${post.postInfo.postLikes} likes"
+                }
+            }
 
 
         }

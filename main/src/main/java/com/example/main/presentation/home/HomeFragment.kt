@@ -1,6 +1,5 @@
 package com.example.main.presentation.home
 
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
@@ -28,6 +27,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     override fun onViewCreated() {
+        viewModel.fetchPosts()
+
         postsAdapter = PostsAdapter(
             onAttachmentClicked = { attachments, position -> },
             onPostClicked = { post, position -> }
@@ -53,7 +54,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             viewModel.postsResponse.flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
                 .collectLatest {
                     it.handleState {
-                        Toast.makeText(requireActivity(), "observePosts:: $it", Toast.LENGTH_SHORT).show()
                         postsAdapter.submitList(it)
                     }
                 }

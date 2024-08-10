@@ -9,10 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.common.domain.model.Attachment
 import com.example.common.domain.model.AttachmentType
 import com.example.core.ui.utils.loadImageFromUrl
-import com.example.main.databinding.ItemImagePreviewBinding
-import com.example.main.databinding.ItemVideoPreviewBinding
+import com.example.main.databinding.ItemImageWithFixHeightPreviewBinding
+import com.example.main.databinding.ItemVideoWithFixHeightPreviewBinding
 
-class PostAttachmentsAdapter(
+class PostFixedHeightAttachmentsAdapter(
     val onAttachmentClicked: (attachments: List<Attachment>, position: Int) -> Unit,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -38,11 +38,11 @@ class PostAttachmentsAdapter(
         val inflater = LayoutInflater.from(parent.context)
         return when (viewType) {
             VIEW_TYPE_IMAGE -> {
-                ImageViewHolder(ItemImagePreviewBinding.inflate(inflater, parent, false))
+                ImageViewHolder(ItemImageWithFixHeightPreviewBinding.inflate(inflater, parent, false))
             }
 
             VIEW_TYPE_VIDEO -> {
-                VideoViewHolder(ItemVideoPreviewBinding.inflate(inflater, parent, false))
+                VideoViewHolder(ItemVideoWithFixHeightPreviewBinding.inflate(inflater, parent, false))
             }
 
             else -> throw IllegalArgumentException("Unknown view type $viewType")
@@ -69,7 +69,7 @@ class PostAttachmentsAdapter(
     }
 
 
-    inner class ImageViewHolder(private val binding: ItemImagePreviewBinding) :
+    inner class ImageViewHolder(private val binding: ItemImageWithFixHeightPreviewBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(attachment: Attachment) {
             binding.image.loadImageFromUrl(attachment.attachment)
@@ -81,7 +81,7 @@ class PostAttachmentsAdapter(
         }
     }
 
-    inner class VideoViewHolder(private val binding: ItemVideoPreviewBinding) :
+    inner class VideoViewHolder(private val binding: ItemVideoWithFixHeightPreviewBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(attachment: Attachment) {
             binding.videoThumbnail.loadImageFromUrl(attachment.attachment)

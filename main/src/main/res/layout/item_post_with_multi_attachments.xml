@@ -22,7 +22,7 @@
 
 
         <com.borjabravo.readmoretextview.ReadMoreTextView
-            android:id="@+id/post_caption"
+            android:id="@+id/tv_caption"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_2sdp"
@@ -38,14 +38,12 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_attachments"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/_210sdp"
             tools:src="@tools:sample/avatars"
             app:spanCount="2"
-            android:scrollbars="none"
             tools:itemCount="4"
-            android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            tools:listitem="@layout/item_image_preview"/>
+            tools:listitem="@layout/item_image_with_fix_height_preview"/>
 
         <include
             android:id="@+id/post_footer"

@@ -22,7 +22,7 @@
 
 
         <com.borjabravo.readmoretextview.ReadMoreTextView
-            android:id="@+id/post_caption"
+            android:id="@+id/tv_caption"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_2sdp"
@@ -42,6 +42,7 @@
             tools:src="@tools:sample/avatars"
             android:scaleType="centerCrop"
             app:spanCount="2"
+            tools:itemCount="2"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             tools:listitem="@layout/item_image_preview"/>
 

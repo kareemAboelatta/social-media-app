@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:maxHeight="@dimen/fixed_item_height"
+    android:layout_height="@dimen/fixed_item_height"
     android:layout_margin="@dimen/margin_very_low">
 
 
@@ -11,7 +12,6 @@
         android:id="@+id/video_thumbnail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/margin_very_low"
         android:scaleType="centerCrop"
         android:transitionName="shared_attachment"
         app:shapeAppearance="@style/RoundedShapeAppearance"
@@ -20,7 +20,6 @@
     <com.google.android.material.imageview.ShapeableImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/margin_very_low"
         android:scaleType="centerCrop"
         android:src="@color/colorBlackTrans"
         app:shapeAppearance="@style/RoundedShapeAppearance" />

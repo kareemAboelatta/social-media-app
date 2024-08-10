@@ -20,6 +20,7 @@
     <dimen name="text_size_large">@dimen/_14ssp</dimen>
     <dimen name="text_size_very_large">@dimen/_16ssp</dimen>
 
+    <dimen name="fixed_item_height">@dimen/_100sdp</dimen>
 
 
     <dimen name="photo_size_very_small">@dimen/_35sdp</dimen>

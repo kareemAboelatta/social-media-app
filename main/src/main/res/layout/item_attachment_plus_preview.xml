@@ -3,15 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:maxHeight="@dimen/fixed_item_height"
+    android:layout_height="@dimen/fixed_item_height"
     android:layout_margin="@dimen/margin_very_low">
 
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/video_thumbnail"
+        android:id="@+id/attachment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/margin_very_low"
         android:scaleType="centerCrop"
         android:transitionName="shared_attachment"
         app:shapeAppearance="@style/RoundedShapeAppearance"
@@ -20,16 +20,26 @@
     <com.google.android.material.imageview.ShapeableImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/margin_very_low"
         android:scaleType="centerCrop"
         android:src="@color/colorBlackTrans"
         app:shapeAppearance="@style/RoundedShapeAppearance" />
 
-    <ImageView
-        android:id="@+id/play_icon"
-        android:layout_width="@dimen/icon_size_medium"
-        android:layout_height="@dimen/icon_size_medium"
+    <com.google.android.material.imageview.ShapeableImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@color/colorBlackTrans"
+        app:shapeAppearance="@style/RoundedShapeAppearance" />
+
+    <TextView
+        android:id="@+id/tv_remain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:src="@drawable/ic_circle_play" />
+        android:textColor="@color/white"
+        style="@style/TextView.Title"
+        android:text="+10"
+        android:textSize="@dimen/_20ssp"
+        />
 
 </RelativeLayout>

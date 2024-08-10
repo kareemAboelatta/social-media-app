@@ -1,6 +1,5 @@
 package com.example.main.data.datasource
 
-import com.example.main.domain.model.input.CreatePostInput
 import android.net.Uri
 import androidx.core.net.toUri
 import com.example.common.AppDispatcher
@@ -9,6 +8,7 @@ import com.example.common.domain.model.Attachment
 import com.example.common.domain.model.AttachmentType
 import com.example.common.ui.utils.Constants
 import com.example.main.domain.model.Post
+import com.example.main.domain.model.input.CreatePostInput
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.storage.StorageReference
 import kotlinx.coroutines.CoroutineDispatcher
@@ -71,15 +71,16 @@ class PostDatasourceFirebase @Inject constructor(
             }.map { it.await() }
         }
 
-    private suspend fun uploadFile(uri: Uri, type: AttachmentType): Attachment = withContext(defaultDispatcher) {
-        val folder = when (type) {
-            AttachmentType.IMAGE -> Constants.IMAGES
-            AttachmentType.VIDEO -> Constants.VIDEOS
+    private suspend fun uploadFile(uri: Uri, type: AttachmentType): Attachment =
+        withContext(defaultDispatcher) {
+            val folder = when (type) {
+                AttachmentType.IMAGE -> Constants.IMAGES
+                AttachmentType.VIDEO -> Constants.VIDEOS
+            }
+            val uploadTask = refStorage.child(folder).putFile(uri).await()
+            val downloadUrl = uploadTask.storage.downloadUrl.await().toString()
+            Attachment(downloadUrl, type)
         }
-        val uploadTask = refStorage.child(folder).putFile(uri).await()
-        val downloadUrl = uploadTask.storage.downloadUrl.await().toString()
-        Attachment(downloadUrl, type)
-    }
 
 
     private suspend fun setPostInfoOnDatabase(post: Post): Post = coroutineScope {

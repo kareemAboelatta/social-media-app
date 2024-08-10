@@ -80,7 +80,7 @@ class PublishPostFragment :
         val mediaPreviewAttachments = viewModel.input.value.attachments.map {
             MediaPreviewAttachment(
                 type = if (it.type == AttachmentType.VIDEO) MediaPreviewType.VIDEO else MediaPreviewType.IMAGE,
-                attachment = it.attachment
+                attachment = it.attachment?:""
             )
         }
         PreviewAttachmentDialogBuilder(requireActivity())
