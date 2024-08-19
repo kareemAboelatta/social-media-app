@@ -25,6 +25,8 @@ interface PostDatasource {
     suspend fun uploadPost(postInput: CreatePostInput): Post
     suspend fun fetchAllPosts(): List<Post>
     suspend fun fetchVideoPosts(): List<Post>
+    suspend fun fetchPostDetails(postId: String): Post
+
 
 }
 
@@ -45,6 +47,11 @@ class PostDatasourceFirebase @Inject constructor(
         val snapshot = refDatabase.child(Constants.POSTS).get().await()
         snapshot.children.mapNotNull { it.getValue(Post::class.java) }
             .filter { it.attachments.size == 1 && it.attachments.first().type == AttachmentType.VIDEO }
+    }
+
+    override suspend fun fetchPostDetails(postId: String): Post = withContext(ioDispatcher) {
+        val snapshot = refDatabase.child(Constants.POSTS).child(postId).get().await()
+        snapshot.getValue(Post::class.java)?: throw Exception("Post not found")
     }
 
     override suspend fun uploadPost(postInput: CreatePostInput): Post =

@@ -27,4 +27,9 @@ class PostsRepositoryImp @Inject constructor(
         safeFirebaseCall {
             postDatasource.fetchVideoPosts()
         }
+
+    override suspend fun fetchPostDetails(postId:String): Flow<DataState<Post>> =
+        safeFirebaseCall {
+            postDatasource.fetchPostDetails(postId)
+        }
 }
