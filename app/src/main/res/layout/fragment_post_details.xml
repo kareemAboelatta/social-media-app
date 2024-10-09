@@ -85,19 +85,14 @@
                     </LinearLayout>
 
 
-                    <com.borjabravo.readmoretextview.ReadMoreTextView
+                    <TextView
                         android:id="@+id/det_pTitleIv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="20sp"
                         android:text="title"
                         android:layout_margin="@dimen/_2sdp"
-                        android:textStyle="normal"
-                        app:trimCollapsedText="Show less"
-                        app:trimExpandedText="Show More"
-                        app:trimLength="200"
-                        android:autoLink="all"
-                        app:trimMode="trimModeLength"/>
+                        android:textStyle="normal"/>
 
 
 

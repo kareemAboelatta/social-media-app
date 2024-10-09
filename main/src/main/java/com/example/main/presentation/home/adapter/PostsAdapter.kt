@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.common.domain.model.Attachment
+import com.example.common.ui.utils.getRelativeTimeSpan
 import com.example.core.ui.utils.loadCircleImageFromUrl
 import com.example.main.databinding.ItemPostWithFourAttachmentBinding
 import com.example.main.databinding.ItemPostWithMultiAttachmentsBinding
@@ -141,6 +142,8 @@ class PostsAdapter(
                 with(postHeader) {
                     postUserPicture.loadCircleImageFromUrl(post.user.image)
                     postUserName.text = post.user.name
+                    bio.text = post.user.bio
+                    time.text = itemView.context.getRelativeTimeSpan(post.postInfo.createAt?:0)
                 }
             }
 
@@ -164,6 +167,8 @@ class PostsAdapter(
                 with(postHeader) {
                     postUserPicture.loadCircleImageFromUrl(post.user.image)
                     postUserName.text = post.user.name
+                    bio.text = post.user.bio
+                    time.text = itemView.context.getRelativeTimeSpan(post.postInfo.createAt?:0)
                 }
             }
 
@@ -201,6 +206,8 @@ class PostsAdapter(
                 with(postHeader) {
                     postUserPicture.loadCircleImageFromUrl(post.user.image)
                     postUserName.text = post.user.name
+                    bio.text = post.user.bio
+                    time.text = itemView.context.getRelativeTimeSpan(post.postInfo.createAt?:0)
                 }
             }
         }
@@ -225,6 +232,8 @@ class PostsAdapter(
                 with(postHeader) {
                     postUserPicture.loadCircleImageFromUrl(post.user.image)
                     postUserName.text = post.user.name
+                    bio.text = post.user.bio
+                    time.text = itemView.context.getRelativeTimeSpan(post.postInfo.createAt?:0)
                 }
                 with(postFooter) {
                     postCommentTV.text = "${post.postInfo.postComments} comments"
@@ -255,6 +264,8 @@ class PostsAdapter(
                 with(postHeader) {
                     postUserPicture.loadCircleImageFromUrl(post.user.image)
                     postUserName.text = post.user.name
+                    bio.text = post.user.bio
+                    time.text = itemView.context.getRelativeTimeSpan(post.postInfo.createAt?:0)
                 }
                 with(postFooter) {
                     postCommentTV.text = "${post.postInfo.postComments} comments"

@@ -18,7 +18,7 @@ data class User(
 )
 
 data class PostInfo(
-    var createAt: Long = 0,
+    var createAt: Long? = 0,
     var postLikes: Int = 0,
     var postComments: Int = 0,
     var languageCode: String = "und",

@@ -40,7 +40,7 @@
 
 
         <TextView
-            android:id="@+id/post_text_anyone"
+            android:id="@+id/bio"
             tools:text="Android Developer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
 
 
         <TextView
-            android:id="@+id/post_TimeIv"
+            android:id="@+id/time"
             tools:text="33min "
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

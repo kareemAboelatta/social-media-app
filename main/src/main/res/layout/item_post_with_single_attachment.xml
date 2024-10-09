@@ -21,7 +21,7 @@
             layout="@layout/layout_post_header" />
 
 
-        <com.borjabravo.readmoretextview.ReadMoreTextView
+        <TextView
             android:id="@+id/tv_caption"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -29,10 +29,6 @@
             android:autoLink="all"
             android:textSize="20sp"
             android:textStyle="normal"
-            app:trimCollapsedText=" Show less"
-            app:trimExpandedText=" Show More"
-            app:trimLength="200"
-            app:trimMode="trimModeLength"
             tools:text="I love my mom" />
 
         <androidx.recyclerview.widget.RecyclerView

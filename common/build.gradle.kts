@@ -66,8 +66,6 @@ dependencies {
 
     // Chip Navigation Bar
     api("com.github.ismaeldivita:chip-navigation-bar:1.4.0")
-    // ReadMoreTextView
-    api("com.borjabravo:readmoretextview:2.1.0")
 
 
     // ExoPlayer

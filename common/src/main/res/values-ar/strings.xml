@@ -4,7 +4,6 @@
     <string name="more">المزيد</string>
 
 
-
     <string name="name_required">الاسم مطلوب</string>
     <string name="name_invalid">الاسم غير صالح</string>
     <string name="bio_required">السيرة الذاتية مطلوبة</string>
@@ -23,6 +22,63 @@
 
     <string name="create_post_hint">ماذا يدور في ذهنك، %1$s؟</string>
     <string name="data_updated">تم تحديث البيانات</string>
+
+
+    <!-- Time ago strings -->
+    <string name="time_just_now">الآن</string>
+    <plurals name="time_minutes_ago">
+        <item quantity="one">منذ دقيقة واحدة</item>
+        <item quantity="two">منذ دقيقتين</item>
+        <item quantity="few">منذ %d دقائق</item>
+        <item quantity="many">منذ %d دقيقة</item>
+        <item quantity="other">منذ %d دقيقة</item>
+        <item quantity="zero">الأن</item>
+    </plurals>
+    <plurals name="time_hours_ago">
+        <item quantity="one">منذ ساعة واحدة</item>
+        <item quantity="two">منذ ساعتين</item>
+        <item quantity="few">منذ %d ساعات</item>
+        <item quantity="many">منذ %d ساعة</item>
+        <item quantity="other">منذ %d ساعة</item>
+        <item quantity="zero">الأن</item>
+
+    </plurals>
+    <plurals name="time_days_ago">
+        <item quantity="one">منذ يوم واحد</item>
+        <item quantity="two">منذ يومين</item>
+        <item quantity="few">منذ %d أيام</item>
+        <item quantity="many">منذ %d يومًا</item>
+        <item quantity="other">منذ %d يومًا</item>
+        <item quantity="zero">الأن</item>
+
+    </plurals>
+    <plurals name="time_weeks_ago">
+        <item quantity="one">منذ أسبوع واحد</item>
+        <item quantity="two">منذ أسبوعين</item>
+        <item quantity="few">منذ %d أسابيع</item>
+        <item quantity="many">منذ %d أسبوعًا</item>
+        <item quantity="other">منذ %d أسبوعًا</item>
+        <item quantity="zero">الأن</item>
+
+    </plurals>
+    <plurals name="time_months_ago">
+        <item quantity="one">منذ شهر واحد</item>
+        <item quantity="two">منذ شهرين</item>
+        <item quantity="few">منذ %d أشهر</item>
+        <item quantity="many">منذ %d شهرًا</item>
+        <item quantity="other">منذ %d شهرًا</item>
+        <item quantity="zero">الأن</item>
+
+    </plurals>
+    <plurals name="time_years_ago">
+        <item quantity="one">منذ سنة واحدة</item>
+        <item quantity="two">منذ سنتين</item>
+        <item quantity="few">منذ %d سنوات</item>
+        <item quantity="many">منذ %d سنة</item>
+        <item quantity="other">منذ %d سنة</item>
+        <item quantity="zero">الأن</item>
+
+    </plurals>
 
 
 </resources>

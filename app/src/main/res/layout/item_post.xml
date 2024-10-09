@@ -109,17 +109,13 @@
 
 
 
-        <com.borjabravo.readmoretextview.ReadMoreTextView
+        <TextView
             android:id="@+id/post_caption"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:textStyle="normal"
             android:text="I love my mom"
-            app:trimCollapsedText=" Show less"
-            app:trimExpandedText=" Show More"
-            app:trimLength="200"
-            app:trimMode="trimModeLength"
             android:autoLink="all"
             android:layout_margin="@dimen/_2sdp"
             />

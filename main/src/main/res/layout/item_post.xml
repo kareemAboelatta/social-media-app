@@ -24,7 +24,7 @@
 
 
 
-        <com.borjabravo.readmoretextview.ReadMoreTextView
+        <TextView
             android:id="@+id/post_caption"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -32,11 +32,7 @@
             android:autoLink="all"
             tools:text="I love my mom"
             android:textSize="20sp"
-            android:textStyle="normal"
-            app:trimCollapsedText=" Show less"
-            app:trimExpandedText=" Show More"
-            app:trimLength="200"
-            app:trimMode="trimModeLength" />
+            android:textStyle="normal"/>
 
         <TextView
             android:id="@+id/post_language"
